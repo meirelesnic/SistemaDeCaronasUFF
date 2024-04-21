@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'UFF Caronas',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(103, 80, 164, 1)),
         useMaterial3: true,
       ),
       //Verificar se esta autenticado
