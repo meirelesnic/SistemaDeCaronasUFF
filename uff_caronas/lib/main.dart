@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/login.dart';
+import 'package:uff_caronas/telas/mainScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +14,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'UFF Caronas',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF6750A4)),
         useMaterial3: true,
       ),
       //Verificar se esta autenticado
       // ...
       //Se nao estiver autenticado
-      home: const Login(),
+      home: const MainScreen(),
       //Se tiver autenticado
       //home: const Home(),
     );
