@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/login.dart';
+import 'package:uff_caronas/telas/login.dart';
 import 'package:uff_caronas/telas/mainScreen.dart';
-import 'package:uff_caronas/recuperar_senha/recovery_code.dart';
-import 'package:uff_caronas/register.dart';
+import 'package:uff_caronas/telas/recuperar_senha/recovery_code.dart';
+import 'package:uff_caronas/telas/register.dart';
 
 void main() {
   runApp(const MyApp());

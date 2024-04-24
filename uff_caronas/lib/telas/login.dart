@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset("images/login.png", width: 180),
+        Image.asset("image/login.png", width: 180),
         Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 20),
           child: Text(
