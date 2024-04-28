@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uff_caronas/telas/caronaEmEspera.dart';
 import 'package:uff_caronas/telas/oferecerCarona.dart';
 import 'package:uff_caronas/telas/pedirCarona.dart';
 
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
                       CircleAvatar(
                         radius: screenSize.width * (39 / 360),
                         backgroundColor: Colors.blue,
-                        backgroundImage: NetworkImage('https://gravatar.com/avatar/fa477d3f9bb01b5dc6e3c81e79434b36?s=400&d=robohash&r=x'),
+                        backgroundImage: NetworkImage('https://img.freepik.com/premium-photo/man-with-glasses-backpack-street-corner-smiling-camera-with-blurry-background_961147-49483.jpg?w=1060'),
                       ),
                       Container(
                         width: screenSize.width * (15/360),
@@ -64,17 +65,14 @@ class _HomeState extends State<Home> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Bem-Vindo!',
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.displaySmall?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: screenSize.height * (33/800)
-                            ),
+                            )
                           ),
-                          Text('Nome',
-                            style: TextStyle(
+                          Text('Antônio Pedro',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
-                              fontSize: screenSize.height * (17/800)
-                            ),
+                            )
                           )
                         ],
                       )
@@ -114,7 +112,7 @@ class _HomeState extends State<Home> {
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: screenSize.height * (10/800)),
                 width: screenSize.width * (313/360),
-                height: screenSize.height * (169/800),
+                height: screenSize.height * (150/800),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondaryContainer,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -161,7 +159,7 @@ class _HomeState extends State<Home> {
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: screenSize.height * (10/800)),
                 width: screenSize.width * (313/360),
-                height: screenSize.height * (169/800),
+                height: screenSize.height * (150/800),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondaryContainer,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -186,7 +184,111 @@ class _HomeState extends State<Home> {
                   ],
                 )
               )
-            )
+            ),
+            Container(
+                  height: screenSize.height * (30/800),
+                ),
+            Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width * (35/360)),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return CaronaEmEspera();
+                      },
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      transitionDuration: Duration(milliseconds: 250),
+                    ),
+                  );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person_outline,
+                            size: screenSize.width * (27/360),
+                          ),
+                          Container(
+                            width: screenSize.width * (10/360),
+                          ),
+                          Text('Aprovar Passageiro',
+                              style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: screenSize.height * (18/800)
+                            ),
+                          ),
+                        ],
+                      
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: screenSize.width * (20/360),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: screenSize.height * (30/800),
+                ),
+                InkWell(
+                  onTap: () {
+                    print('editar veiculo');
+                    Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return CaronaEmEspera();
+                      },
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      transitionDuration: Duration(milliseconds: 250),
+                    ),
+                  );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.directions_car_filled_outlined,
+                            size: screenSize.width * (27/360),
+                          ),
+                          Container(
+                            width: screenSize.width * (10/360),
+                          ),
+                          Text('Pedido Armazenado',
+                              style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: screenSize.height * (18/800)
+                            ),
+                          ),
+                        ],
+                      
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: screenSize.width * (20/360),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )        
           ],
         ),            
       ),

@@ -14,21 +14,32 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int indexScreen = 0;
   final screens = [Home(), Historico(), ChatFeed(), Perfil()];
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[indexScreen],
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (index) {
+          setState(() {
+            indexScreen = index;
+          });
+        },
+        children: screens,
+      ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-        indicatorColor: Theme.of(context).colorScheme.secondary,
-        backgroundColor: Theme.of(context).colorScheme.surface),
+            indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.surface),
         child: NavigationBar(
             selectedIndex: indexScreen,
             onDestinationSelected: (value) {
               setState(() {
                 indexScreen = value;
               });
+              pageController.animateToPage(value,
+                  duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
             destinations: [
               NavigationDestination(

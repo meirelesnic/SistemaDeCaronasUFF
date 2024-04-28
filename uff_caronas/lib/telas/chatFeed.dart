@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/custom_widgets/chatCard.dart';
+import 'package:uff_caronas/custom_widgets/chatListBuilder.dart';
 
 class ChatFeed extends StatefulWidget {
   const ChatFeed({super.key});
@@ -48,18 +50,19 @@ class _ChatFeedState extends State<ChatFeed> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Text('Chat',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: screenSize.height * (33/800)
-                            ),
-                          ),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: screenSize.height * (33/800)
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-          //Lista de chats
-          
+          Expanded(
+            child: ChatListBuilder()
+          )
         ],
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/custom_widgets/caronaCard.dart';
+import 'package:uff_caronas/custom_widgets/caronaListBuilder.dart';
 
 class Historico extends StatefulWidget {
   const Historico({super.key});
@@ -118,6 +120,9 @@ class _HistoricoState extends State<Historico> {
                 )
               ],
             ),              
+          ),
+          Expanded(
+            child: CaronaListBuilder()
           )
         ],
       ),
