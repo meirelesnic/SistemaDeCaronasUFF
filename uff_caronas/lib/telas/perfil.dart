@@ -56,17 +56,17 @@ class _PerfilState extends State<Perfil> {
                       child: CircleAvatar(
                         radius: screenSize.width * (61 / 360),
                         backgroundColor: Colors.blue,
-                        backgroundImage: NetworkImage('https://gravatar.com/avatar/fa477d3f9bb01b5dc6e3c81e79434b36?s=400&d=robohash&r=x'),
+                        backgroundImage: NetworkImage('https://img.freepik.com/premium-photo/man-with-glasses-backpack-street-corner-smiling-camera-with-blurry-background_961147-49483.jpg?w=1060'),
                       ),
                     ),
-                    Text('Nome',
+                    Text('Antônio Pedro',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w500,
                         fontSize: screenSize.height * (25/800)
                       ),
                     ),
-                    Text('email@id.uff.br',
+                    Text('antoniopedro@id.uff.br',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w400,
