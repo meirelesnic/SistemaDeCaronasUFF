@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "480609385955",
+    "project_id": "uffcaronasg5-a4a64",
+    "storage_bucket": "uffcaronasg5-a4a64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480609385955:android:8d3c2e166fec04adfbf4d6",
+        "android_client_info": {
+          "package_name": "com.example.uff_caronas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480609385955-g69hutvkl6jnocpa6eli953oarjf4abp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uff_caronas",
+            "certificate_hash": "e139f8d93737727a3691a77df34caabf8f7bd0f0"
+          }
+        },
+        {
+          "client_id": "480609385955-2n7d3vv7367iigks9ufidcg2va8jm0rn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJVBPoq30fPBwU8wRWiPj7moQmfyhQBxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480609385955-2n7d3vv7367iigks9ufidcg2va8jm0rn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "480609385955-vgkon8lvb9tvaolb37h1snvskpfoqiol.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uffCaronas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
