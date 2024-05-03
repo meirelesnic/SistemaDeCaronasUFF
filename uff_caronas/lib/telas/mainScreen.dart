@@ -4,7 +4,7 @@ import 'package:uff_caronas/telas/historico.dart';
 import 'package:uff_caronas/telas/home.dart';
 import 'package:uff_caronas/telas/perfil.dart';
 
-import '../login.dart';
+import 'login.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

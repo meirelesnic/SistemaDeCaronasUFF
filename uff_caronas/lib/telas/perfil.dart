@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/Services/googleAuthenticator.dart';
+import 'package:uff_caronas/telas/login.dart';
 import 'package:uff_caronas/telas/editarPerfil.dart';
 import 'package:uff_caronas/telas/editarVeiculo.dart';
 import 'package:uff_caronas/telas/motoristaAvaliacao.dart';
 import 'package:uff_caronas/telas/passageiroAvaliacao.dart';
+
+import 'mainScreen.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -309,8 +313,21 @@ class _PerfilState extends State<Perfil> {
                 ),
                 InkWell(
                   onTap: () {
-                    print('fazer logout');
-                    //desautenticar e voltar pra tela de login
+                    googleSignIn.disconnect();
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return Login();
+                        },
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 250),
+                      ),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

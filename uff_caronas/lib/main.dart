@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uff_caronas/Services/googleAuthenticator.dart';
-import 'package:uff_caronas/login.dart';
-import 'package:uff_caronas/telas/mainScreen.dart';
-import 'package:uff_caronas/recuperar_senha/recovery_code.dart';
-import 'package:uff_caronas/register.dart';
+import 'package:uff_caronas/telas/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -35,9 +32,7 @@ class MyApp extends StatelessWidget {
         //Se tiver autenticado
         //home: const Home(),
         routes: {
-          Login.routeName: (context) => Login(),
-          Register.routeName: (context) => Register(),
-          RecoveryCode.routeName:(context) => RecoveryCode(),
+          Login.routeName: (context) => Login()
         },
       ),
     );

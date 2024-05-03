@@ -8,21 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/Services/googleAuthenticator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/images/login.png" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/image/login.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/Services/googleAuthenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/Services/googleAuthenticator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/telas/login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/recuperar_senha/new_password.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/recuperar_senha/recovery_code.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/recuperar_senha/recovery_email.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/register.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/mainScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/telas/mainScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/perfil.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/telas/perfil.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,27 +56,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Pedro2&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/tools/dart-sdk&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "Pedro",
+    "ignore.virus.scanning.warn.message": "true",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "C:/tools/dart-sdk",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\image" />
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\telas" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android\app" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android\app\src" />
