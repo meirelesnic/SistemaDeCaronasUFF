@@ -17,7 +17,6 @@ class GoogleSignProvider extends ChangeNotifier {
 
     final email = googleUser.email;
     if (!email.endsWith('@id.uff.br')) {
-      // Email não é do domínio desejado, fazer algo (por exemplo, mostrar uma mensagem de erro)
       return false;
     }
 

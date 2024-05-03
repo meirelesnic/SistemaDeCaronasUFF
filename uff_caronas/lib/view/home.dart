@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:uff_caronas/telas/caronaEmEspera.dart';
-import 'package:uff_caronas/telas/oferecerCarona.dart';
-import 'package:uff_caronas/telas/pedirCarona.dart';
+import 'package:uff_caronas/view/caronaEmEspera.dart';
+import 'package:uff_caronas/view/oferecerCarona.dart';
+import 'package:uff_caronas/view/pedirCarona.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

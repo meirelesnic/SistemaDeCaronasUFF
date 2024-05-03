@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
-import 'package:uff_caronas/JSONmodel/infoBuscaPlaces.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+
+import '../model/JSONmodel/infoBuscaPlaces.dart';
 
 class PedirCarona extends StatefulWidget {
   const PedirCarona({super.key});
@@ -48,8 +49,6 @@ class _PedirCaronaState extends State<PedirCarona> {
     }
     return "$dataCarona";
   }
-
-
 
   void updateDate(DateTime? dt){
     if(dt==null){return;}

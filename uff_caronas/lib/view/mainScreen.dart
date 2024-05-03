@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/telas/chatFeed.dart';
-import 'package:uff_caronas/telas/historico.dart';
-import 'package:uff_caronas/telas/home.dart';
-import 'package:uff_caronas/telas/perfil.dart';
+import 'package:uff_caronas/view/chatFeed.dart';
+import 'package:uff_caronas/view/historico.dart';
+import 'package:uff_caronas/view/home.dart';
+import 'package:uff_caronas/view/perfil.dart';
 
 import 'login.dart';
 

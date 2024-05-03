@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/custom_widgets/caronaCard.dart';
+import 'package:uff_caronas/view/custom_widgets/caronaCard.dart';
 
 class CaronaListBuilder extends StatefulWidget {
   const CaronaListBuilder({super.key});

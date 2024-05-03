@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/custom_widgets/chatCard.dart';
+import 'package:uff_caronas/view/custom_widgets/chatCard.dart';
 
 class ChatListBuilder extends StatefulWidget {
   const ChatListBuilder({super.key});

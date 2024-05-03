@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/custom_widgets/chatCard.dart';
-import 'package:uff_caronas/custom_widgets/chatListBuilder.dart';
+import 'package:uff_caronas/view/custom_widgets/chatCard.dart';
+import 'package:uff_caronas/view/custom_widgets/chatListBuilder.dart';
 
 class ChatFeed extends StatefulWidget {
   const ChatFeed({super.key});

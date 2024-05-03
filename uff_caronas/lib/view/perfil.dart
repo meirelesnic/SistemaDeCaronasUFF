@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/Services/googleAuthenticator.dart';
-import 'package:uff_caronas/telas/login.dart';
-import 'package:uff_caronas/telas/editarPerfil.dart';
-import 'package:uff_caronas/telas/editarVeiculo.dart';
-import 'package:uff_caronas/telas/motoristaAvaliacao.dart';
-import 'package:uff_caronas/telas/passageiroAvaliacao.dart';
+import 'package:uff_caronas/view/login.dart';
+import 'package:uff_caronas/view/editarPerfil.dart';
+import 'package:uff_caronas/view/editarVeiculo.dart';
+import 'package:uff_caronas/view/motoristaAvaliacao.dart';
+import 'package:uff_caronas/view/passageiroAvaliacao.dart';
 
-import 'mainScreen.dart';
+import '../model/Services/googleAuthenticator.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});

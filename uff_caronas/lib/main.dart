@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uff_caronas/Services/googleAuthenticator.dart';
-import 'package:uff_caronas/telas/login.dart';
+import 'package:uff_caronas/view/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'model/Services/googleAuthenticator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

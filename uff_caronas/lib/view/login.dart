@@ -1,12 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:uff_caronas/Services/googleAuthenticator.dart';
-import 'package:uff_caronas/telas/mainScreen.dart';
+import 'package:uff_caronas/view/mainScreen.dart';
+import 'package:uff_caronas/controller/AutenticaçãoController.dart';
+
+import '../model/Services/googleAuthenticator.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
               "image/login.png",
               width: 180,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 90),
             Text(
               "UFF Caronas",
               style: TextStyle(
@@ -37,11 +37,11 @@ class _LoginState extends State<Login> {
                 fontSize: 40,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 80),
             ElevatedButton.icon(
               onPressed: () async {
-                final provider = Provider.of<GoogleSignProvider>(context, listen: false);
-                if (await provider.googleLogin()) {
+                var controller = CaronasController();
+                if (await controller.googleAutenticar(context)) {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) {
