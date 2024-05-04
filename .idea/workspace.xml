@@ -8,25 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/AutenticaçãoController.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/VeiculoDAO.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Carona.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Pedido.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Usuario.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Veiculo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/image/login.png" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/image/login.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/JSONmodel/infoBuscaPlaces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/JSONmodel/infoBuscaPlaces.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/Services/googleAuthenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/Services/googleAuthenticator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/caronaEmEspera.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/caronaEmEspera.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/chatFeed.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/chatFeed.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/editarPerfil.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/editarPerfil.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/editarVeiculo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/editarVeiculo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/historico.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/historico.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/mainScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/mainScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/motoristaAvaliacao.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/motoristaAvaliacao.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/oferecerCarona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/oferecerCarona.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/passageiroAvaliacao.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/passageiroAvaliacao.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/pedirCarona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/pedirCarona.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/telas/perfil.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/perfil.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/Services/googleAuthenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/Services/googleAuthenticator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,8 +76,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\model" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\view" />
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\model" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\image" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\telas" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android\app" />

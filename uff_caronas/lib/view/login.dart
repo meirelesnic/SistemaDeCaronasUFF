@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:uff_caronas/view/mainScreen.dart';
 import 'package:uff_caronas/controller/AutenticaçãoController.dart';
-
 import '../model/Services/googleAuthenticator.dart';
 
 class Login extends StatefulWidget {
