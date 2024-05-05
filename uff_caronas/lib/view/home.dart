@@ -5,6 +5,8 @@ import 'package:uff_caronas/view/caronaEmEspera.dart';
 import 'package:uff_caronas/view/oferecerCarona.dart';
 import 'package:uff_caronas/view/pedirCarona.dart';
 
+import 'login.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -55,7 +57,7 @@ class _HomeState extends State<Home> {
                       CircleAvatar(
                         radius: screenSize.width * (39 / 360),
                         backgroundColor: Colors.blue,
-                        backgroundImage: NetworkImage('https://img.freepik.com/premium-photo/man-with-glasses-backpack-street-corner-smiling-camera-with-blurry-background_961147-49483.jpg?w=1060'),
+                        backgroundImage: NetworkImage(user!.fotoUrl),
                       ),
                       Container(
                         width: screenSize.width * (15/360),
@@ -69,7 +71,7 @@ class _HomeState extends State<Home> {
                               color: Theme.of(context).colorScheme.primary,
                             )
                           ),
-                          Text('Antônio Pedro',
+                          Text(user!.nome,
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: Theme.of(context).colorScheme.primary,
                             )

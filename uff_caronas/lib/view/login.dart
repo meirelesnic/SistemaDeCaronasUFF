@@ -2,9 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/modelos/Usuario.dart';
 import 'package:uff_caronas/view/mainScreen.dart';
 import 'package:uff_caronas/controller/AutenticaçãoController.dart';
+import 'package:uff_caronas/view/perfil.dart';
 import '../model/Services/googleAuthenticator.dart';
+
+Usuario? user;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -38,28 +43,49 @@ class _LoginState extends State<Login> {
             SizedBox(height: 80),
             ElevatedButton.icon(
               onPressed: () async {
-                var controller = CaronasController();
-                if (await controller.googleAutenticar(context)) {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return MainScreen();
-                      },
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 250),
-                    ),
-                  );
+                var autenticacaocontroller = AutenticacaoController();
+                var usuarioController = UsuarioController();
+                if (await autenticacaocontroller.googleAutenticar(context)) {
+                  var currentUser = googleSignIn.currentUser;
+                  user = Usuario(id: currentUser!.id, nome: currentUser.displayName!, email: currentUser.email, fotoUrl: currentUser.photoUrl!);
+                  if(await usuarioController.usuarioExiste(user!.id)){
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return MainScreen();
+                        },
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 250),
+                      ),
+                    );
+                  } else {
+                    usuarioController.salvarUsuario(user!.id, user!.nome, user!.email, user!.fotoUrl);
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return Perfil();
+                        },
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 250),
+                      ),
+                    );
+                  }
                 } else {
                   googleSignIn.disconnect();
                 }
               },
               icon: FaIcon(FontAwesomeIcons.google),
-              label: Text(
+              label: const Text(
                 "Sign in with Google",
                 style: TextStyle(
                   color: Colors.black,

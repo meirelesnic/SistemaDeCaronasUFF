@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modelos/Veiculo.dart';
 
@@ -13,7 +12,7 @@ class VeiculoDAO {
         random.nextInt(9999).toString().padLeft(4, '0');
   }
 
-  Future<void> salvarVeiculo(String modelo, String marca, int ano) async {
+  Future<void> salvarVeiculo(String modelo, String marca, int ano, int userId) async {
     try {
       String id = _gerarId();
 
@@ -22,6 +21,7 @@ class VeiculoDAO {
         'modelo': modelo,
         'marca': marca,
         'ano': ano,
+        'usuarioId': userId
       });
 
     } catch (e) {
@@ -42,6 +42,7 @@ class VeiculoDAO {
             modelo: data['modelo'],
             marca: data['marca'],
             ano: data['ano'],
+            usuarioId: data['usuarioId'],
           );
         } else {
           throw ('Dados do veículo são nulos');

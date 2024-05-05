@@ -3,25 +3,25 @@ class Veiculo {
    String _modelo;
    String _marca;
    int _ano;
-   //int _usuarioId;
+   int _usuarioId;
 
   Veiculo({
     required String id,
     required String modelo,
     required String marca,
     required int ano,
-    //required usuarioId,
+    required usuarioId,
   })  : _id = id,
         _modelo = modelo,
         _marca = marca,
-        _ano = ano;
-        //_usuarioId = usuarioId;
+        _ano = ano,
+        _usuarioId = usuarioId;
 
-  // int get usuarioId => _usuarioId;
-  //
-  // set usuarioId(int value) {
-  //   _usuarioId = value;
-  // }
+  int get usuarioId => _usuarioId;
+
+  set usuarioId(int value) {
+    _usuarioId = value;
+  }
 
   int get ano => _ano;
 
