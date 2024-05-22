@@ -79,51 +79,46 @@ class _HistoricoState extends State<Historico> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DropdownMenu<String>(
-                  initialSelection: selectedPapel,
-                  controller: papelController,
-                  label: const Text('Papel'),
-                  inputDecorationTheme: const InputDecorationTheme(
-                      filled: true,
-                      contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-                      fillColor: Colors.white
-                  ),
-                  onSelected: (String? s) {
-                    setState(() {
-                      selectedPapel = s;
-                      //fazer consulta
-                    });
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: 'Passageiro', label: 'Passageiro'),
-                    DropdownMenuEntry(value: 'Motorista', label: 'Motorista'),
-                  ]
-                ),
+                    initialSelection: selectedPapel,
+                    controller: papelController,
+                    label: const Text('Papel'),
+                    inputDecorationTheme: const InputDecorationTheme(
+                        filled: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 5.0),
+                        fillColor: Colors.white),
+                    onSelected: (String? s) {
+                      setState(() {
+                        selectedPapel = s;
+                        //fazer consulta
+                      });
+                    },
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(
+                          value: 'Passageiro', label: 'Passageiro'),
+                      DropdownMenuEntry(value: 'Motorista', label: 'Motorista'),
+                    ]),
                 DropdownMenu<String>(
-                  initialSelection: selectedPeriodo,
-                  controller: periodoController,
-                  label: const Text('Periodo'),
-                  inputDecorationTheme: const InputDecorationTheme(
-                      filled: true,
-                      contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-                      fillColor: Colors.white
-                  ),
-                  onSelected: (String? s) {
-                    setState(() {
-                      selectedPeriodo = s;
-                      //fazer consulta
-                    });
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: 'Atual', label: 'Atual'),
-                    DropdownMenuEntry(value: 'Passado', label: 'Passado'),
-                  ]
-                )
+                    initialSelection: selectedPeriodo,
+                    controller: periodoController,
+                    label: const Text('Periodo'),
+                    inputDecorationTheme: const InputDecorationTheme(
+                        filled: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 5.0),
+                        fillColor: Colors.white),
+                    onSelected: (String? s) {
+                      setState(() {
+                        selectedPeriodo = s;
+                        //fazer consulta
+                      });
+                    },
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(value: 'Atual', label: 'Atual'),
+                      DropdownMenuEntry(value: 'Passado', label: 'Passado'),
+                    ])
               ],
-            ),              
+            ),
           ),
-          Expanded(
-            child: CaronaListBuilder()
-          )
+          Expanded(child: CaronaListBuilder())
         ],
       ),
     );

@@ -13,7 +13,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text('editar perfil')),
+      body: SafeArea(child: Column(children: [],)),
     );
   }
 }

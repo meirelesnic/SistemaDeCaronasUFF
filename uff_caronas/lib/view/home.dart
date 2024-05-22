@@ -36,46 +36,60 @@ class _HomeState extends State<Home> {
                   ),
                   border: Border(
                     right: BorderSide(
-                      color: Theme.of(context).colorScheme.secondaryContainer, // cor da linha de contorno
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer, // cor da linha de contorno
                       width: 2.0, // largura da linha de contorno
                     ),
                     left: BorderSide(
-                      color: Theme.of(context).colorScheme.secondaryContainer, // cor da linha de contorno
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer, // cor da linha de contorno
                       width: 2.0, // largura da linha de contorno
                     ),
                     bottom: BorderSide(
-                      color: Theme.of(context).colorScheme.secondaryContainer, // cor da linha de contorno
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondaryContainer, // cor da linha de contorno
                       width: 2.0, // largura da linha de contorno
                     ),
                   ),
                 ),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: screenSize.width * (25/360)),
+                  margin: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * (25 /360)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
                         radius: screenSize.width * (39 / 360),
                         backgroundColor: Colors.blue,
-                        backgroundImage: NetworkImage(user!.fotoUrl),
+                        // backgroundImage: NetworkImage(user!.fotoUrl),
                       ),
                       Container(
-                        width: screenSize.width * (15/360),
+                        width: screenSize.width * (15 / 360),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Bem-Vindo!',
-                            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          ),
-                          Text(user!.nome,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            )
-                          )
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )),
+                          Text(
+                              user!.nome,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ))
                         ],
                       )
                     ],
@@ -86,213 +100,214 @@ class _HomeState extends State<Home> {
             //botoes Pedir oferecer
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 25),
-              child: Text('O que deseja?', 
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: screenSize.height * (18/800)
-                )
-              ),
+              child: Text('O que deseja?',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenSize.height * (18 / 800))),
             ),
             InkWell(
-              onTap: () {
-                print('Pedir');
-                Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return PedirCarona();
-                  },
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  transitionDuration: Duration(milliseconds: 250),
-                ),
-              );
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: screenSize.height * (10/800)),
-                width: screenSize.width * (313/360),
-                height: screenSize.height * (150/800),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Pedir Carona',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: screenSize.height * (18/800)
-                          ),
-                        ),
-                        Text('Sou Passageiro')
-                      ],
+                onTap: () {
+                  print('Pedir');
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return PedirCarona();
+                      },
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      transitionDuration: Duration(milliseconds: 250),
                     ),
-                    Image.asset('image/pedir.png')
-                  ],
-                )
-              )
-            ),
+                  );
+                },
+                child: Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenSize.height * (10 / 800)),
+                    width: screenSize.width * (313 / 360),
+                    height: screenSize.height * (150 / 800),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Pedir Carona',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenSize.height * (18 / 800)),
+                            ),
+                            Text('Sou Passageiro')
+                          ],
+                        ),
+                        Image.asset('image/pedir.png')
+                      ],
+                    ))),
             InkWell(
-              onTap: () {
-                print('Oferecer');
-                Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return OferecerCarona();
-                  },
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  transitionDuration: Duration(milliseconds: 250),
-                ),
-              );
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: screenSize.height * (10/800)),
-                width: screenSize.width * (313/360),
-                height: screenSize.height * (150/800),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Oferecer Carona',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: screenSize.height * (18/800)
-                          ),
-                        ),
-                        Text('Sou Motorista')
-                      ],
+                onTap: () {
+                  print('Oferecer');
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return OferecerCarona();
+                      },
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      transitionDuration: Duration(milliseconds: 250),
                     ),
-                    Image.asset('image/oferecer.png')
-                  ],
-                )
-              )
-            ),
+                  );
+                },
+                child: Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: screenSize.height * (10 / 800)),
+                    width: screenSize.width * (313 / 360),
+                    height: screenSize.height * (150 / 800),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Oferecer Carona',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenSize.height * (18 / 800)),
+                            ),
+                            Text('Sou Motorista')
+                          ],
+                        ),
+                        Image.asset('image/oferecer.png')
+                      ],
+                    ))),
             Container(
-                  height: screenSize.height * (30/800),
-                ),
-            Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenSize.width * (35/360)),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return CaronaEmEspera();
-                      },
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 250),
-                    ),
-                  );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            size: screenSize.width * (27/360),
-                          ),
-                          Container(
-                            width: screenSize.width * (10/360),
-                          ),
-                          Text('Aprovar Passageiro',
-                              style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: screenSize.height * (18/800)
-                            ),
-                          ),
-                        ],
-                      
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: screenSize.width * (20/360),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: screenSize.height * (30/800),
-                ),
-                InkWell(
-                  onTap: () {
-                    print('editar veiculo');
-                    Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return CaronaEmEspera();
-                      },
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 250),
-                    ),
-                  );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.directions_car_filled_outlined,
-                            size: screenSize.width * (27/360),
-                          ),
-                          Container(
-                            width: screenSize.width * (10/360),
-                          ),
-                          Text('Pedido Armazenado',
-                              style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: screenSize.height * (18/800)
-                            ),
-                          ),
-                        ],
-                      
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: screenSize.width * (20/360),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              height: screenSize.height * (30 / 800),
             ),
-          )        
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width * (35 / 360)),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return CaronaEmEspera();
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 250),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.person_outline,
+                              size: screenSize.width * (27 / 360),
+                            ),
+                            Container(
+                              width: screenSize.width * (10 / 360),
+                            ),
+                            Text(
+                              'Aprovar Passageiro',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: screenSize.height * (18 / 800)),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: screenSize.width * (20 / 360),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: screenSize.height * (30 / 800),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print('editar veiculo');
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return CaronaEmEspera();
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 250),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.directions_car_filled_outlined,
+                              size: screenSize.width * (27 / 360),
+                            ),
+                            Container(
+                              width: screenSize.width * (10 / 360),
+                            ),
+                            Text(
+                              'Pedido Armazenado',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: screenSize.height * (18 / 800)),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: screenSize.width * (20 / 360),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
-        ),            
+        ),
       ),
     );
   }
