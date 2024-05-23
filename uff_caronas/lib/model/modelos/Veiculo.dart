@@ -1,19 +1,22 @@
 class Veiculo {
-   String _id;
-   String _modelo;
-   String _marca;
-   int _ano;
-   int _usuarioId;
+  String _id;
+  String _modelo;
+  String _marca;
+  String _cor;
+  int _ano;
+  int _usuarioId;
 
   Veiculo({
     required String id,
     required String modelo,
     required String marca,
+    required String cor,
     required int ano,
     required usuarioId,
   })  : _id = id,
         _modelo = modelo,
         _marca = marca,
+        _cor = cor,
         _ano = ano,
         _usuarioId = usuarioId;
 
@@ -41,10 +44,15 @@ class Veiculo {
     _modelo = value;
   }
 
+  String get cor => _cor;
+
+  set cor(String value) {
+    _cor = value;
+  }
+
   String get id => _id;
 
   set id(String value) {
     _id = value;
   }
 }
-

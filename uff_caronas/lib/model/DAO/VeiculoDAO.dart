@@ -4,7 +4,7 @@ import '../modelos/Veiculo.dart';
 
 class VeiculoDAO {
   final CollectionReference _veiculosCollection =
-  FirebaseFirestore.instance.collection('veiculos');
+      FirebaseFirestore.instance.collection('veiculos');
 
   String _gerarId() {
     var random = Random();
@@ -12,7 +12,8 @@ class VeiculoDAO {
         random.nextInt(9999).toString().padLeft(4, '0');
   }
 
-  Future<void> salvarVeiculo(String modelo, String marca, int ano, int userId) async {
+  Future<void> salvarVeiculo(
+      String modelo, String marca, String cor, int ano, int userId) async {
     try {
       String id = _gerarId();
 
@@ -20,10 +21,10 @@ class VeiculoDAO {
         'id': id,
         'modelo': modelo,
         'marca': marca,
+        'cor': cor,
         'ano': ano,
         'usuarioId': userId
       });
-
     } catch (e) {
       print('Erro ao salvar veículo: $e');
     }
@@ -31,7 +32,8 @@ class VeiculoDAO {
 
   Future<Veiculo?> recuperarVeiculo(String id) async {
     try {
-      QuerySnapshot querySnapshot = await _veiculosCollection.where('id', isEqualTo: id).get();
+      QuerySnapshot querySnapshot =
+          await _veiculosCollection.where('id', isEqualTo: id).get();
 
       if (querySnapshot.docs.isNotEmpty) {
         DocumentSnapshot snapshot = querySnapshot.docs.first;
@@ -42,6 +44,7 @@ class VeiculoDAO {
             modelo: data['modelo'],
             marca: data['marca'],
             ano: data['ano'],
+            cor: data['cor'],
             usuarioId: data['usuarioId'],
           );
         } else {
@@ -55,6 +58,4 @@ class VeiculoDAO {
       return null;
     }
   }
-
-
 }

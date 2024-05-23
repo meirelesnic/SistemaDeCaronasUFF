@@ -5,7 +5,7 @@ import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
 import 'package:uff_caronas/view/login.dart';
 import 'package:uff_caronas/view/editarPerfil.dart';
-import 'package:uff_caronas/view/editarVeiculo.dart';
+import 'package:uff_caronas/view/meusVeiculos.dart';
 import 'package:uff_caronas/view/motoristaAvaliacao.dart';
 import 'package:uff_caronas/view/passageiroAvaliacao.dart';
 
@@ -21,7 +21,8 @@ class Perfil extends StatefulWidget {
 class _PerfilState extends State<Perfil> {
   bool isEditingProfile = false;
   TextEditingController _userNameController =
-      TextEditingController(text: user!.nome); //Trocar por user
+      TextEditingController(text: user!.nome);
+  String nomeAntigo = user!.nome;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +96,16 @@ class _PerfilState extends State<Perfil> {
                                         textAlign: TextAlign.center,
                                       )),
                                   const SizedBox(width: 5),
-                                  GestureDetector(
+                                  InkWell(
+                                      child: const Icon(Icons.cancel_outlined),
+                                      onTap: () {
+                                        setState(() {
+                                          isEditingProfile = !isEditingProfile;
+                                          _userNameController.text = nomeAntigo;
+                                        });
+                                      }),
+                                  const SizedBox(width: 5),
+                                  InkWell(
                                       child: const Icon(Icons.check_sharp),
                                       onTap: () {
                                         setState(() {
@@ -270,62 +280,62 @@ class _PerfilState extends State<Perfil> {
                 EdgeInsets.symmetric(horizontal: screenSize.width * (35 / 360)),
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {
-                    print('editar usuario');
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return EditarPerfil();
-                        },
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 250),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            size: screenSize.width * (27 / 360),
-                          ),
-                          Container(
-                            width: screenSize.width * (10 / 360),
-                          ),
-                          Text(
-                            'Editar dados de perfil',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: screenSize.height * (18 / 800)),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: screenSize.width * (20 / 360),
-                      ),
-                    ],
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     print('editar usuario');
+                //     Navigator.of(context).push(
+                //       PageRouteBuilder(
+                //         pageBuilder: (context, animation, secondaryAnimation) {
+                //           return EditarPerfil();
+                //         },
+                //         transitionsBuilder:
+                //             (context, animation, secondaryAnimation, child) {
+                //           return FadeTransition(
+                //             opacity: animation,
+                //             child: child,
+                //           );
+                //         },
+                //         transitionDuration: Duration(milliseconds: 250),
+                //       ),
+                //     );
+                //   },
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Row(
+                //         children: [
+                //           Icon(
+                //             Icons.person_outline,
+                //             size: screenSize.width * (27 / 360),
+                //           ),
+                //           Container(
+                //             width: screenSize.width * (10 / 360),
+                //           ),
+                //           Text(
+                //             'Editar dados de perfil',
+                //             style: TextStyle(
+                //                 fontWeight: FontWeight.w800,
+                //                 fontSize: screenSize.height * (18 / 800)),
+                //           ),
+                //         ],
+                //       ),
+                //       Icon(
+                //         Icons.arrow_forward_ios_rounded,
+                //         size: screenSize.width * (20 / 360),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Container(
                   height: screenSize.height * (30 / 800),
                 ),
                 InkWell(
                   onTap: () {
-                    print('editar veiculo');
+                    print('Meus Veículos');
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) {
-                          return EditarVeiculo();
+                          return MeusVeiculos();
                         },
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
@@ -351,7 +361,7 @@ class _PerfilState extends State<Perfil> {
                             width: screenSize.width * (10 / 360),
                           ),
                           Text(
-                            'Editar dados do veículo',
+                            'Meus Veículos',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
                                 fontSize: screenSize.height * (18 / 800)),

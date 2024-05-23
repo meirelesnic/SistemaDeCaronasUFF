@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                       CircleAvatar(
                         radius: screenSize.width * (39 / 360),
                         backgroundColor: Colors.blue,
-                        // backgroundImage: NetworkImage(user!.fotoUrl),
+                        backgroundImage: NetworkImage(user!.fotoUrl),
                       ),
                       Container(
                         width: screenSize.width * (15 / 360),
