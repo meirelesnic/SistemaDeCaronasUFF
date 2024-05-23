@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/view/editarVeiculo.dart';
+import '../../model/modelos/Veiculo.dart';
 
 class VeiculoCard extends StatefulWidget {
-  const VeiculoCard({super.key});
+  final Veiculo veiculo;
+
+  const VeiculoCard({Key? key, required this.veiculo}) : super(key: key);
 
   @override
   State<VeiculoCard> createState() => _VeiculoCardState();
 }
 
 class _VeiculoCardState extends State<VeiculoCard> {
-  String carColor = "preto"; 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -31,21 +33,20 @@ class _VeiculoCardState extends State<VeiculoCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //
                   Image.asset(
-                    "image/car_icons/carro_$carColor.png",
+                    "image/car_icons/carro_${widget.veiculo.cor.toLowerCase()}.png",
                     width: screenSize.width * (1 / 7),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Marca: Chevrolet",
+                      Text("Marca: ${widget.veiculo.marca}",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(
                         height: screenSize.height * (1 / 60),
                       ),
-                      Text("Modelo: Prisma",
+                      Text("Modelo: ${widget.veiculo.modelo}",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
@@ -55,23 +56,24 @@ class _VeiculoCardState extends State<VeiculoCard> {
                 width: screenSize.height * (2 / 60),
               ),
               Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "LTZ1435",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: screenSize.height * 1 / 40),
-                    ),
-                    Text("Cor: Branco",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Placa: ${widget.veiculo.placa}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenSize.height * 1 / 40),
+                  ),
+                  Text("Cor: ${widget.veiculo.cor}",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ],
+              ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) {
-                        return EditarVeiculo();
+                        return EditarVeiculo(veiculo: widget.veiculo);
                       },
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {

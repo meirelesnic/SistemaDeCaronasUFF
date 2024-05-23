@@ -4,7 +4,8 @@ class Veiculo {
   String _marca;
   String _cor;
   int _ano;
-  int _usuarioId;
+  String _usuarioId;
+  String _placa;
 
   Veiculo({
     required String id,
@@ -12,17 +13,19 @@ class Veiculo {
     required String marca,
     required String cor,
     required int ano,
-    required usuarioId,
+    required String usuarioId,
+    required String placa,
   })  : _id = id,
         _modelo = modelo,
         _marca = marca,
         _cor = cor,
         _ano = ano,
-        _usuarioId = usuarioId;
+        _usuarioId = usuarioId,
+        _placa = placa;
 
-  int get usuarioId => _usuarioId;
+  String get usuarioId => _usuarioId;
 
-  set usuarioId(int value) {
+  set usuarioId(String value) {
     _usuarioId = value;
   }
 
@@ -54,5 +57,11 @@ class Veiculo {
 
   set id(String value) {
     _id = value;
+  }
+
+  String get placa => _placa;
+
+  set placa(String value) {
+    _placa = value;
   }
 }

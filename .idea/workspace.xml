@@ -8,19 +8,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/UsuarioController.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/UsuarioDAO.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/AutenticaçãoController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/AutenticaçãoController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/UsuarioController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/UsuarioController.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/VeiculoDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/VeiculoDAO.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Usuario.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Usuario.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/Services/googleAuthenticator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/Services/googleAuthenticator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Veiculo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Veiculo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/veiculoCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/veiculoCard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/veiculoListBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/veiculoListBuilder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/editarVeiculo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/editarVeiculo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/meusVeiculos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/meusVeiculos.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/perfil.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/perfil.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,4 +1,5 @@
 import 'package:uff_caronas/model/DAO/UsuarioDAO.dart';
+import 'package:uff_caronas/model/modelos/Usuario.dart';
 
 class UsuarioController {
   UsuarioDAO? usuarioDAO;
@@ -17,5 +18,9 @@ class UsuarioController {
 
   Future<bool> usuarioExiste(String id) {
     return usuarioDAO!.usuarioExiste(id);
+  }
+
+  Future<Usuario?> recuperarUsuario(String id){
+    return usuarioDAO!.recuperarUsuario(id);
   }
 }

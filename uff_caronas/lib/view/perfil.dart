@@ -21,7 +21,7 @@ class Perfil extends StatefulWidget {
 class _PerfilState extends State<Perfil> {
   bool isEditingProfile = false;
   TextEditingController _userNameController =
-      TextEditingController(text: user!.nome);
+  TextEditingController(text: user!.nome);
   String nomeAntigo = user!.nome;
 
   @override
@@ -73,71 +73,72 @@ class _PerfilState extends State<Perfil> {
                         child: CircleAvatar(
                           radius: screenSize.width * (61 / 360),
                           backgroundColor: Colors.blue,
-                          // backgroundImage: NetworkImage(user!.fotoUrl),
+                          backgroundImage: NetworkImage(user!.fotoUrl),
                         ),
                       ),
                       isEditingProfile
                           ? // condicional para editar perfil
-                          // Editando
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                  SizedBox(
-                                      width: screenSize.width * (0.5),
-                                      child: TextField(
-                                        controller: _userNameController,
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize:
-                                                screenSize.height * (25 / 800)),
-                                        textAlign: TextAlign.center,
-                                      )),
-                                  const SizedBox(width: 5),
-                                  InkWell(
-                                      child: const Icon(Icons.cancel_outlined),
-                                      onTap: () {
-                                        setState(() {
-                                          isEditingProfile = !isEditingProfile;
-                                          _userNameController.text = nomeAntigo;
-                                        });
-                                      }),
-                                  const SizedBox(width: 5),
-                                  InkWell(
-                                      child: const Icon(Icons.check_sharp),
-                                      onTap: () {
-                                        setState(() {
-                                          isEditingProfile = !isEditingProfile;
-                                          UsuarioController().editarUsuario(
-                                              user!.id,
-                                              _userNameController.text);
-                                        });
-                                      })
-                                ])
-                          // Nâo está editando
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  _userNameController.text,
+                      // Editando
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: screenSize.width * (0.5),
+                                child: TextField(
+                                  controller: _userNameController,
                                   style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: screenSize.height * (25 / 800)),
-                                ),
-                                const SizedBox(width: 5),
-                                GestureDetector(
-                                    child: const Icon(Icons.edit_outlined),
-                                    onTap: () {
-                                      setState(() {
-                                        isEditingProfile = !isEditingProfile;
-                                      });
-                                    })
-                              ],
-                            ),
+                                      fontSize:
+                                      screenSize.height * (25 / 800)),
+                                  textAlign: TextAlign.center,
+                                )),
+                            const SizedBox(width: 5),
+                            InkWell(
+                                child: const Icon(Icons.cancel_outlined),
+                                onTap: () {
+                                  setState(() {
+                                    isEditingProfile = !isEditingProfile;
+                                    _userNameController.text = nomeAntigo;
+                                  });
+                                }),
+                            const SizedBox(width: 5),
+                            InkWell(
+                                child: const Icon(Icons.check_sharp),
+                                onTap: () {
+                                  setState(() {
+                                    isEditingProfile = !isEditingProfile;
+                                    UsuarioController().editarUsuario(
+                                        user!.id,
+                                        _userNameController.text);
+                                    user?.nome = _userNameController.text;
+                                  });
+                                })
+                          ])
+                      // Não está editando
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            _userNameController.text,
+                            style: TextStyle(
+                                color:
+                                Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenSize.height * (25 / 800)),
+                          ),
+                          const SizedBox(width: 5),
+                          GestureDetector(
+                              child: const Icon(Icons.edit_outlined),
+                              onTap: () {
+                                setState(() {
+                                  isEditingProfile = !isEditingProfile;
+                                });
+                              })
+                        ],
+                      ),
                       Text(
                         user!.email,
                         style: TextStyle(
@@ -277,55 +278,9 @@ class _PerfilState extends State<Perfil> {
           //editar perfil e veiculo, logout
           Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: screenSize.width * (35 / 360)),
+            EdgeInsets.symmetric(horizontal: screenSize.width * (35 / 360)),
             child: Column(
               children: [
-                // InkWell(
-                //   onTap: () {
-                //     print('editar usuario');
-                //     Navigator.of(context).push(
-                //       PageRouteBuilder(
-                //         pageBuilder: (context, animation, secondaryAnimation) {
-                //           return EditarPerfil();
-                //         },
-                //         transitionsBuilder:
-                //             (context, animation, secondaryAnimation, child) {
-                //           return FadeTransition(
-                //             opacity: animation,
-                //             child: child,
-                //           );
-                //         },
-                //         transitionDuration: Duration(milliseconds: 250),
-                //       ),
-                //     );
-                //   },
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Icon(
-                //             Icons.person_outline,
-                //             size: screenSize.width * (27 / 360),
-                //           ),
-                //           Container(
-                //             width: screenSize.width * (10 / 360),
-                //           ),
-                //           Text(
-                //             'Editar dados de perfil',
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.w800,
-                //                 fontSize: screenSize.height * (18 / 800)),
-                //           ),
-                //         ],
-                //       ),
-                //       Icon(
-                //         Icons.arrow_forward_ios_rounded,
-                //         size: screenSize.width * (20 / 360),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 Container(
                   height: screenSize.height * (30 / 800),
                 ),

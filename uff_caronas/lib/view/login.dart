@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/VeiculoDAO.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
+import 'package:uff_caronas/model/modelos/Veiculo.dart';
 import 'package:uff_caronas/view/mainScreen.dart';
 import 'package:uff_caronas/controller/AutenticaçãoController.dart';
 import 'package:uff_caronas/view/perfil.dart';
@@ -49,6 +51,8 @@ class _LoginState extends State<Login> {
                   var currentUser = googleSignIn.currentUser;
                   user = Usuario(id: currentUser!.id, nome: currentUser.displayName!, email: currentUser.email, fotoUrl: currentUser.photoUrl!);
                   if(await usuarioController.usuarioExiste(user!.id)){
+                    var usuarioBanco = await usuarioController.recuperarUsuario(user!.id);
+                    user?.nome = usuarioBanco!.nome;
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) {

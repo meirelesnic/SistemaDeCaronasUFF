@@ -19,9 +19,9 @@ class GoogleSignProvider extends ChangeNotifier {
     if(googleUser == null) return false;
 
     final email = googleUser.email;
-    if (!email.endsWith('@id.uff.br')) {
-      return false;
-    }
+    // if (!email.endsWith('@id.uff.br')) {
+    //   return false;
+    // }
 
     _user = googleUser;
 
