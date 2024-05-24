@@ -2,11 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uff_caronas/controller/CaronaController.dart';
+import 'package:uff_caronas/model/DAO/CaronaDAO.dart';
 import 'login.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:uff_caronas/model/DAO/VeiculoDAO.dart';
 import 'package:uff_caronas/model/JSONmodel/infoBuscaPlaces.dart';
 import 'package:uff_caronas/model/modelos/Veiculo.dart';
+
+import 'mainScreen.dart';
 
 class OferecerCarona extends StatefulWidget {
   const OferecerCarona({super.key});
@@ -513,18 +517,33 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                   child: FilledButton(
                     onPressed: () {
                       if (_isFormComplete()) {
-                        // Colocar carona no banco DAO CARONA
-                        //DAOadicionaCarona(origemCoord,destinoCoord,dataSelecionada,horaSelecionada,origemLocal.text,destinoLocal.text,autoAceitar,veiculoID,quantAcentos);
-                        
-                        //direcionar pra tela HOME
+                        CaronaController caronaController = CaronaController();
+
+                        caronaController.salvarCarona(
+                          origemCoord,
+                          destinoCoord,
+                          origemLocal.text,
+                          destinoLocal.text,
+                          dataCarona,
+                          horaCarona,
+                          autoaceitar,
+                          selectedVeiculo!.id,
+                          quantAcentos,
+                          user!.id,
+                          [],
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        );
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Carona Registrada'),
                             duration: Duration(seconds: 5),
-                            backgroundColor: Theme.of(context).colorScheme.primary
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                           ),
                         );
-                        Navigator.pop(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
