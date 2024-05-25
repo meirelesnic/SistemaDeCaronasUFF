@@ -48,6 +48,7 @@ class MessageBubble extends StatelessWidget {
             Text(
               username,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
                     color: isSender
                         ? Theme.of(context).colorScheme.background
                         : Theme.of(context).colorScheme.onPrimaryContainer,
@@ -56,7 +57,7 @@ class MessageBubble extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               message,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: isSender
                         ? Theme.of(context).colorScheme.background
                         : Theme.of(context).colorScheme.onPrimaryContainer,
