@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
                 ),
                 child: Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: screenSize.width * (25 /360)),
+                      horizontal: screenSize.width * (25 / 360)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -81,8 +81,7 @@ class _HomeState extends State<Home> {
                                     color:
                                         Theme.of(context).colorScheme.primary,
                                   )),
-                          Text(
-                              user!.nome,
+                          Text(user!.nome,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium

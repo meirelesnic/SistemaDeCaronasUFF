@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/view/cadastrarVeiculo.dart';
 import 'package:uff_caronas/view/custom_widgets/veiculoCard.dart';
 import '../model/DAO/VeiculoDAO.dart';
 import '../model/modelos/Veiculo.dart';
+import 'adicionarVeiculo.dart';
 import 'login.dart';
 
 class MeusVeiculos extends StatefulWidget {
@@ -32,7 +34,21 @@ class _MeusVeiculosState extends State<MeusVeiculos> {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return AdicionarVeiculo();
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            transitionDuration: Duration(milliseconds: 250),
+          ),
+        ),
         tooltip: 'Add',
         child: Icon(
           Icons.add,
