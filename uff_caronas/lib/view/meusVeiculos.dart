@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/view/cadastrarVeiculo.dart';
 import 'package:uff_caronas/view/custom_widgets/veiculoCard.dart';
 import '../model/DAO/VeiculoDAO.dart';
 import '../model/modelos/Veiculo.dart';
