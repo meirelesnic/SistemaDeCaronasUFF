@@ -20,4 +20,8 @@ class VeiculoController {
   Future<List<Veiculo>>? veiculosPorUsuarioId(String id){
     return veiculoDAO?.recuperarVeiculosPorUsuario(id);
   }
+
+  Future<Veiculo?>? recuperarVeiculo(String id){
+    return veiculoDAO?.recuperarVeiculo(id);
+  }
 }

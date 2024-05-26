@@ -8,11 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Carona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Carona.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/oferecerCarona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/oferecerCarona.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaCard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaListBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaListBuilder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/historico.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/historico.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +57,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Pedro",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "last_opened_file_path": "C:/tools/dart-sdk",

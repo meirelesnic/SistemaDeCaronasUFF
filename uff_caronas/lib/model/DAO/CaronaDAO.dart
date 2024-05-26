@@ -45,53 +45,9 @@ class CaronaDAO {
     }
   }
 
-  Future<Carona?> recuperarCarona(String id) async {
+  Future<List<Carona>?> recuperarCaronasComoPassageiro(String idPassageiro) async {
     try {
-      QuerySnapshot querySnapshot = await _caronasCollection.where('id', isEqualTo: id).get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        DocumentSnapshot snapshot = querySnapshot.docs.first;
-        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-
-        if (data != null) {
-          return Carona(
-            id: data['id'],
-            origem: List<double>.from(data['origem']),
-            dest: List<double>.from(data['dest']),
-            origemLocal: data['origemLocal'],
-            origemDestino: data['origemDestino'],
-            data: data['data'],
-            hora: data['hora'],
-            autoAceitar: data['autoAceitar'],
-            veiculoId: data['veiculoId'],
-            vagas: data['vagas'],
-            motoristaId: data['motoristaId'],
-            passageirosIds: data['passageirosIds'] != null ? List<String>.from(data['passageirosIds']) : null,
-          );
-        } else {
-          throw ('Dados da carona são nulos');
-        }
-      } else {
-        throw ('Carona não encontrada');
-      }
-    } catch (e) {
-      print('Erro ao recuperar carona: $e');
-      return null;
-    }
-  }
-
-  Future<void> editarCarona(String id, List<double> novaOrigem, List<double> novoDest) async {
-    try {
-      var querySnapshot = await _caronasCollection.where('id', isEqualTo: id).get();
-      await _caronasCollection.doc(querySnapshot.docs.first.id).update({'origem': novaOrigem, 'dest': novoDest});
-    } catch (e) {
-      print('Erro ao atualizar a carona: $e');
-    }
-  }
-
-  Future<List<Carona>?>? recuperarCaronasPorUsuario(String idUsuario) async {
-    try {
-      QuerySnapshot querySnapshot = await _caronasCollection.where('motoristaId', isEqualTo: idUsuario).get();
+      QuerySnapshot querySnapshot = await _caronasCollection.where('passageirosIds', arrayContains: idPassageiro).get();
 
       List<Carona> caronas = [];
       for (DocumentSnapshot snapshot in querySnapshot.docs) {
@@ -118,9 +74,43 @@ class CaronaDAO {
 
       return caronas;
     } catch (e) {
-      print('Erro ao recuperar caronas do usuário: $e');
+      print('Erro ao recuperar caronas como passageiro: $e');
       return null;
     }
   }
 
+  Future<List<Carona>?> recuperarCaronasComoMotorista(String idMotorista) async {
+    try {
+      QuerySnapshot querySnapshot = await _caronasCollection.where('motoristaId', isEqualTo: idMotorista).get();
+
+      List<Carona> caronas = [];
+      for (DocumentSnapshot snapshot in querySnapshot.docs) {
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+        if (data != null) {
+          Carona carona = Carona(
+            id: data['id'],
+            origem: List<double>.from(data['origem']),
+            dest: List<double>.from(data['dest']),
+            origemLocal: data['origemLocal'],
+            origemDestino: data['origemDestino'],
+            data: data['data'],
+            hora: data['hora'],
+            autoAceitar: data['autoAceitar'],
+            veiculoId: data['veiculoId'],
+            vagas: data['vagas'],
+            motoristaId: data['motoristaId'],
+            passageirosIds: data['passageirosIds'] != null ? List<String>.from(data['passageirosIds']) : null,
+          );
+          caronas.add(carona);
+        }
+      }
+
+      return caronas;
+    } catch (e) {
+      print('Erro ao recuperar caronas como motorista: $e');
+      return null;
+    }
+  }
 }
+
