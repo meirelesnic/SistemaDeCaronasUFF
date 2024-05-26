@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uff_caronas/view/custom_widgets/caronaCard.dart';
+import '../../model/modelos/Carona.dart';
+import 'caronaCard.dart';
 
 class CaronaListBuilder extends StatefulWidget {
-  const CaronaListBuilder({super.key});
+  final List<Carona> caronas;
+
+  const CaronaListBuilder({required this.caronas, Key? key}) : super(key: key);
 
   @override
   State<CaronaListBuilder> createState() => _CaronaListBuilderState();
@@ -11,15 +14,19 @@ class CaronaListBuilder extends StatefulWidget {
 class _CaronaListBuilderState extends State<CaronaListBuilder> {
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size; 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenSize.width * (12 / 360)),
-      child: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index){
-          return CaronaCard();
-        }
-      ),
+    return ListView.builder(
+      itemCount: widget.caronas.length,
+      itemBuilder: (context, index) {
+        return CaronaCard(carona: widget.caronas[index]);
+      },
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant CaronaListBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.caronas != widget.caronas) {
+      setState(() {});
+    }
   }
 }

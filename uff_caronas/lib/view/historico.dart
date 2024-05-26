@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/view/custom_widgets/caronaCard.dart';
 import 'package:uff_caronas/view/custom_widgets/caronaListBuilder.dart';
+import '../../model/modelos/Carona.dart';
+import '../model/DAO/CaronaDAO.dart';
+import 'login.dart';
 
 class Historico extends StatefulWidget {
   const Historico({super.key});
@@ -14,6 +17,23 @@ class _HistoricoState extends State<Historico> {
   final TextEditingController papelController = TextEditingController();
   String? selectedPeriodo = 'Atual';
   String? selectedPapel = 'Passageiro';
+  List<Carona> caronas = [];
+  final CaronaDAO _caronaDAO = CaronaDAO();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCaronas();
+  }
+
+  Future<void> _fetchCaronas() async {
+    if (selectedPapel == 'Passageiro') {
+      caronas = await _caronaDAO.recuperarCaronasComoPassageiro(user!.id) ?? [];
+    } else if (selectedPapel == 'Motorista') {
+      caronas = await _caronaDAO.recuperarCaronasComoMotorista(user!.id) ?? [];
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +109,7 @@ class _HistoricoState extends State<Historico> {
                     onSelected: (String? s) {
                       setState(() {
                         selectedPapel = s;
-                        //fazer consulta
+                        _fetchCaronas(); // atualizar caronas
                       });
                     },
                     dropdownMenuEntries: const [
@@ -108,7 +128,7 @@ class _HistoricoState extends State<Historico> {
                     onSelected: (String? s) {
                       setState(() {
                         selectedPeriodo = s;
-                        //fazer consulta
+                        //fazer consulta se necessário
                       });
                     },
                     dropdownMenuEntries: const [
@@ -118,7 +138,7 @@ class _HistoricoState extends State<Historico> {
               ],
             ),
           ),
-          Expanded(child: CaronaListBuilder())
+          Expanded(child: CaronaListBuilder(caronas: caronas))
         ],
       ),
     );
