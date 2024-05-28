@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
-import 'package:uff_caronas/model/modelos/Usuario.dart';
-import '../../model/modelos/Carona.dart';
+import 'package:uff_caronas/model/modelos/Carona.dart';
+import '../../controller/VeiculoController.dart';
+
+
+import '../../model/modelos/Usuario.dart';
+import '../../model/modelos/Veiculo.dart';
 
 class CaronaCard extends StatefulWidget {
   final Carona carona;
 
-  const CaronaCard({Key? key, required this.carona}) : super(key: key);
+  const CaronaCard({super.key, required this.carona});
 
   @override
   State<CaronaCard> createState() => _CaronaCardState();
@@ -14,34 +19,30 @@ class CaronaCard extends StatefulWidget {
 
 class _CaronaCardState extends State<CaronaCard> {
   int widthScale = 500;
-  Usuario? motorista;
-  UsuarioController usuarioController = UsuarioController();
-
-  @override
-  void initState() {
-    super.initState();
-    _loadMotorista();
-  }
-
-  @override
-  void didUpdateWidget(covariant CaronaCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.carona != oldWidget.carona) {
-      _loadMotorista();
-    }
-  }
-
-  Future<void> _loadMotorista() async {
-    Usuario? usuario = await usuarioController.recuperarUsuario(widget.carona.motoristaId);
-    setState(() {
-      motorista = usuario;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    return FutureBuilder<List<dynamic>>(
+      future: Future.wait([
+        UsuarioController().recuperarUsuario(widget.carona.motoristaId),
+        VeiculoController().recuperarVeiculoDoc(widget.carona.veiculoId) ?? Future.value(null)
+      ]),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(width: 15); // Mostra um indicador de progresso enquanto os dados estão sendo carregados
+        } else if (snapshot.hasError) {
+          return Text('Erro: ${snapshot.error}'); // Exibe uma mensagem de erro se houver algum erro
+        } else {
+          Usuario? motorista = snapshot.data?[0] as Usuario?;
+          Veiculo? veiculo = snapshot.data?[1] as Veiculo?;
+          return _buildCaronaCard(context, motorista, veiculo); // Constrói o widget do CaronaCard com os dados do motorista e veículo
+        }
+      },
+    );
+  }
 
+  Widget _buildCaronaCard(BuildContext context, Usuario? motorista, Veiculo? veiculo) {
+    final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: SizedBox(
@@ -55,12 +56,17 @@ class _CaronaCardState extends State<CaronaCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(//Avatar, nome motorista, estrelas
+              Row(
                 children: [
                   CircleAvatar(
                     radius: screenSize.width * (25 / 360),
                     backgroundColor: Colors.blue,
-                    backgroundImage: NetworkImage(motorista!.fotoUrl),
+                    backgroundImage: motorista?.fotoUrl != null
+                        ? NetworkImage(motorista!.fotoUrl!)
+                        : null,
+                    child: motorista?.fotoUrl == null
+                        ? const Icon(Icons.person, size: 30)
+                        : null,
                   ),
                   Container(width: screenSize.width * (12 / widthScale)),
                   Column(
@@ -68,7 +74,7 @@ class _CaronaCardState extends State<CaronaCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        motorista!.nome,
+                        motorista?.nome ?? '',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: screenSize.height * (20 / 800),
@@ -99,7 +105,6 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
-              //origem
               Row(
                 children: [
                   Padding(
@@ -118,7 +123,6 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
-              //destino
               Row(
                 children: [
                   Padding(
@@ -137,7 +141,6 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
-              //data
               Row(
                 children: [
                   Padding(
@@ -156,7 +159,6 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
-              // veiculo e passageiros
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -170,7 +172,7 @@ class _CaronaCardState extends State<CaronaCard> {
                         ),
                       ),
                       Text(
-                        widget.carona.veiculoId,
+                        veiculo != null ? '${veiculo.marca} ${veiculo.modelo}' : 'Veículo desconhecido',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: screenSize.height * (14 / 800),
@@ -188,7 +190,7 @@ class _CaronaCardState extends State<CaronaCard> {
                         ),
                       ),
                       Text(
-                        '${widget.carona.passageirosIds?.length} passageiros',
+                        '${widget.carona.vagas} Vagas',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: screenSize.height * (14 / 800),
@@ -203,13 +205,13 @@ class _CaronaCardState extends State<CaronaCard> {
                 children: [
                   FilledButton(
                     onPressed: () {
-                      //Tela detalhes, passando ID da carona
+                      // Tela detalhes, passando ID da carona
                     },
                     child: Text('Detalhes'),
                   ),
                   FilledButton(
                     onPressed: () {
-                      //Tela mensagem, passando ID do chat
+                      // Tela mensagem, passando ID do chat
                     },
                     child: Text('Chat'),
                   ),

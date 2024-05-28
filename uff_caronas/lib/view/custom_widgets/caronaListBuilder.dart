@@ -14,11 +14,15 @@ class CaronaListBuilder extends StatefulWidget {
 class _CaronaListBuilderState extends State<CaronaListBuilder> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.caronas.length,
-      itemBuilder: (context, index) {
-        return CaronaCard(carona: widget.caronas[index]);
-      },
+    final screenSize = MediaQuery.of(context).size; 
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenSize.width * (12 / 360)),
+      child: ListView.builder(
+        itemCount: widget.caronas.length,
+        itemBuilder: (context, index){
+          return CaronaCard(carona: widget.caronas[index]);
+        }
+      ),
     );
   }
 

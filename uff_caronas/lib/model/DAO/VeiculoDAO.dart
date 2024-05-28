@@ -30,6 +30,33 @@ class VeiculoDAO {
     }
   }
 
+    Future<Veiculo?> recuperarVeiculoDoc(String id) async {
+    try {
+      DocumentSnapshot snapshot = await _veiculosCollection.doc(id).get();
+      if (snapshot.exists) {
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+        if (data != null) {
+          return Veiculo(
+            id: snapshot.id,
+            modelo: data['modelo'],
+            marca: data['marca'],
+            ano: data['ano'],
+            cor: data['cor'],
+            usuarioId: data['usuarioId'],
+            placa: data['placa'],
+          );
+        } else {
+          throw ('Dados do veículo são nulos');
+        }
+      } else {
+        throw ('Veículo não encontrado');
+      }
+    } catch (e) {
+      print('Erro ao recuperar veículo: $e');
+      return null;
+    }
+  }
+
   Future<Veiculo?> recuperarVeiculo(String id) async {
     try {
       QuerySnapshot querySnapshot =
