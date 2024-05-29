@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+import 'package:uff_caronas/view/buscaCarona.dart';
 
 import '../model/JSONmodel/infoBuscaPlaces.dart';
 
@@ -29,6 +30,9 @@ class _PedirCaronaState extends State<PedirCarona> {
  
   bool dateVazio = true;
   bool horaVazio = true;
+
+  bool origem = false;
+  bool destino = false;
 
   String dataCarona = '';
   String horaCarona = '';
@@ -170,6 +174,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                   onPressed: () {
                                     origemLocal.clear();
                                     origemCoord = [0,0];
+                                    origem = false;
                                     enderecos.clear();
                                     setState(() {
                                       
@@ -187,6 +192,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                 }else{
                                   origemLocal.clear();
                                   origemCoord = [0,0];
+                                  origem = false;
                                   enderecos.clear();
                                   setState(() {
                                     
@@ -213,6 +219,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                           LatLong coord = pickedData.latLong;
                                           origemCoord[0] = coord.latitude;
                                           origemCoord[1] = coord.longitude;
+                                          origem = true;
                                           Navigator.of(context).pop();
                                           setState(() {
                                             
@@ -256,7 +263,8 @@ class _PedirCaronaState extends State<PedirCarona> {
                                   icon: Icon(Icons.clear),
                                   onPressed: () {
                                     destinoLocal.clear();
-                                    destinoCoord = [0,0]; 
+                                    destinoCoord = [0,0];
+                                    destino = false;
                                     enderecos.clear();
                                     setState(() {
                                       
@@ -274,6 +282,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                 }else{
                                   destinoLocal.clear();
                                   destinoCoord = [0,0]; 
+                                  destino = false;
                                   enderecos.clear();
                                   setState(() {
                                     
@@ -300,6 +309,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                           LatLong coord = pickedData.latLong;
                                           destinoCoord[0] = coord.latitude;
                                           destinoCoord[1] = coord.longitude;
+                                          destino = true;
                                           Navigator.of(context).pop();
                                           setState(() {
                                             
@@ -385,7 +395,34 @@ class _PedirCaronaState extends State<PedirCarona> {
                     height: screenSize.height * (45/800),
                     child: FilledButton(
                       onPressed: () {
-                        //buscar caronas
+                        if (origem && destino) {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) {
+                                return BuscaCarona(
+                                  origemCoord: origemCoord,
+                                  destinoCoord: destinoCoord,
+                                  dataCarona: dataCarona,
+                                );
+                              },
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 250),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Por favor, selecione os locais'),
+                              duration: Duration(seconds: 4),
+                              backgroundColor: Theme.of(context).colorScheme.error,
+                            ),
+                          );
+                        }
                       },
                       child: Text('Buscar Caronas'),
                     ),
@@ -416,6 +453,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                             enderecos.clear();
                             setState(() {
                               origemCoord = e.geometry!.coordinates!;
+                              origem = true;
                             });
                           }
                           else{
@@ -423,7 +461,8 @@ class _PedirCaronaState extends State<PedirCarona> {
                             //destinoFocus.dispose();
                             enderecos.clear();
                             setState(() {
-                              destinoCoord = e.geometry!.coordinates!;      
+                              destinoCoord = e.geometry!.coordinates!;   
+                              destino = true;   
                             });
                           }
                         },
