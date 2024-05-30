@@ -1,4 +1,5 @@
 import '../model/DAO/CaronaDAO.dart';
+import '../model/modelos/Carona.dart';
 
 class CaronaController {
   CaronaDAO? caronaDAO;
@@ -22,5 +23,7 @@ class CaronaController {
       ) {
     caronaDAO?.salvarCarona(origem, dest, origemLocal, origemDestino, data, hora, autoAceitar, veiculoId, vagas, motoristaId, passageirosIds);
   }
+
+  
 
 }

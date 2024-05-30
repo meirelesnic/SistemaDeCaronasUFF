@@ -112,5 +112,41 @@ class CaronaDAO {
       return null;
     }
   }
+
+  Future<List<Carona>> buscarCaronasPorDataEVagas(String data) async {
+    try {
+      QuerySnapshot querySnapshot = await _caronasCollection
+          .where('data', isEqualTo: data)
+          .where('vagas', isGreaterThan: 0)
+          .orderBy('data')
+          .orderBy('hora')
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.map((doc) {
+          Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+          return Carona(
+            id: doc.id,
+            origem: List<double>.from(data!['origem']),
+            dest: List<double>.from(data['dest']),
+            origemLocal: data['origemLocal'],
+            origemDestino: data['origemDestino'],
+            data: data['data'],
+            hora: data['hora'],
+            autoAceitar: data['autoAceitar'],
+            veiculoId: data['veiculoId'],
+            vagas: data['vagas'],
+            motoristaId: data['motoristaId'],
+            passageirosIds: data['passageirosIds'] != null ? List<String>.from(data['passageirosIds']) : [],
+          );
+        }).toList();
+      } else {
+        throw ('Nenhuma carona encontrada para esta data');
+      }
+    } catch (e) {
+      print('Erro ao buscar caronas por data e vagas: $e');
+      return [];
+    }
+  }
 }
 
