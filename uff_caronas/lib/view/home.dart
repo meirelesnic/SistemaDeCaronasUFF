@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:uff_caronas/view/caronaEmEspera.dart';
 import 'package:uff_caronas/view/oferecerCarona.dart';
+import 'package:uff_caronas/view/pedidoArmazenado.dart';
 import 'package:uff_caronas/view/pedirCarona.dart';
 
 import 'login.dart';
@@ -257,12 +258,12 @@ class _HomeState extends State<Home> {
                   ),
                   InkWell(
                     onTap: () {
-                      print('editar veiculo');
+                      print('Pedido armazenado');
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
-                            return CaronaEmEspera();
+                            return PedidoArmazenado();
                           },
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
