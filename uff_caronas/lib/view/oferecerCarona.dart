@@ -582,7 +582,9 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                             //origemFocus.dispose();
                             enderecos.clear();
                             setState(() {
-                              origemCoord = e.geometry!.coordinates!;
+                              var coord = e.geometry!.coordinates!;
+                              origemCoord[0] = coord[1];
+                              origemCoord[1] = coord[0];
                             });
                           }
                           else{
@@ -590,7 +592,9 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                             //destinoFocus.dispose();
                             enderecos.clear();
                             setState(() {
-                              destinoCoord = e.geometry!.coordinates!;      
+                              var coord = e.geometry!.coordinates!;
+                              destinoCoord[0] = coord[1];
+                              destinoCoord[1] = coord[0];      
                             });
                           }
                         },
