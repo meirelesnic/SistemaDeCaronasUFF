@@ -49,6 +49,8 @@ class _BuscaCaronaState extends State<BuscaCarona> {
       dropoffPoint: mapa['dropoffPoint'] as List<double>,
       routeDuration: mapa['routeDuration'] as int,
       route: mapa['route'] as List,
+      walkRouteEnd: mapa['walkRouteEnd'] as List,
+      walkRouteStart: mapa['walkRouteStart'] as List,
     )).toList();
 
     for (var caronaInfo in caronaInfosList) {

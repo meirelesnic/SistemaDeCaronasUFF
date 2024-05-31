@@ -51,7 +51,7 @@ class _CaronaCardState extends State<CaronaCard> {
           padding: EdgeInsets.all(screenSize.width * (10 / 360)),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,7 +62,7 @@ class _CaronaCardState extends State<CaronaCard> {
                     radius: screenSize.width * (25 / 360),
                     backgroundColor: Colors.blue,
                     backgroundImage: motorista?.fotoUrl != null
-                        ? NetworkImage(motorista!.fotoUrl!)
+                        ? NetworkImage(motorista!.fotoUrl)
                         : null,
                     child: motorista?.fotoUrl == null
                         ? const Icon(Icons.person, size: 30)
