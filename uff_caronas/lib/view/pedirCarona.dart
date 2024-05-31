@@ -403,6 +403,7 @@ class _PedirCaronaState extends State<PedirCarona> {
                                   origemCoord: origemCoord,
                                   destinoCoord: destinoCoord,
                                   dataCarona: dataCarona,
+
                                 );
                               },
                               transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -452,7 +453,9 @@ class _PedirCaronaState extends State<PedirCarona> {
                             //origemFocus.dispose();
                             enderecos.clear();
                             setState(() {
-                              origemCoord = e.geometry!.coordinates!;
+                              var coord = e.geometry!.coordinates!;
+                              origemCoord[0] = coord[1];
+                              origemCoord[1] = coord[0];
                               origem = true;
                             });
                           }
@@ -461,7 +464,9 @@ class _PedirCaronaState extends State<PedirCarona> {
                             //destinoFocus.dispose();
                             enderecos.clear();
                             setState(() {
-                              destinoCoord = e.geometry!.coordinates!;   
+                              var coord = e.geometry!.coordinates!;
+                              destinoCoord[0] = coord[1];
+                              destinoCoord[1] = coord[0];
                               destino = true;   
                             });
                           }
