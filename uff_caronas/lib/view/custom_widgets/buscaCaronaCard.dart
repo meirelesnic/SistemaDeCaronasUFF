@@ -2,21 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
 import '../../controller/VeiculoController.dart';
-
+import 'package:intl/intl.dart';
+import '../../model/modelos/CaronaInfo.dart';
 import '../../model/modelos/Usuario.dart';
 import '../../model/modelos/Veiculo.dart';
 
 class BuscaCaronaCard extends StatefulWidget {
   final Carona carona;
+  final CaronaInfo info;
 
-  const BuscaCaronaCard({super.key, required this.carona});
+  const BuscaCaronaCard({super.key, required this.carona, required this.info});
 
   @override
   State<BuscaCaronaCard> createState() => _BuscaCaronaCardState();
 }
 
 class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
-  int widthScale = 500;
+  String horaChegada = '';
+
+  @override
+  void initState() {
+    horaChegada = addMinutesToTimeString(widget.carona.hora, widget.info.routeDuration);
+    super.initState();
+  }
+
+  String addMinutesToTimeString(String time, int minutes) {
+    DateTime timeParsed = DateFormat.Hm().parse(time);
+    timeParsed = timeParsed.add(Duration(minutes: minutes));
+    String newTimeString = DateFormat.Hm().format(timeParsed);
+    setState(() {
+      
+    });
+    
+    return newTimeString;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +83,13 @@ class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
                       SizedBox(
                         height: screenSize.height * (3/800),
                       ),
-                      Text("09:00",
+                      Text(widget.carona.hora,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
                       SizedBox(height: screenSize.width * (52/360) - screenSize.width * (28/360)),
-                      Text("09:48",
+                      Text(horaChegada,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
@@ -130,7 +150,7 @@ class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
                           Icon(Icons.directions_walk_rounded,
                             size: screenSize.width * (14 / 360),
                           ),
-                          Text("1,1 km",
+                          Text('${widget.info.walkingDistanceStart} Km',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Theme.of(context).colorScheme.onBackground,
                             ),
@@ -148,7 +168,7 @@ class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
                           Icon(Icons.directions_walk_rounded,
                             size: screenSize.width * (14 / 360),
                           ),
-                          Text("0,1 km",
+                          Text('${widget.info.walkingDistanceEnd} Km',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Theme.of(context).colorScheme.onBackground,
                             ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/model/DAO/CaronaDAO.dart';
+import '../controller/CaronaController.dart';
 import '../model/modelos/Carona.dart';
+import '../model/modelos/CaronaInfo.dart';
 import 'custom_widgets/BuscaCaronaListBuilder.dart';
+import 'package:lottie/lottie.dart';
 
 class BuscaCarona extends StatefulWidget {
   final List<double> origemCoord;
@@ -18,17 +21,49 @@ class BuscaCarona extends StatefulWidget {
 }
 
 class _BuscaCaronaState extends State<BuscaCarona> {
-  List<Carona> caronas = [];
+  late CaronaController caronaController;
+  
+  List<Map<String, dynamic>> caronas = [];
+  List<Carona> caronasList = [];
+  List<CaronaInfo> caronaInfosList = [];
+  List<double> rota = [];
+  
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    //_carregarCaronas(widget.dataCarona);
+    caronaController = CaronaController();
+    buscarCaronas(); // Chamada para buscar as caronas ao inicializar o estado do widget
   }
 
-  //TESTE IMPLEMENTAR O FILTRO AQUI
-  Future<void> _carregarCaronas(data, oLat, oLon, dLat, dLon) async {
-    caronas = await CaronaDAO().buscarCaronasPorDataEVagas(data);
+  Future<void> buscarCaronas() async {
+    caronas = await caronaController.buscarCaronasCompativeis(widget.origemCoord[0], widget.origemCoord[1], widget.destinoCoord[0], widget.destinoCoord[1], widget.dataCarona);
+    
+    caronasList = caronas.map((mapa) => mapa['carona'] as Carona).toList();
+    caronaInfosList = caronas.map((mapa) => CaronaInfo(
+      carona: mapa['carona'] as Carona,
+      walkingDistanceStart: mapa['walkingDistanceStart'],
+      walkingDistanceEnd: mapa['walkingDistanceEnd'],
+      pickupPoint: mapa['pickupPoint'] as List<double>,
+      dropoffPoint: mapa['dropoffPoint'] as List<double>,
+      routeDuration: mapa['routeDuration'] as int,
+      route: mapa['route'] as List,
+    )).toList();
+
+    for (var caronaInfo in caronaInfosList) {
+      print('Carona para ${caronaInfo.carona.origemDestino}:');
+      print('Distância a pé até o ponto de embarque: ${caronaInfo.walkingDistanceStart} metros');
+      print('Distância a pé até o ponto de desembarque: ${caronaInfo.walkingDistanceEnd} metros');
+      print('Duração da rota: ${caronaInfo.routeDuration} minutos');
+      print('${caronaInfo.pickupPoint} embarque');
+      print('${caronaInfo.dropoffPoint} desembarque');
+      print('------------------------------------');
+    }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -56,50 +91,75 @@ class _BuscaCaronaState extends State<BuscaCarona> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            isLoading ? Container() : Padding(
               padding: const EdgeInsets.all(12),
-              child: Text(widget.dataCarona,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+              child: Row(
+                children: [
+                  Text(widget.dataCarona,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                  ),
+                  Spacer(),
+                  Text('${caronasList.length} Caronas encontradas',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                  )
+                ],
               ),
             ),
             Expanded(
-              child: FutureBuilder<void>(
-                future: _carregarCaronas(
-                  widget.dataCarona,
-                  widget.origemCoord[0],
-                  widget.origemCoord[1],
-                  widget.destinoCoord[0],
-                  widget.destinoCoord[1],
-                ),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Erro ao carregar caronas: ${snapshot.error}'),
-                    );
-                  } else if (caronas.isEmpty) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Text('Nenhuma carona encontrada para esta data'),
-                          Text('linha 2'),
-                        ],
+              child: isLoading
+                  ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    
+                    children: [
+                      Lottie.asset(
+                        'image/load.json', // substitua 'animation.json' pelo nome do seu arquivo de animação
+                        //fit: BoxFit.cover,
                       ),
-                    );
-                  } else {
-                    return BuscaCaronaListBuilder(caronas: caronas);
-                  }
-                },
-              ),
+                      Row(
+                        mainAxisAlignment:MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 15,
+                            height: 15,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.6
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          Text('Buscando Caronas',
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                  : _buildCaronasList(),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildCaronasList() {
+    if (caronas.isEmpty) {
+      return Center(
+        child: Column(
+          children: [
+            Text('Nenhuma carona encontrada para esta data'),
+            Text('linha 2'),
+          ],
+        ),
       );
+    } else {
+      return BuscaCaronaListBuilder(caronas: caronasList, caronasInfo: caronaInfosList, or: widget.origemCoord, de: widget.destinoCoord);
+    }
   }
 }
