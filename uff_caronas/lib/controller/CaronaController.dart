@@ -45,17 +45,24 @@ class CaronaController {
 
       // Verificar se esses pontos estão a uma distância razoável dos pontos de origem e destino do usuário
       if (routeService.isPointNear(nearestPickupPoint, latOrigem, lonOrigem, 4000) && routeService.isPointNear(nearestDropoffPoint, latDestino, lonDestino, 4000)) {
-        String walkingDistanceStart = await routeService.distanciaCaminhada(lonOrigem, latOrigem, nearestPickupPoint[0], nearestPickupPoint[1]);
-        String walkingDistanceEnd = await routeService.distanciaCaminhada(lonDestino, latDestino, nearestDropoffPoint[0], nearestDropoffPoint[1]);
+        //String walkingDistanceStart = await routeService.distanciaCaminhada(lonOrigem, latOrigem, nearestPickupPoint[0], nearestPickupPoint[1]);
+        //String walkingDistanceEnd = await routeService.distanciaCaminhada(lonDestino, latDestino, nearestDropoffPoint[0], nearestDropoffPoint[1]);
 
+        Map<String, dynamic> walkingStart = await routeService.distanciaCaminhada2(lonOrigem, latOrigem, nearestPickupPoint[0], nearestPickupPoint[1]);
+        List? walkRouteStart = walkingStart['route'];
+        Map<String, dynamic> walkingEnd = await routeService.distanciaCaminhada2(lonDestino, latDestino, nearestDropoffPoint[0], nearestDropoffPoint[1]);
+        List? walkRouteEnd = walkingEnd['route'];
+        
         caronasCompativeis.add({
           'carona': carona,
-          'walkingDistanceStart': walkingDistanceStart,
-          'walkingDistanceEnd': walkingDistanceEnd,
-          'pickupPoint': nearestPickupPoint,
-          'dropoffPoint': nearestDropoffPoint,
+          'walkingDistanceStart': walkingStart['distance'],
+          'walkingDistanceEnd': walkingEnd['distance'],
+          'pickupPoint': nearestPickupPoint.reversed.toList(),
+          'dropoffPoint': nearestDropoffPoint.reversed.toList(),
           'routeDuration': routeDuration,
-          'route': routeCarona,  // Adicionando a rota aqui
+          'route': routeCarona,
+          'walkRouteStart': walkRouteStart,
+          'walkRouteEnd': walkRouteEnd,
         });
       }
     }

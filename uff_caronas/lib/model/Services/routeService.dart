@@ -30,18 +30,39 @@ class RouteService {
     };
   }
 
+  Future<Map<String, dynamic>> distanciaCaminhada2(double startLat, double startLng, double endLat, double endLng) async {
+    final url = 'https://api.openrouteservice.org/v2/directions/foot-walking?api_key=$apiKey&start=$startLat,$startLng&end=$endLat,$endLng';
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['features'].isNotEmpty) {
+        final route = data['features'][0]['geometry']['coordinates'];
+        double distanciaMetros = data['features'][0]['properties']['segments'][0]['distance'];
+        double distanciaKm = distanciaMetros / 1000; 
+        return {
+          'route': route.map((point) => [point[1], point[0]]).toList(),
+          'distance': distanciaKm.toStringAsFixed(2)
+        };
+      }
+    }
+    return {
+      'route': [],
+      'distance': '0.0'
+    };
+  }
+
 
   Future<String> distanciaCaminhada(double startLat, double startLng, double endLat, double endLng) async {
     final url = 'https://api.openrouteservice.org/v2/directions/foot-walking?api_key=$apiKey&start=$startLat,$startLng&end=$endLat,$endLng';
-    print(url);
+    //print(url);
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['features'].isNotEmpty) {
         double distanciaMetros = data['features'][0]['properties']['segments'][0]['distance'];
         double distanciaKm = distanciaMetros / 1000; 
-        print('${distanciaKm.toStringAsFixed(2)} km');
-        
+        //print('${distanciaKm.toStringAsFixed(2)} km');
         return distanciaKm.toStringAsFixed(2);
       }
     }

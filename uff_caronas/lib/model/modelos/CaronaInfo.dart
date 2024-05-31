@@ -8,6 +8,8 @@ class CaronaInfo {
   final List<double> dropoffPoint;
   final int routeDuration;
   final List route;
+  final List walkRouteEnd;
+  final List walkRouteStart;
 
   CaronaInfo({
     required this.carona,
@@ -17,5 +19,7 @@ class CaronaInfo {
     required this.dropoffPoint,
     required this.routeDuration,
     required this.route,
+    required this.walkRouteEnd,
+    required this.walkRouteStart,
   });
 }
