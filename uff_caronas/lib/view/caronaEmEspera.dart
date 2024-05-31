@@ -13,7 +13,7 @@ class _CaronaEmEsperaState extends State<CaronaEmEspera> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text('editar perfil')),
+      body: Center(child: Text('Carona em espera')),
     );
   }
 }

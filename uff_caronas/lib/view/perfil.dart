@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
 import 'package:uff_caronas/view/login.dart';
-import 'package:uff_caronas/view/editarPerfil.dart';
+import 'package:uff_caronas/view/pedidoArmazenado.dart';
 import 'package:uff_caronas/view/meusVeiculos.dart';
 import 'package:uff_caronas/view/motoristaAvaliacao.dart';
 import 'package:uff_caronas/view/passageiroAvaliacao.dart';
