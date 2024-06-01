@@ -403,6 +403,9 @@ class _PedirCaronaState extends State<PedirCarona> {
                                   origemCoord: origemCoord,
                                   destinoCoord: destinoCoord,
                                   dataCarona: dataCarona,
+                                  horaCarona: horaCarona,
+                                  nomeDestino:  destinoLocal.text,
+                                  nomeOrigem: origemLocal.text,
 
                                 );
                               },
