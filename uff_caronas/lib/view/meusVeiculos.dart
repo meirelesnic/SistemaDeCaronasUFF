@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/view/custom_widgets/veiculoCard.dart';
+import 'package:uff_caronas/view/custom_widgets/veiculoListBuilder.dart';
 import '../model/DAO/VeiculoDAO.dart';
 import '../model/modelos/Veiculo.dart';
 import 'adicionarVeiculo.dart';
@@ -99,14 +100,7 @@ class _MeusVeiculosState extends State<MeusVeiculos> {
           SizedBox(
             height: 10,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: veiculos.length,
-              itemBuilder: (context, index) {
-                return VeiculoCard(veiculo: veiculos[index]);
-              },
-            ),
-          ),
+          Expanded(child: VeiculoListBuilder(veiculos: veiculos)),
         ],
       ),
     );
