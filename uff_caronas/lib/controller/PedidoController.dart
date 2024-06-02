@@ -14,12 +14,20 @@ class PedidoController {
       String nomeDestino,
       List<double> coordenadasOrigem,
       List<double> coordenadasDestino,
-      int userId) {
-    pedidoDAO?.salvarPedido(
-        data, nomeOrigem, nomeDestino, coordenadasOrigem, coordenadasDestino, userId);
+      String userId) {
+    pedidoDAO?.salvarPedido(data, nomeOrigem, nomeDestino, coordenadasOrigem,
+        coordenadasDestino, userId);
   }
 
-  Future<List<Pedido>> recuperarPedidos(String id) {
-    return pedidoDAO!.recuperarPedidos(id);
+  Future<List<Pedido?>> recuperarPedidosPorUsuario(String id) {
+    return pedidoDAO!.recuperarPedidosPorUsuario(id);
+  }
+
+  Future<void> deletarPedido(String id) {
+    return pedidoDAO!.deletarPedido(id);
+  }
+
+  Future<void> atualizarStatusPedido(String id, String status) {
+    return pedidoDAO!.atualizarStatusPedido(id, status);
   }
 }

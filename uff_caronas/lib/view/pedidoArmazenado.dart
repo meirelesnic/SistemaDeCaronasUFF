@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:uff_caronas/controller/PedidoController.dart';
+import 'package:uff_caronas/model/DAO/PedidoDAO.dart';
+import 'package:uff_caronas/model/modelos/Pedido.dart';
 import 'package:uff_caronas/view/custom_widgets/PedidoCard.dart';
 import 'package:uff_caronas/view/custom_widgets/pedidoListBuilder.dart';
+import 'package:uff_caronas/view/login.dart';
 
 class PedidoArmazenado extends StatefulWidget {
   const PedidoArmazenado({super.key});
@@ -11,8 +18,58 @@ class PedidoArmazenado extends StatefulWidget {
 }
 
 class _PedidoArmazenadoState extends State<PedidoArmazenado> {
+  List<Pedido> pedidos = [];
+  DateFormat format = DateFormat("dd/MM/yyyy - HH:mm");
+
+  DateTime now = DateTime.now().subtract(Duration(hours: 3));
+
   @override
+  void initState() {
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection('pedidos')
+        .snapshots()
+        .listen((event) {
+      _fetchPedidos().then((_) {
+        _atualizarPedidos();
+      });
+    });
+    print(now);
+  }
+
+  Future<void> _fetchPedidos() async {
+    pedidos = await PedidoController().recuperarPedidosPorUsuario(user!.id)
+        as List<Pedido>;
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  Future<void> _atualizarPedidos() async {
+    print('Função Atualizando pedidos');
+    print(pedidos.length);
+    for (int i = 0; i < pedidos.length; i++) {
+      print('Pedido: ${pedidos[i].id}');
+      if (pedidos[i].status == 'Pendente') {
+        print('Estado atual pendente pendente');
+        DateTime dataPedido = format.parse(pedidos[i].data);
+        if (dataPedido.isBefore(now)) {
+          print(dataPedido);
+          print('Pedido expirado');
+          await PedidoController()
+              .atualizarStatusPedido(pedidos[i].id, 'Expirado');
+        }
+      }
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   Widget build(BuildContext context) {
+    print(user!.id);
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(),
@@ -67,7 +124,7 @@ class _PedidoArmazenadoState extends State<PedidoArmazenado> {
             SizedBox(
               height: 10,
             ),
-            Expanded(child: PedidoListBuilder()),
+            Expanded(child: PedidoListBuilder(pedidos: pedidos)),
           ],
         ));
   }

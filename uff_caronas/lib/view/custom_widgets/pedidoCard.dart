@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/controller/PedidoController.dart';
+import 'package:uff_caronas/model/modelos/Pedido.dart';
 
 class PedidoCard extends StatefulWidget {
-  const PedidoCard({super.key});
+  final Pedido pedido;
+  const PedidoCard({super.key, required this.pedido});
 
   @override
   State<PedidoCard> createState() => _PedidoCardState();
 }
 
 class _PedidoCardState extends State<PedidoCard> {
-  String _status = "Pendente";
   int widthScale = 500;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class _PedidoCardState extends State<PedidoCard> {
       padding: const EdgeInsets.only(bottom: 8),
       child: SizedBox(
         width: screenSize.width * (313 / 360),
-        height: screenSize.height * (188 / 800),
+        height: screenSize.height * (150 / 800),
         child: Container(
           padding: EdgeInsets.all(screenSize.width * (10 / 360)),
           decoration: BoxDecoration(
@@ -42,7 +44,7 @@ class _PedidoCardState extends State<PedidoCard> {
                         ),
                       ),
                       Text(
-                        'Local Origem',
+                        widget.pedido.nomeOrigem,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: screenSize.height * (14 / 800)),
@@ -50,8 +52,8 @@ class _PedidoCardState extends State<PedidoCard> {
                     ],
                   ),
                   Text(
-                    _status,
-                    style: _status == "Pendente"
+                    widget.pedido.status,
+                    style: widget.pedido.status == "Pendente"
                         ? TextStyle(
                             color: const Color.fromARGB(255, 187, 72, 72))
                         : TextStyle(color: Colors.grey.shade700),
@@ -70,7 +72,7 @@ class _PedidoCardState extends State<PedidoCard> {
                     ),
                   ),
                   Text(
-                    'Local Destino',
+                    widget.pedido.nomeDestino,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: screenSize.height * (14 / 800)),
@@ -92,7 +94,7 @@ class _PedidoCardState extends State<PedidoCard> {
                         ),
                       ),
                       Text(
-                        '00/00/2000 - 00:00h',
+                        widget.pedido.data,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: screenSize.height * (14 / 800)),
@@ -101,7 +103,9 @@ class _PedidoCardState extends State<PedidoCard> {
                   ),
                   FilledButton(
                     onPressed: () {
-                      //Tela detalhes, passando ID da carona
+                      //deletar pedido
+                      PedidoController().deletarPedido(widget.pedido.id);
+                      setState(() {});
                     },
                     child: Text('Apagar'),
                     // style: ButtonStyle(
