@@ -25,7 +25,6 @@ class BuscaCarona extends StatefulWidget {
       required this.nomeOrigem,
       required this.nomeDestino});
 
-  @override
   State<BuscaCarona> createState() => _BuscaCaronaState();
 }
 

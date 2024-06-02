@@ -1,3 +1,5 @@
+import 'package:latlong2/latlong.dart';
+
 import '../model/DAO/CaronaDAO.dart';
 import '../model/modelos/Carona.dart';
 import '../model/Services/routeService.dart';

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 class RouteService {
   final String apiKey = '5b3ce3597851110001cf624848d99bd3298d44d9af6fde13363151a9';
@@ -28,6 +29,21 @@ class RouteService {
       'route': [],
       'duration': 0
     };
+  }
+
+  Future<List<LatLng>> getRouteLatLng(double startLat, double startLng, double endLat, double endLng) async {
+    final url = 'https://api.openrouteservice.org/v2/directions/driving-car?api_key=$apiKey&start=$startLng,$startLat&end=$endLng,$endLat';
+    
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['features'].isNotEmpty) {
+        final route = data['features'][0]['geometry']['coordinates'];
+        return route.map<LatLng>((point) => LatLng(point[1], point[0])).toList();
+      }
+    }
+    
+    return <LatLng>[];
   }
 
   Future<Map<String, dynamic>> distanciaCaminhada2(double startLat, double startLng, double endLat, double endLng) async {

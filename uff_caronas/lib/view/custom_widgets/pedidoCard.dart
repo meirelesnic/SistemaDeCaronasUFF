@@ -108,10 +108,10 @@ class _PedidoCardState extends State<PedidoCard> {
                       setState(() {});
                     },
                     child: Text('Apagar'),
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 187, 72, 72)),
-                    ),
+                    // style: ButtonStyle(
+                    //   backgroundColor: WidgetStateProperty.all(
+                    //       Color.fromARGB(255, 187, 72, 72)),
+                    // ),
                   )
                 ],
               )

@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
+import 'package:uff_caronas/view/detalhesCarona.dart';
 import '../../controller/VeiculoController.dart';
 
 
+import '../../model/Services/routeService.dart';
 import '../../model/modelos/Usuario.dart';
 import '../../model/modelos/Veiculo.dart';
 
@@ -19,6 +23,21 @@ class CaronaCard extends StatefulWidget {
 
 class _CaronaCardState extends State<CaronaCard> {
   int widthScale = 500;
+  late RouteService routeService;
+  List<LatLng> route = [];
+
+  @override
+  void initState() {
+    routeService = RouteService();
+    super.initState();
+  }
+
+  Future<void> _getRoute() async{
+    List<LatLng> result = await routeService.getRouteLatLng(widget.carona.origem[0], widget.carona.origem[1], widget.carona.dest[0], widget.carona.dest[1]);
+      setState(() {
+        route = result;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +133,15 @@ class _CaronaCardState extends State<CaronaCard> {
                       size: screenSize.width * (20 / widthScale),
                     ),
                   ),
-                  Text(
-                    widget.carona.origemLocal,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenSize.height * (14 / 800),
+                  Expanded(
+                    child: Text(
+                      widget.carona.origemLocal,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenSize.height * (14 / 800),
+                      ),
                     ),
                   ),
                 ],
@@ -132,11 +155,15 @@ class _CaronaCardState extends State<CaronaCard> {
                       size: screenSize.width * (20 / widthScale),
                     ),
                   ),
-                  Text(
-                    widget.carona.origemDestino,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenSize.height * (14 / 800),
+                  Expanded(
+                    child: Text(
+                      widget.carona.origemDestino,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenSize.height * (14 / 800),
+                      ),
                     ),
                   ),
                 ],
@@ -204,8 +231,29 @@ class _CaronaCardState extends State<CaronaCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FilledButton(
-                    onPressed: () {
-                      // Tela detalhes, passando ID da carona
+                    onPressed: () async {
+                      await _getRoute();
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return DetalhesCarona(
+                              route: route,
+                              coordinates: [LatLng(widget.carona.origem[0], widget.carona.origem[1]),
+                                            LatLng(widget.carona.dest[0], widget.carona.dest[1])
+                              ],
+                            );
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 250),
+                        ),
+                      );
                     },
                     child: Text('Detalhes'),
                   ),

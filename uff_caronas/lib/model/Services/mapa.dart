@@ -14,21 +14,15 @@ class Mapa extends StatefulWidget {
 
 class _MapaState extends State<Mapa> {
   late LatLng center;
+  late MapController mapController;
 
   @override
   void initState() {
-    _center();
+    //_center();
     super.initState();
-  }
-
-  void _center(){
-    if(widget.route == null){
-      center = const LatLng(-22.90654345, -43.13314597657);
-    }else{
-      int i;
-      i = widget.route![0].length ~/ 2;
-      center = widget.route![0][i];
-    }
+    mapController = MapController();
+    //mapController.fitCamera(CameraFit.coordinates(coordinates: widget.coordinates!, padding: const EdgeInsets.all(35)));
+   // print('initState');
   }
 
   @override
@@ -57,6 +51,7 @@ class _MapaState extends State<Mapa> {
           ),
         );
       }
+      
     }
 
     List<Polyline> polylines = [];
@@ -77,7 +72,7 @@ class _MapaState extends State<Mapa> {
         } else {
           break;
         }
-
+        
         polylines.add(
           Polyline(
             points: widget.route![i],
@@ -88,24 +83,35 @@ class _MapaState extends State<Mapa> {
       }
     }
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.route != null && widget.route!.isNotEmpty) {
+        
+        mapController.fitCamera(CameraFit.coordinates(coordinates: widget.route![0], padding: const EdgeInsets.all(35)));
+        //mapController.fitCamera(CameraFit.coordinates(coordinates: widget.coordinates!, padding: const EdgeInsets.all(35)));
+
+      }
+    });
+
     return FlutterMap(
+      mapController: mapController,
       options: MapOptions(
-        initialCenter: center,
-        initialZoom: 11,
-        minZoom: 10,
-        maxZoom: 15
+        initialCenter: const LatLng(-22.90654345, -43.13314597657),
+        initialZoom: 10,
+        minZoom: 7.1,
+        maxZoom: 15.5,
+        interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate)
       ),
       children: [
         TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          //'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png
+          urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
           userAgentPackageName: 'dev.fleaflet.flutter_map.example',
         ),
-        
         if (polylines.isNotEmpty)
           PolylineLayer(
             polylines: polylines,
           ),
-
+    
         if (markers.isNotEmpty)
           MarkerLayer(
             markers: markers, // Usar os marcadores gerados a partir das coordenadas (se existirem)
