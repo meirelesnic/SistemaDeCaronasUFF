@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
 import '../../controller/VeiculoController.dart';
@@ -136,46 +138,52 @@ class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
                     ],
                   ),
                   SizedBox(width: screenSize.width * (10/360)),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(widget.carona.origemLocal,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(widget.carona.origemLocal,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.directions_walk_rounded,
+                              size: screenSize.width * (14 / 360),
                             ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.directions_walk_rounded,
-                            size: screenSize.width * (14 / 360),
-                          ),
-                          Text('${widget.info.walkingDistanceStart} Km',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
+                            Text('${widget.info.walkingDistanceStart} Km',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: screenSize.width * (17 / 360)), // Espaço proporcional ao conteúdo entre os textos
-                      Text(widget.carona.origemDestino,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
+                          ],
+                        ),
+                        SizedBox(height: screenSize.width * (17 / 360)), // Espaço proporcional ao conteúdo entre os textos
+                        Text(widget.carona.origemDestino,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.directions_walk_rounded,
+                              size: screenSize.width * (14 / 360),
                             ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.directions_walk_rounded,
-                            size: screenSize.width * (14 / 360),
-                          ),
-                          Text('${widget.info.walkingDistanceEnd} Km',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
+                            Text('${widget.info.walkingDistanceEnd} Km',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

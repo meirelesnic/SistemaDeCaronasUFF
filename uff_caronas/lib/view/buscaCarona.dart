@@ -10,13 +10,20 @@ class BuscaCarona extends StatefulWidget {
   final List<double> origemCoord;
   final List<double> destinoCoord;
   final String dataCarona;
+  final String horaCarona;
+  final String nomeOrigem;
+  final String nomeDestino;
 
-  const BuscaCarona({super.key, 
-    required this.dataCarona,
-    required this.origemCoord,
-    required this.destinoCoord});
+  const BuscaCarona(
+      {super.key,
+      required this.dataCarona,
+      required this.horaCarona,
+      required this.origemCoord,
+      required this.destinoCoord,
+      required this.nomeOrigem,
+      required this.nomeDestino});
 
-  @override
+
   State<BuscaCarona> createState() => _BuscaCaronaState();
 }
 

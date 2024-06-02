@@ -104,10 +104,10 @@ class _PedidoCardState extends State<PedidoCard> {
                       //Tela detalhes, passando ID da carona
                     },
                     child: Text('Apagar'),
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(
-                          Color.fromARGB(255, 187, 72, 72)),
-                    ),
+                    // style: ButtonStyle(
+                    //   backgroundColor: WidgetStateProperty.all(
+                    //       Color.fromARGB(255, 187, 72, 72)),
+                    // ),
                   )
                 ],
               )
