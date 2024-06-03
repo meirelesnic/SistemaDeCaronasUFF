@@ -6,10 +6,17 @@ import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
 
+import '../model/modelos/Carona.dart';
+import '../model/modelos/Usuario.dart';
+import '../model/modelos/Veiculo.dart';
+
 class DetalhesCarona extends StatefulWidget {
   final List<LatLng> route;
   final List<LatLng> coordinates;
-  const DetalhesCarona({super.key, required this.route, required this.coordinates});
+  final Carona carona;
+  final Veiculo veiculo;
+  final Usuario motorista;
+  const DetalhesCarona({super.key, required this.route, required this.coordinates, required this.carona, required this.veiculo, required this.motorista});
 
   @override
   State<DetalhesCarona> createState() => _DetalhesCaronaState();
@@ -41,7 +48,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
       body: Column(
         children: [
           Container(
-            height: screenSize.width * (330 / 360),
+            height: screenSize.width * (280 / 360),
             child: Mapa(
               route: [widget.route],
               coordinates: widget.coordinates,
@@ -63,6 +70,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                       child: Row(
                         children: [
                           CircleAvatar(
+                            backgroundImage: NetworkImage(widget.motorista.fotoUrl),
                             backgroundColor: Colors.blue,
                             radius: screenSize.width * (38 / 360),
                           ),
@@ -72,7 +80,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'User Name',
+                                  widget.motorista.nome,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context).textTheme.titleLarge,
@@ -107,46 +115,146 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 10,),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: screenSize.width * (39 / 360)),
                       child: Column(
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.location_on_sharp),
-                              Text('Origem'),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.sports_score_rounded),
-                              Text('Destino'),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.schedule),
-                              Text('00/00/2024 - 09:00'),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                'image/car_icons/carro_amarelo.png',
-                                width: screenSize.width * (73 / 360),
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: screenSize.width * (20 / 360),
                               ),
-                              Column(
+                              SizedBox(width: 15,),
+                              Expanded(
+                                child: Text(
+                                  widget.carona.origemLocal,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenSize.height * (18 / 800),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 7,),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.sports_score_rounded,
+                                size: screenSize.width * (20 / 360),
+                              ),
+                              SizedBox(width: 15,),
+                              Expanded(
+                                child: Text(
+                                  widget.carona.origemDestino,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenSize.height * (18 / 800),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 7,),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.schedule_rounded,
+                                size: screenSize.width * (20 / 360),
+                              ),
+                              SizedBox(width: 15,),
+                              Text(
+                                '${widget.carona.data} - ${widget.carona.hora}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenSize.height * (18 / 800),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 10,),
+                          //Veiculo
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Container(
+                              padding: EdgeInsets.all(18),
+                              //color: Theme.of(context).colorScheme.inversePrimary,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer, // cor da linha de contorno
+                                    width: 2.0, // largura da linha de contorno
+                                  ),
+                                  left: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer, // cor da linha de contorno
+                                    width: 2.0, // largura da linha de contorno
+                                  ),
+                                  bottom: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer, // cor da linha de contorno
+                                    width: 2.0, // largura da linha de contorno
+                                  ),
+                                  top: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer, // cor da linha de contorno
+                                    width: 2.0, // largura da linha de contorno
+                                  ),
+                                ),
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Row(
                                 children: [
-                                  Text('Renault Sandero'),
-                                  Placa(placa: 'ABC1734'),
+                                  Image.asset(
+                                        "image/car_icons/carro_${widget.veiculo.cor.toLowerCase()}.png",
+                                        width: screenSize.width * (32 / 360),
+                                      ),
+                                  SizedBox(width: 10,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      
+                                      Text(widget.veiculo.marca,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: screenSize.height * (14 / 800),
+                                        ),
+                                      ),
+                                      Text(widget.veiculo.modelo,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: screenSize.height * (16 / 800),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Placa(placa: widget.veiculo.placa, width: screenSize.width * (115/360)),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
                           Row(
                             children: [
                               Icon(Icons.person_outline),
-                              Text('4 Passageiros'),
+                              Text(' ${widget.carona.vagas}' ' Passageiros',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenSize.height * (18 / 800),
+                                  ),
+                              ),
                               Spacer(),
                               !chat
                                   ? FilledButton(

@@ -242,6 +242,9 @@ class _CaronaCardState extends State<CaronaCard> {
                               coordinates: [LatLng(widget.carona.origem[0], widget.carona.origem[1]),
                                             LatLng(widget.carona.dest[0], widget.carona.dest[1])
                               ],
+                              carona: widget.carona,
+                              veiculo: veiculo!,
+                              motorista: motorista!,
                             );
                           },
                           transitionsBuilder:
