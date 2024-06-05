@@ -24,7 +24,6 @@ class _PedidoListBuilderState extends State<PedidoListBuilder> {
   @override
   Widget build(BuildContext context) {
 
-    final now = DateTime.now();
     final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenSize.width * (10 / 360)),
