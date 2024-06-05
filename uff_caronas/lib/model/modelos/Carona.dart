@@ -51,5 +51,14 @@ class Carona {
   set setVeiculoId(String veiculoId) => this.veiculoId = veiculoId;
   set setVagas(int vagas) => this.vagas = vagas;
   set setMotoristaId(String motoristaId) => this.motoristaId = motoristaId;
-  set setPassageirosIds(List<String> passageirosIds) => this.passageirosIds = passageirosIds;
+  set setPassageirosIds(List<String> passageirosIds) =>
+      this.passageirosIds = passageirosIds;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Carona && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

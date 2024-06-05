@@ -70,5 +70,8 @@ class CaronaController {
     return caronasCompativeis;
   }
 
+  Future<Carona?> recuperarCaronaPorId(String caronaId) async {
+    return await caronaDAO?.recuperarCaronaPorId(caronaId);
+  }
 
 }
