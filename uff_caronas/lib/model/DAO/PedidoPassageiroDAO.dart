@@ -37,7 +37,6 @@ class PedidoPassageiroDAO {
 
   Future<List<PedidoPassageiro>> recuperarPassageirosPendentesPorUsuario(
       String motoristaId) async {
-    print('Recuperando Passageiros pendentes por motorista: $motoristaId');
     List<PedidoPassageiro> pedidosPassageiro = [];
     try {
       QuerySnapshot querySnapshot = await _pedidoPassageiroCollection
@@ -122,9 +121,7 @@ class PedidoPassageiroDAO {
     // Subtraindo somente 2 horas para dar um período de tolerância de 1 hora
     DateTime now = DateTime.now().subtract(Duration(hours: 2));
 
-    print('Função Atualizando pedidos de passageiros');
     for (int i = 0; i < pedidosPassageiro.length; i++) {
-      print('Pedido: ${pedidosPassageiro[i].id}');
       if (pedidosPassageiro[i].status == 'Pendente') {
         Carona? carona = await CaronaController()
             .recuperarCaronaPorId(pedidosPassageiro[i].caronaId);
@@ -133,8 +130,6 @@ class PedidoPassageiroDAO {
           DateTime dataCarona =
               format.parse(carona!.data + ' - ' + carona.hora);
           if (dataCarona.isBefore(now)) {
-            print(dataCarona);
-            print('Pedido expirado');
             await _pedidoPassageiroCollection
                 .doc(pedidosPassageiro[i].id)
                 .update({'status': 'Expirado'});

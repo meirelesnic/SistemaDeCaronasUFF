@@ -45,7 +45,6 @@ class _PassageiroListBuilderState extends State<PassageiroListBuilder> {
       Usuario? usuario =
           await UsuarioController().recuperarUsuario(pedido!.userId);
       usuarios.add(usuario);
-      print(usuarios);
     }
     if (mounted) {
       setState(() {
