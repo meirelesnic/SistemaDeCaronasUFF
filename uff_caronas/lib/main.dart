@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF002147)),
           useMaterial3: true,
-        ),  
+        ),
         //Verificar se esta autenticado
-        // ... 
+        // ...
         //Se nao estiver autenticado
         home: const Login(),
         //Se tiver autenticado
