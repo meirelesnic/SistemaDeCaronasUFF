@@ -5,25 +5,52 @@ import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
-
+import 'package:shimmer/shimmer.dart';
+import '../model/Services/routeService.dart';
 import '../model/modelos/Carona.dart';
 import '../model/modelos/Usuario.dart';
 import '../model/modelos/Veiculo.dart';
 
 class DetalhesCarona extends StatefulWidget {
-  final List<LatLng> route;
+  final bool isPedido;
+  final List<List<LatLng>>? pedidoRoutes;
+  final List<double>? embarque;
+  final List<double>? desembarque;
+  final List<LatLng>? route;
   final List<LatLng> coordinates;
   final Carona carona;
   final Veiculo veiculo;
   final Usuario motorista;
-  const DetalhesCarona({super.key, required this.route, required this.coordinates, required this.carona, required this.veiculo, required this.motorista});
+  const DetalhesCarona({super.key, this.route, required this.coordinates, required this.carona, required this.veiculo, required this.motorista, required this.isPedido, this.pedidoRoutes, this.embarque, this.desembarque});
 
   @override
   State<DetalhesCarona> createState() => _DetalhesCaronaState();
 }
 
 class _DetalhesCaronaState extends State<DetalhesCarona> {
-  bool chat = false;
+  late RouteService routeService;
+  List<String> endEmbarque = ['Carregando',''];
+  List<String> endDesembarque = ['Carregando',''];
+  bool isLoading = true;
+  @override
+  void initState() {
+    if(widget.isPedido){
+      routeService = RouteService();
+      getEnderecos();
+      setState(() {
+        
+      });
+    }
+    super.initState();
+  }
+
+  void getEnderecos() async{
+    endEmbarque = await routeService.getAddressFromLatLng(widget.embarque![0], widget.embarque![1]);
+    endDesembarque = await routeService.getAddressFromLatLng(widget.desembarque![0], widget.desembarque![1]);
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +74,10 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
       ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: screenSize.width * (280 / 360),
             child: Mapa(
-              route: [widget.route],
+              route: widget.isPedido ? widget.pedidoRoutes : [widget.route!],
               coordinates: widget.coordinates,
             ),
           ),
@@ -60,6 +87,98 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                 padding: EdgeInsets.symmetric(vertical: screenSize.width * (13 / 360)),
                 child: Column(
                   children: [
+                    widget.isPedido ?
+                    //Dados pasageiro na busca
+                    Container(
+                      //esse conatainer ficar carregando circular indicator enquanto o endereco é obtido
+                      width: screenSize.width * (313 / 360),
+                      padding: EdgeInsets.all(screenSize.width * (9 / 360)),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child:
+                       Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Text('Meus Dados',
+                                //   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                //     color: Colors.white,
+                                //     fontWeight: FontWeight.bold
+                                //   )
+                                // ),
+                                // const SizedBox(height: 7,),
+                                Text('Embarque',
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    isLoading ? 
+                                    const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                    :Container(),
+                                    Expanded(
+                                      child: Text(endEmbarque[0],
+                                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(endEmbarque[1],
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
+                                  )
+                                ),
+                                const SizedBox(height: 8,),
+                                Text('Desembarque',
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    isLoading ? 
+                                    const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                    :Container(),
+                                    Expanded(
+                                      child: Text(endDesembarque[0],
+                                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(endDesembarque[1],
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
+                                  )
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                    )
+                    :
+                    Container(),
+                    widget.isPedido ? SizedBox(height: 10,) : Container(),
                     Container(
                       width: screenSize.width * (313 / 360),
                       padding: EdgeInsets.all(screenSize.width * (9 / 360)),
@@ -74,7 +193,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                             backgroundColor: Colors.blue,
                             radius: screenSize.width * (38 / 360),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +202,9 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                   widget.motorista.nome,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.titleLarge,
+                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold
+                                  )
                                 ),
                                 Text(
                                   'Motorista',
@@ -98,14 +219,14 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                           '4,8',
                                           style: Theme.of(context).textTheme.titleMedium,
                                         ),
-                                        Icon(Icons.star_rounded),
+                                        const Icon(Icons.star_rounded),
                                       ],
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         //ver reputacao ID
                                       },
-                                      child: Text('Ver reputação'),
+                                      child: const Text('Ver reputação'),
                                     ),
                                   ],
                                 ),
@@ -115,7 +236,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: screenSize.width * (39 / 360)),
                       child: Column(
@@ -126,7 +247,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                 Icons.location_on_outlined,
                                 size: screenSize.width * (20 / 360),
                               ),
-                              SizedBox(width: 15,),
+                              const SizedBox(width: 15,),
                               Expanded(
                                 child: Text(
                                   widget.carona.origemLocal,
@@ -140,14 +261,14 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7,),
+                          const SizedBox(height: 7,),
                           Row(
                             children: [
                               Icon(
                                 Icons.sports_score_rounded,
                                 size: screenSize.width * (20 / 360),
                               ),
-                              SizedBox(width: 15,),
+                              const SizedBox(width: 15,),
                               Expanded(
                                 child: Text(
                                   widget.carona.origemDestino,
@@ -161,14 +282,14 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 7,),
+                          const SizedBox(height: 7,),
                           Row(
                             children: [
                               Icon(
                                 Icons.schedule_rounded,
                                 size: screenSize.width * (20 / 360),
                               ),
-                              SizedBox(width: 15,),
+                              const SizedBox(width: 15,),
                               Text(
                                 '${widget.carona.data} - ${widget.carona.hora}',
                                 style: TextStyle(
@@ -178,12 +299,12 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               ),
                             ],
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                           //Veiculo
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Container(
-                              padding: EdgeInsets.all(18),
+                              padding: const EdgeInsets.all(18),
                               //color: Theme.of(context).colorScheme.inversePrimary,
                               decoration: BoxDecoration(
                                 border: Border(
@@ -221,7 +342,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                         "image/car_icons/carro_${widget.veiculo.cor.toLowerCase()}.png",
                                         width: screenSize.width * (32 / 360),
                                       ),
-                                  SizedBox(width: 10,),
+                                  const SizedBox(width: 10,),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -248,20 +369,20 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                           ),
                           Row(
                             children: [
-                              Icon(Icons.person_outline),
+                              const Icon(Icons.person_outline),
                               Text(' ${widget.carona.vagas}' ' Passageiros',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: screenSize.height * (18 / 800),
                                   ),
                               ),
-                              Spacer(),
-                              !chat
+                              const Spacer(),
+                              !widget.isPedido
                                   ? FilledButton(
                                       onPressed: () {
                                         // Tela mensagem, passando ID do chat
                                       },
-                                      child: Text('Chat'),
+                                      child: const Text('Chat'),
                                     )
                                   : Container(),
                             ],
@@ -290,6 +411,36 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
               ),
             ),
           ),
+          widget.isPedido ? Padding(
+            padding: EdgeInsets.symmetric(vertical: screenSize.height * (5/800)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: screenSize.width * (80/360),
+                  height: screenSize.height * (45/800),
+                  child: FilledButton.tonal(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Voltar'),
+                  ),
+                ),
+                SizedBox(width: 7,),
+                SizedBox(
+                  width: screenSize.width * (150/360),
+                  height: screenSize.height * (45/800),
+                  child: FilledButton(
+                    onPressed: () {
+                      //Metodo para participar da carona
+                      // ou entar na lista de espera (autoaceitar false)
+                    },
+                    child: Text('Entrar na Carona'),
+                  ),
+                ),
+              ],
+            ),
+          ) : Container()
         ],
       ),
     );

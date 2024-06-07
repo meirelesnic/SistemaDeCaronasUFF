@@ -238,6 +238,7 @@ class _CaronaCardState extends State<CaronaCard> {
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
                             return DetalhesCarona(
+                              isPedido: false,
                               route: route,
                               coordinates: [LatLng(widget.carona.origem[0], widget.carona.origem[1]),
                                             LatLng(widget.carona.dest[0], widget.carona.dest[1])

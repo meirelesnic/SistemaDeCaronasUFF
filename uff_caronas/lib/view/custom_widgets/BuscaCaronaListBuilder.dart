@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/model/Services/mapa.dart';
+import 'package:uff_caronas/view/detalhesCarona.dart';
+import '../../controller/UsuarioController.dart';
+import '../../controller/VeiculoController.dart';
 import '../../model/modelos/Carona.dart';
 import '../../model/modelos/CaronaInfo.dart';
+import '../../model/modelos/Usuario.dart';
+import '../../model/modelos/Veiculo.dart';
 import 'buscaCaronaCard.dart';
 import 'caronaCard.dart';
 
@@ -41,28 +46,51 @@ class _BuscaCaronaListBuilderState extends State<BuscaCaronaListBuilder> {
         itemCount: widget.caronas.length,
         itemBuilder: (context, index){
           return GestureDetector(child: BuscaCaronaCard(carona: widget.caronas[index], info: widget.caronasInfo[index],),
-            onTap: () {
-              print(widget.caronasInfo[index].dropoffPoint[0]);
+            onTap: () async {
+              Usuario? motorista = await UsuarioController().recuperarUsuario(widget.caronas[index].motoristaId);
+              Veiculo? veiculo = (await VeiculoController().recuperarVeiculoDoc(widget.caronas[index].veiculoId) ?? Future.value(null)) as Veiculo?;
+             
               Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) {
                         coord = convertToLatLngList(widget.caronasInfo[index].route);
                         walk1 = convertToLatLngList(widget.caronasInfo[index].walkRouteStart);
                         walk2 = convertToLatLngList(widget.caronasInfo[index].walkRouteEnd);
-                        return Mapa(route: [
-                                      coord,
-                                      walk1,
-                                      walk2
-                                    ],
-                                    coordinates: [
-                                      LatLng(widget.caronas[index].origem[0], widget.caronas[index].origem[1]),
-                                      LatLng(widget.caronas[index].dest[0], widget.caronas[index].dest[1]),
-                                      LatLng(widget.caronasInfo[index].pickupPoint[0], widget.caronasInfo[index].pickupPoint[1]),
-                                      LatLng(widget.caronasInfo[index].dropoffPoint[0], widget.caronasInfo[index].dropoffPoint[1]),
-                                      LatLng(widget.or[0], widget.or[1]),
-                                      LatLng(widget.de[0], widget.de[1])
-                                    ],
-                                );
+                        // return Mapa(route: [
+                        //               coord,
+                        //               walk1,
+                        //               walk2
+                        //             ],
+                        //             coordinates: [
+                        //               LatLng(widget.caronas[index].origem[0], widget.caronas[index].origem[1]),
+                        //               LatLng(widget.caronas[index].dest[0], widget.caronas[index].dest[1]),
+                        //               LatLng(widget.caronasInfo[index].pickupPoint[0], widget.caronasInfo[index].pickupPoint[1]),
+                        //               LatLng(widget.caronasInfo[index].dropoffPoint[0], widget.caronasInfo[index].dropoffPoint[1]),
+                        //               LatLng(widget.or[0], widget.or[1]),
+                        //               LatLng(widget.de[0], widget.de[1])
+                        //             ],
+                        //         );
+                        return DetalhesCarona(coordinates: [
+                                                              LatLng(widget.caronas[index].origem[0], widget.caronas[index].origem[1]),
+                                                              LatLng(widget.caronas[index].dest[0], widget.caronas[index].dest[1]),
+                                                              LatLng(widget.caronasInfo[index].pickupPoint[0], widget.caronasInfo[index].pickupPoint[1]),
+                                                              LatLng(widget.caronasInfo[index].dropoffPoint[0], widget.caronasInfo[index].dropoffPoint[1]),
+                                                              LatLng(widget.or[0], widget.or[1]),
+                                                              LatLng(widget.de[0], widget.de[1])
+                                                            ],
+                                              carona: widget.caronas[index],
+                                              pedidoRoutes: [
+                                                              coord,
+                                                              walk1,
+                                                              walk2
+                                                            ],
+                                              motorista: motorista!,
+                                              veiculo: veiculo!,
+                                              isPedido: true,
+                                              embarque: widget.caronasInfo[index].pickupPoint,
+                                              desembarque: widget.caronasInfo[index].dropoffPoint,
+
+                                                            );
                       },
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
