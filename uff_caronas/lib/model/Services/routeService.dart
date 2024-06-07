@@ -118,4 +118,21 @@ class RouteService {
     return distance <= maxDistance;
   }
 
+  Future<List<String>> getAddressFromLatLng(double lat, double lng) async {
+    final url = 'https://api.openrouteservice.org/geocode/reverse?api_key=$apiKey&point.lat=$lat&point.lon=$lng&size=1';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print(data);
+      final addressDetails = data['features'][0]['properties'];
+      final street = addressDetails['street'] ?? 'No street info';
+      final cityAndBorough = '${addressDetails['locality'] ?? ''}, ${addressDetails['county'] ?? ''}';
+      return [street, cityAndBorough];
+    } else {
+      throw Exception('Failed to load address');
+    }
+  }
+
 }
