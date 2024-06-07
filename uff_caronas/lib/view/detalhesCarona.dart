@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
+import '../controller/UsuarioController.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
@@ -29,17 +30,22 @@ class DetalhesCarona extends StatefulWidget {
 
 class _DetalhesCaronaState extends State<DetalhesCarona> {
   late RouteService routeService;
+  late UsuarioController usuarioController;
   List<String> endEmbarque = ['Carregando',''];
   List<String> endDesembarque = ['Carregando',''];
   bool isLoading = true;
+  List<Usuario> passageiros = [];
+  bool isPassageirosLoading = true;
+
   @override
   void initState() {
+    routeService = RouteService();
+    usuarioController = UsuarioController();
     if(widget.isPedido){
-      routeService = RouteService();
       getEnderecos();
-      setState(() {
-        
-      });
+    }
+    if (widget.carona.passageirosIds != null) {
+      fetchPassageiros(widget.carona.passageirosIds!);
     }
     super.initState();
   }
@@ -49,6 +55,20 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
     endDesembarque = await routeService.getAddressFromLatLng(widget.desembarque![0], widget.desembarque![1]);
     setState(() {
       isLoading = false;
+    });
+  }
+
+  void fetchPassageiros(List<String> passageirosIds) async {
+    List<Usuario> fetchedPassageiros = [];
+    for (String id in passageirosIds) {
+      Usuario? usuario = await usuarioController.recuperarUsuario(id);
+      if (usuario != null) {
+        fetchedPassageiros.add(usuario);
+      }
+    }
+    setState(() {
+      passageiros = fetchedPassageiros;
+      isPassageirosLoading = false;
     });
   }
 
@@ -370,7 +390,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                           Row(
                             children: [
                               const Icon(Icons.person_outline),
-                              Text(' ${widget.carona.vagas}' ' Passageiros',
+                              Text(' ${passageiros.length}' ' Passageiros',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: screenSize.height * (18 / 800),
@@ -387,21 +407,19 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                   : Container(),
                             ],
                           ),
-                          SizedBox(
-                            height: 120, // altura fixa para o ListView.builder
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 6,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(right: screenSize.width * (7 / 360)),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.blue,
-                                    radius: screenSize.width * (23 / 360),
-                                  ),
-                                );
-                              },
-                            ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: passageiros.length,
+                            itemBuilder: (context, index) {
+                              final passageiro = passageiros[index];
+                              return ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(passageiro.fotoUrl),
+                                ),
+                                title: Text(passageiro.nome),
+                              );
+                            },
                           ),
                         ],
                       ),
