@@ -199,4 +199,30 @@ class CaronaDAO {
       return null;
     }
   }
+
+  Future<void> adicionarPassageiroNaCarona(String idCarona, String idPassageiro) async {
+    try {
+      DocumentReference caronaRef = _caronasCollection.doc(idCarona);
+
+      await caronaRef.update({
+        'passageirosIds': FieldValue.arrayUnion([idPassageiro])
+      });
+    } catch (e) {
+      print('Erro ao adicionar passageiro na carona: $e');
+    }
+  }
+
+  Future<void> decrementarVagas(String idCarona) async {
+    try {
+      DocumentReference caronaRef = _caronasCollection.doc(idCarona);
+
+      await caronaRef.update({
+        'vagas': FieldValue.increment(-1)
+      });
+    } catch (e) {
+      print('Erro ao decrementar vagas: $e');
+    }
+  }
+
+
 }
