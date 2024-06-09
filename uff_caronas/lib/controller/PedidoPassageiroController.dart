@@ -42,4 +42,8 @@ class PedidoPassageiroController {
   atalizarPedidosPassageiroExpirados(List<PedidoPassageiro> pedidosPassageiro) {
     pedidoPassageiroDAO!.atualizarPedidosPassageiroExpirados(pedidosPassageiro);
   }
+
+  Future<PedidoPassageiro?> recuperarPedidoPorId(String id) {
+    return pedidoPassageiroDAO!.recuperarPedidoPassageiroPorId(id);
+  }
 }

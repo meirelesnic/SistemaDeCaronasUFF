@@ -25,7 +25,6 @@ class _PassageiroListBuilderState extends State<PassageiroListBuilder> {
       DismissDirection direction, int index, String pedidoPassageiroId) {
     PedidoPassageiroController pedidoPassageiroController =
         PedidoPassageiroController();
-    // CaronaController caronaController = CaronaController();
 
     setState(() {
       widget.pedidos.removeAt(index);
@@ -33,10 +32,19 @@ class _PassageiroListBuilderState extends State<PassageiroListBuilder> {
     });
     // Executa a ação de acordo com a direção do dismiss
     if (direction == DismissDirection.endToStart) {
-      // implementar adicionar passageiro na carna
       pedidoPassageiroController.recusarPassageiro(pedidoPassageiroId);
     } else if (direction == DismissDirection.startToEnd) {
-      pedidoPassageiroController.aceitarPassageiro(pedidoPassageiroId);
+      var caronaController = CaronaController();
+      PedidoPassageiroController pedidoPassageiroController = PedidoPassageiroController();
+
+      void processarPedido() async {
+        PedidoPassageiro? pedido = await pedidoPassageiroController.recuperarPedidoPorId(pedidoPassageiroId);
+        if (pedido != null) {
+          await caronaController.adicionarPassageiroNaCarona(widget.carona!.id, pedido.userId);
+          pedidoPassageiroController.aceitarPassageiro(pedidoPassageiroId);
+        }
+      }
+      processarPedido();
     }
   }
 

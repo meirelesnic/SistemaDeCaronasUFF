@@ -463,7 +463,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                         );
                       } else {
                         var pedidoPassageiroController = PedidoPassageiroController();
-                         pedidoPassageiroController.criarPedidoPassageiro(user!.id, widget.carona.motoristaId, widget.carona.id, "Pendente");
+                         pedidoPassageiroController.criarPedidoPassageiro(user!.id, widget.carona.motoristaId, widget.carona.id, 'Pendente' );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
                         );
