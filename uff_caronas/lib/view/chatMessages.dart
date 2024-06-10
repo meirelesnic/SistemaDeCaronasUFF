@@ -21,9 +21,9 @@ class _ChatMessagesState extends State<ChatMessages> {
   final ScrollController _scrollController = ScrollController();
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
-      _chatGrupoDAO.sendMessage(widget.chat.docId, _controller.text, user!.nome, user!.id);
+      await _chatGrupoDAO.sendMessage(widget.chat.docId, _controller.text, user!.nome, user!.id);
       _controller.clear();
     }
   }
@@ -35,7 +35,7 @@ class _ChatMessagesState extends State<ChatMessages> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -46,12 +46,12 @@ class _ChatMessagesState extends State<ChatMessages> {
           children: [
             Text(widget.chat.nomeChat,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.background
+              color: Theme.of(context).colorScheme.surface
               )
             ),
             Text(widget.nomeUsuarios,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.background
+              color: Theme.of(context).colorScheme.surface
               )
             )
           ],
@@ -65,17 +65,16 @@ class _ChatMessagesState extends State<ChatMessages> {
               stream: _chatGrupoDAO.getMensagensStream(widget.chat.docId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Erro ao carregar as mensagens'));
+                  return const Center(child: Text('Erro ao carregar as mensagens'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('Nenhuma mensagem'));
+                  return const Center(child: Text('Nenhuma mensagem'));
                 }
 
                 final mensagens = snapshot.data!;
-                print("MENSAGEM CARREGADA");
-                //atualizar mensagem lidas
-
+                _chatGrupoDAO.markAsRead(user!.id, widget.chat.docId);
+                
                 return ListView.builder(
                   //controller: _scrollController,
                   reverse: true,
@@ -95,7 +94,7 @@ class _ChatMessagesState extends State<ChatMessages> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             color: Theme.of(context).colorScheme.onInverseSurface,
             child: Row(
               children: [
@@ -105,7 +104,7 @@ class _ChatMessagesState extends State<ChatMessages> {
                     decoration: InputDecoration(
                       hintText: 'Digite sua mensagem...',
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.background,
+                      fillColor: Theme.of(context).colorScheme.surface,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide.none,
@@ -113,11 +112,11 @@ class _ChatMessagesState extends State<ChatMessages> {
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   child: IconButton(
-                    icon: Icon(Icons.send, color: Colors.white),
+                    icon: const Icon(Icons.send, color: Colors.white),
                     onPressed: _sendMessage,
                   ),
                 ),

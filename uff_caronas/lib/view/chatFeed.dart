@@ -18,7 +18,8 @@ class _ChatFeedState extends State<ChatFeed> {
   // @override
   // void initState() {
   //   super.initState();
-  //   _fetchChatGrupo();
+  //   //_chatGrupoDAO.createDocumentWithSubcollection(' ');
+  //   //_chatGrupoDAO.addMemberToChat('zbLpf36RnImxzOYEgP3h', user!.id, user!.nome);
   // }
 
   // Future<void> _fetchChatGrupo() async {
