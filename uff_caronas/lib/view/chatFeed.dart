@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/model/DAO/ChatGrupoDAO.dart';
+import 'package:uff_caronas/model/modelos/chatGrupo.dart';
 import 'package:uff_caronas/view/custom_widgets/chatCard.dart';
 import 'package:uff_caronas/view/custom_widgets/chatListBuilder.dart';
+import 'login.dart';
 
 class ChatFeed extends StatefulWidget {
   const ChatFeed({super.key});
@@ -10,6 +13,20 @@ class ChatFeed extends StatefulWidget {
 }
 
 class _ChatFeedState extends State<ChatFeed> {
+  final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   //_chatGrupoDAO.createDocumentWithSubcollection(' ');
+  //   //_chatGrupoDAO.addMemberToChat('zbLpf36RnImxzOYEgP3h', user!.id, user!.nome);
+  // }
+
+  // Future<void> _fetchChatGrupo() async {
+  //   chatGrupos = await _chatGrupoDAO.getChatGruposByUserId(user!.id);
+  //   setState(() {});
+  // }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -61,7 +78,22 @@ class _ChatFeedState extends State<ChatFeed> {
             ),
           ),
           Expanded(
-            child: ChatListBuilder()
+            child: StreamBuilder<List<ChatGrupo>>(
+              stream: _chatGrupoDAO.getChatGruposStreamByUserId(user!.id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Erro: ${snapshot.error}'));
+                }
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('Nenhum chat encontrado.'));
+                }
+
+                return ChatListBuilder(grupos: snapshot.data!);
+              },
+            ),
           )
         ],
       ),
