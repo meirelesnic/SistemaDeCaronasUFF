@@ -28,6 +28,7 @@ class ChatGrupoDAO {
     };
 
    await collectionRef.add(data);
+   print('Chat criado');
   }
 
   Future<void> addMemberToChat(String caronaId, String userId, String username) async {
@@ -49,6 +50,7 @@ class ChatGrupoDAO {
       "members.$userId": memberData,
       "membersId": FieldValue.arrayUnion([userId])
     });
+    print('Membro adicionado');
   }
 
   void markAsRead(String userId, String docId) async {
