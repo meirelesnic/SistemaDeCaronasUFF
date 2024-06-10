@@ -14,11 +14,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "480609385955-dki4tqifdeb737j9n33keo925oek93r6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uff_caronas",
+            "certificate_hash": "2766c6798bad9e95429f91aff901d51496f89913"
+          }
+        },
+        {
           "client_id": "480609385955-g69hutvkl6jnocpa6eli953oarjf4abp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.uff_caronas",
             "certificate_hash": "e139f8d93737727a3691a77df34caabf8f7bd0f0"
+          }
+        },
+        {
+          "client_id": "480609385955-n53j2508ig9kmac27e4mp7t9vnmruv2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uff_caronas",
+            "certificate_hash": "c77c6b68462e8370dd5facd6f33f103bf1a8792e"
+          }
+        },
+        {
+          "client_id": "480609385955-q4uq9i3et3l3tb2fih225tjg31ds3h31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.uff_caronas",
+            "certificate_hash": "e4073da146cafce782f5f3dbfc0024cfecb5280b"
           }
         },
         {
