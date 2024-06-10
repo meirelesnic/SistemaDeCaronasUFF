@@ -70,7 +70,7 @@ class PedidoPassageiroDAO {
       Map<Carona?, List<PedidoPassageiro?>> caronaPassageirosMap = {};
       for (int i = 0; i < pedidosPassageiro.length; i++) {
         Carona? carona = await CaronaController()
-            .recuperarCaronaPorId(pedidosPassageiro[i].caronaId);
+            .recuperarCaronaPorIdDoc(pedidosPassageiro[i].caronaId);
         // Usuario? usuario = await UsuarioController()
         //     .recuperarUsuario(pedidosPassageiro[i].userId);
         if (carona != null) {
@@ -138,4 +138,24 @@ class PedidoPassageiroDAO {
       }
     }
   }
+
+  Future<PedidoPassageiro?> recuperarPedidoPassageiroPorId(String id) async {
+    try {
+      DocumentSnapshot snapshot = await _pedidoPassageiroCollection.doc(id).get();
+      if (snapshot.exists) {
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+        if (data != null) {
+          return PedidoPassageiro(
+            id: snapshot.id,
+            userId: data['userId'],
+            motoristaId: data['motoristaId'],
+            caronaId: data['caronaId'],
+            status: data['status'],
+          );
+        }
+      }
+    } catch (e) {
+    }
+  }
+
 }

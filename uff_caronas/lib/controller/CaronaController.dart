@@ -76,4 +76,15 @@ class CaronaController {
     return await caronaDAO?.recuperarCaronaPorId(caronaId);
   }
 
+  Future<Carona?> recuperarCaronaPorIdDoc(String caronaId) async {
+    return await caronaDAO?.recuperarCaronaPorIdDoc(caronaId);
+  }
+
+  Future<void> adicionarPassageiroNaCarona(String idCarona, String idPassageiro) async {
+    await caronaDAO?.adicionarPassageiroNaCarona(idCarona, idPassageiro);
+    await caronaDAO?.decrementarVagas(idCarona);
+  }
+
+
+
 }

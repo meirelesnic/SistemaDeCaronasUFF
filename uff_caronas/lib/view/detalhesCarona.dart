@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:uff_caronas/controller/CaronaController.dart';
+import 'package:uff_caronas/controller/PedidoController.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
+import 'package:uff_caronas/view/login.dart';
+import '../controller/PedidoPassageiroController.dart';
 import '../controller/UsuarioController.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +15,7 @@ import '../model/Services/routeService.dart';
 import '../model/modelos/Carona.dart';
 import '../model/modelos/Usuario.dart';
 import '../model/modelos/Veiculo.dart';
+import 'mainScreen.dart';
 
 class DetalhesCarona extends StatefulWidget {
   final bool isPedido;
@@ -449,9 +454,34 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                   width: screenSize.width * (150/360),
                   height: screenSize.height * (45/800),
                   child: FilledButton(
-                    onPressed: () {
-                      //Metodo para participar da carona
-                      // ou entar na lista de espera (autoaceitar false)
+                    onPressed: () async {
+                      if (widget.carona.autoAceitar) {
+                        var caronaController = CaronaController();
+                        caronaController.adicionarPassageiroNaCarona(widget.carona.id, user!.id);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Você entrou na carona')),
+                        );
+                      } else {
+                        var pedidoPassageiroController = PedidoPassageiroController();
+                         pedidoPassageiroController.criarPedidoPassageiro(user!.id, widget.carona.motoristaId, widget.carona.id, 'Pendente' );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
+                        );
+                      }
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return MainScreen();
+                          },
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: Duration(milliseconds: 250),
+                        ),
+                      );
                     },
                     child: Text('Entrar na Carona'),
                   ),

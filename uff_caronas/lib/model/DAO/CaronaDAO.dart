@@ -199,4 +199,65 @@ class CaronaDAO {
       return null;
     }
   }
+
+  Future<void> adicionarPassageiroNaCarona(String idCarona, String idPassageiro) async {
+    try {
+      DocumentReference caronaRef = _caronasCollection.doc(idCarona);
+
+      await caronaRef.update({
+        'passageirosIds': FieldValue.arrayUnion([idPassageiro])
+      });
+    } catch (e) {
+      print('Erro ao adicionar passageiro na carona: $e');
+    }
+  }
+
+  Future<void> decrementarVagas(String idCarona) async {
+    try {
+      DocumentReference caronaRef = _caronasCollection.doc(idCarona);
+
+      await caronaRef.update({
+        'vagas': FieldValue.increment(-1)
+      });
+    } catch (e) {
+      print('Erro ao decrementar vagas: $e');
+    }
+  }
+
+  Future<Carona?> recuperarCaronaPorIdDoc(String id) async {
+    try {
+      DocumentSnapshot snapshot = await _caronasCollection.doc(id).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+        if (data != null) {
+          return Carona(
+            id: id,
+            origem: List<double>.from(data['origem']),
+            dest: List<double>.from(data['dest']),
+            origemLocal: data['origemLocal'],
+            origemDestino: data['origemDestino'],
+            data: data['data'],
+            hora: data['hora'],
+            autoAceitar: data['autoAceitar'],
+            veiculoId: data['veiculoId'],
+            vagas: data['vagas'],
+            motoristaId: data['motoristaId'],
+            passageirosIds: data['passageirosIds'] != null
+                ? List<String>.from(data['passageirosIds'])
+                : [],
+          );
+        } else {
+          throw ('Dados da carona são nulos');
+        }
+      } else {
+        throw ('Carona não encontrada');
+      }
+    } catch (e) {
+      print('Erro ao recuperar carona por id: $e');
+      return null;
+    }
+  }
+
 }

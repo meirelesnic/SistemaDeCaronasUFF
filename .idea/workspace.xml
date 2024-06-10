@@ -10,11 +10,11 @@
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/PedidoPassageiroController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/PedidoPassageiroController.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaCard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaListBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/caronaListBuilder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/historico.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/historico.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/PedidoPassageiroDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/PedidoPassageiroDAO.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/passageiroListBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/passageiroListBuilder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/detalhesCarona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/detalhesCarona.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
