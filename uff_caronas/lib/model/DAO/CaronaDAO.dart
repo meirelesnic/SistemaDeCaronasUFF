@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uff_caronas/model/DAO/ChatGrupoDAO.dart';
+import '../../view/login.dart';
 import '../modelos/Carona.dart';
 
 class CaronaDAO {
@@ -28,7 +30,7 @@ class CaronaDAO {
     try {
       String id = _gerarId();
 
-      await _caronasCollection.add({
+      DocumentReference docRefId = await _caronasCollection.add({
         'id': id,
         'origem': origem,
         'dest': dest,
@@ -42,6 +44,14 @@ class CaronaDAO {
         'motoristaId': motoristaId,
         'passageirosIds': passageirosIds,
       });
+      
+      //criar Chat,
+      String nomeChat = 'Carona ${user!.nome.split(' ').first} - $data - $hora';
+      ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+      await _chatGrupoDAO.createNewChat(docRefId.id, nomeChat);
+      //Add motorista no chat
+      await _chatGrupoDAO.addMemberToChat(docRefId.id, motoristaId, user!.nome);
+
     } catch (e) {
       print('Erro ao salvar carona: $e');
     }
@@ -207,6 +217,9 @@ class CaronaDAO {
       await caronaRef.update({
         'passageirosIds': FieldValue.arrayUnion([idPassageiro])
       });
+
+      ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+      await _chatGrupoDAO.addMemberToChat(caronaRef.id, user!.id, user!.nome);
     } catch (e) {
       print('Erro ao adicionar passageiro na carona: $e');
     }
