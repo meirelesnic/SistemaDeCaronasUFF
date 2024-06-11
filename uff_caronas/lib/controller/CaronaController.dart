@@ -85,6 +85,9 @@ class CaronaController {
     await caronaDAO?.decrementarVagas(idCarona);
   }
 
+  Future<String?> docIdString(String id) async {
+    return await caronaDAO?.docIdString(id);
+  }
 
 
 }

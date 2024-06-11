@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/ChatGrupoDAO.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
+import 'package:uff_caronas/model/modelos/chatGrupo.dart';
 import 'package:uff_caronas/view/detalhesCarona.dart';
 import '../../controller/VeiculoController.dart';
 
@@ -11,6 +14,7 @@ import '../../controller/VeiculoController.dart';
 import '../../model/Services/routeService.dart';
 import '../../model/modelos/Usuario.dart';
 import '../../model/modelos/Veiculo.dart';
+import '../chatMessages.dart';
 
 class CaronaCard extends StatefulWidget {
   final Carona carona;
@@ -25,6 +29,7 @@ class _CaronaCardState extends State<CaronaCard> {
   int widthScale = 500;
   late RouteService routeService;
   List<LatLng> route = [];
+  final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
 
   @override
   void initState() {
@@ -37,6 +42,30 @@ class _CaronaCardState extends State<CaronaCard> {
       setState(() {
         route = result;
       });
+  }
+
+  Future<ChatGrupo?> _getChat() async {
+    CaronaController caronaController = CaronaController();
+    String? docId = await caronaController.docIdString(widget.carona.id);
+    print(docId);
+    ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
+    print(chat?.membersId);
+    return chat;
+  }
+
+  Future<String?> _getPassageiros(List<String> passageirosIds) async {
+    UsuarioController usuarioController = UsuarioController();
+    String fetchedPassageiros = '';
+    for (String id in passageirosIds) {
+    Usuario? usuario = await usuarioController.recuperarUsuario(id);
+      if (usuario != null) {
+        fetchedPassageiros += '${usuario.nome.split(' ').first}, ';
+      }
+    }
+     if (fetchedPassageiros.isNotEmpty) {
+      fetchedPassageiros = fetchedPassageiros.substring(0, fetchedPassageiros.length - 2);
+    }
+    return fetchedPassageiros;
   }
 
   @override
@@ -262,8 +291,24 @@ class _CaronaCardState extends State<CaronaCard> {
                     child: Text('Detalhes'),
                   ),
                   FilledButton(
-                    onPressed: () {
-                      // Tela mensagem, passando ID do chat
+                    onPressed: () async {
+                      ChatGrupo? chat = await _getChat();
+                      String? passageiros = await _getPassageiros(chat!.membersId);
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return ChatMessages(chat: chat, nomeUsuarios: passageiros!,);
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
                     },
                     child: Text('Chat'),
                   ),

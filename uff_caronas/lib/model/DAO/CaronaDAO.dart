@@ -273,4 +273,20 @@ class CaronaDAO {
     }
   }
 
+  Future<String?> docIdString(String id) async {
+    try {
+      QuerySnapshot querySnapshot = await _caronasCollection.where('id', isEqualTo: id).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot snapshot = querySnapshot.docs.first;
+        return snapshot.id; // Retorna o Document ID
+      } else {
+        throw ('Carona não encontrada');
+      }
+    } catch (e) {
+      print('Erro ao recuperar carona por id: $e');
+      return null;
+    }
+  }
+
 }
