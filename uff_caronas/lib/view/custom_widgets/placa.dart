@@ -47,12 +47,18 @@ class _PlacaState extends State<Placa> {
         Image.asset('image/antiga.png',
           width: widget.width,
         ),
-        Text(widget.placa.substring(0, 3) + '-' + widget.placa.substring(3),
+        Column(
+          children: [
+            Container(height: widget.width * 0.05,),
+            Text(widget.placa.substring(0, 3) + '-' + widget.placa.substring(3),
           style: TextStyle(
-            fontSize: widget.width * 0.22,
+            fontSize: widget.width * 0.2,
             fontFamily: 'antiga'
           ),
         )
+          ],
+        ),
+        
       ],
     );
   }
