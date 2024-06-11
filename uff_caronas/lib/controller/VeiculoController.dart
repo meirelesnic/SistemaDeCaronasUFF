@@ -29,6 +29,10 @@ class VeiculoController {
     return veiculoDAO?.recuperarVeiculoDoc(id);
   }
 
+  Future<bool>? hasVeiculoIdUser(String userId){
+    return veiculoDAO?.hasVeiculoIdUser(userId);
+  }
+
   bool validaAno(int year) {
     int aux = DateTime.now().year;
     if (aux < year || year + 25 < aux) return false;

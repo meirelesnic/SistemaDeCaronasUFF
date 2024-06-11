@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import 'package:uff_caronas/view/editarVeiculo.dart';
 import '../../model/modelos/Veiculo.dart';
 
@@ -58,12 +59,7 @@ class _VeiculoCardState extends State<VeiculoCard> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Placa: ${widget.veiculo.placa}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: screenSize.height * 1 / 40),
-                  ),
+                  Placa(placa: widget.veiculo.placa, width: screenSize.width * (115/360)),
                   Text("Cor: ${widget.veiculo.cor}",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ],

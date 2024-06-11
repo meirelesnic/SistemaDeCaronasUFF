@@ -128,4 +128,18 @@ class VeiculoDAO {
       print('Erro ao atualizar veículo: $e');
     }
   }
+
+  Future<bool> hasVeiculoIdUser(String userId) async {
+    AggregateQuerySnapshot querySnapshot = await _veiculosCollection
+        .where('usuarioId', isEqualTo: userId)
+        .count()
+        .get();
+
+        if(querySnapshot.count! > 0){
+          print(querySnapshot.count);
+          return true;
+        }
+        return false;
+  }
+
 }

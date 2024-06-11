@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/model/DAO/CaronaDAO.dart';
+import 'package:uff_caronas/view/custom_widgets/veiculoData.dart';
 import 'login.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:uff_caronas/model/DAO/VeiculoDAO.dart';
@@ -433,16 +434,16 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                                 color: Theme.of(context).colorScheme.primary
                             ),
                           ),
-                          Row(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               DropdownButton<Veiculo>(
-                                value: null, // Valor inicial do dropdown (vazio)
-                                hint: Text('Selecione'), // Texto de dica quando nenhum item está selecionado
+                                value: null, 
+                                hint: Text('Selecione'), 
                                 onChanged: (Veiculo? selected) {
                                   selectedVeiculo = selected;
                                   setState(() {
-                                    // Atualiza o estado com o novo veículo selecionado
+                                    
                                   });
                                 },
                                 items: veiculos.map((Veiculo veiculo) {
@@ -453,26 +454,7 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                                 }).toList(),
                               ),
                               selectedVeiculo != null ?
-                              Row(                          
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Image.asset(
-                                      "image/car_icons/carro_${selectedVeiculo?.cor.toLowerCase()}.png",
-                                      width: screenSize.width * (50/360),
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(selectedVeiculo!.modelo),
-                                      Text(selectedVeiculo!.placa.toUpperCase(),)
-
-                                    ],
-                                  )
-                                ]
-                              ) 
-                              : SizedBox.shrink(),
+                              VeiculoData(veiculo: selectedVeiculo!): Container(),
                             ],
                           ),
                           Text('Vagas',

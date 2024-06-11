@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:uff_caronas/controller/VeiculoController.dart';
+import 'package:uff_caronas/view/adicionarVeiculo.dart';
 import 'package:uff_caronas/view/caronaEmEspera.dart';
 import 'package:uff_caronas/view/oferecerCarona.dart';
 import 'package:uff_caronas/view/pedidoArmazenado.dart';
@@ -16,6 +18,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool possuiVeiculo = false;
+  VeiculoController _veiculoController = VeiculoController();
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -107,7 +112,6 @@ class _HomeState extends State<Home> {
             ),
             InkWell(
                 onTap: () {
-                  print('Pedir');
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) {
@@ -153,23 +157,42 @@ class _HomeState extends State<Home> {
                       ],
                     ))),
             InkWell(
-                onTap: () {
-                  print('Oferecer');
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return OferecerCarona();
-                      },
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: Duration(milliseconds: 250),
-                    ),
-                  );
+                onTap: () async {
+                  possuiVeiculo = (await _veiculoController.hasVeiculoIdUser(user!.id))!;
+                  if (possuiVeiculo) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return OferecerCarona();
+                        },
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 250),
+                      ),
+                    );
+                  }else{
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return AdicionarVeiculo();
+                        },
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 250),
+                      ),
+                    );
+                
+                  }
                 },
                 child: Container(
                     margin: EdgeInsets.symmetric(
