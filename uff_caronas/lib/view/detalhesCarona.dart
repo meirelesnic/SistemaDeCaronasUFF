@@ -4,15 +4,18 @@ import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/controller/PedidoController.dart';
+import 'package:uff_caronas/view/chatMessages.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import 'package:uff_caronas/view/login.dart';
 import '../controller/PedidoPassageiroController.dart';
 import '../controller/UsuarioController.dart';
+import '../model/DAO/ChatGrupoDAO.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
 import '../model/Services/routeService.dart';
 import '../model/modelos/Carona.dart';
+import '../model/modelos/chatGrupo.dart';
 import '../model/modelos/Usuario.dart';
 import '../model/modelos/Veiculo.dart';
 import 'mainScreen.dart';
@@ -41,6 +44,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   bool isLoading = true;
   List<Usuario> passageiros = [];
   bool isPassageirosLoading = true;
+  final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
 
   @override
   void initState() {
@@ -75,6 +79,30 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
       passageiros = fetchedPassageiros;
       isPassageirosLoading = false;
     });
+  }
+
+  Future<ChatGrupo?> _getChat() async {
+    CaronaController caronaController = CaronaController();
+    String? docId = await caronaController.docIdString(widget.carona.id);
+    print(docId);
+    ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
+    print(chat?.membersId);
+    return chat;
+  }
+
+  Future<String?> _getPassageiros(List<String> passageirosIds) async {
+    UsuarioController usuarioController = UsuarioController();
+    String fetchedPassageiros = '';
+    for (String id in passageirosIds) {
+    Usuario? usuario = await usuarioController.recuperarUsuario(id);
+      if (usuario != null) {
+        fetchedPassageiros += '${usuario.nome.split(' ').first}, ';
+      }
+    }
+     if (fetchedPassageiros.isNotEmpty) {
+      fetchedPassageiros = fetchedPassageiros.substring(0, fetchedPassageiros.length - 2);
+    }
+    return fetchedPassageiros;
   }
 
   @override
@@ -404,8 +432,24 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               const Spacer(),
                               !widget.isPedido
                                   ? FilledButton(
-                                      onPressed: () {
-                                        // Tela mensagem, passando ID do chat
+                                      onPressed: () async {
+                                        ChatGrupo? chat = await _getChat();
+                                        String? passageiros = await _getPassageiros(chat!.membersId);
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation, secondaryAnimation) {
+                                              return ChatMessages(chat: chat, nomeUsuarios: passageiros!,);
+                                            },
+                                            transitionsBuilder:
+                                                (context, animation, secondaryAnimation, child) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: child,
+                                              );
+                                            },
+                                            transitionDuration: const Duration(milliseconds: 250),
+                                          ),
+                                        );
                                       },
                                       child: const Text('Chat'),
                                     )
