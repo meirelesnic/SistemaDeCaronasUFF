@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
-import 'package:uff_caronas/controller/PedidoController.dart';
 import 'package:uff_caronas/view/chatMessages.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import 'package:uff_caronas/view/login.dart';
@@ -12,7 +11,6 @@ import '../controller/UsuarioController.dart';
 import '../model/DAO/ChatGrupoDAO.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
-import 'package:shimmer/shimmer.dart';
 import '../model/Services/routeService.dart';
 import '../model/modelos/Carona.dart';
 import '../model/modelos/chatGrupo.dart';
@@ -84,9 +82,9 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   Future<ChatGrupo?> _getChat() async {
     CaronaController caronaController = CaronaController();
     String? docId = await caronaController.docIdString(widget.carona.id);
-    print(docId);
+    //print(docId);
     ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
-    print(chat?.membersId);
+    //print(chat?.membersId);
     return chat;
   }
 
@@ -163,7 +161,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                 //   )
                                 // ),
                                 // const SizedBox(height: 7,),
-                                Text('Embarque',
+                                const Text('Embarque',
                                   style: TextStyle(
                                     color: Colors.white
                                   ),
@@ -194,7 +192,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                   )
                                 ),
                                 const SizedBox(height: 8,),
-                                Text('Desembarque',
+                                const Text('Desembarque',
                                   style: TextStyle(
                                     color: Colors.white
                                   ),
@@ -231,7 +229,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                     )
                     :
                     Container(),
-                    widget.isPedido ? SizedBox(height: 10,) : Container(),
+                    widget.isPedido ? const SizedBox(height: 10,) : Container(),
                     Container(
                       width: screenSize.width * (313 / 360),
                       padding: EdgeInsets.all(screenSize.width * (9 / 360)),
@@ -458,7 +456,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                           ),
                           ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: passageiros.length,
                             itemBuilder: (context, index) {
                               final passageiro = passageiros[index];
@@ -490,10 +488,10 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Voltar'),
+                    child: const Text('Voltar'),
                   ),
                 ),
-                SizedBox(width: 7,),
+                const SizedBox(width: 7,),
                 SizedBox(
                   width: screenSize.width * (150/360),
                   height: screenSize.height * (45/800),
@@ -503,19 +501,19 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                         var caronaController = CaronaController();
                         caronaController.adicionarPassageiroNaCarona(widget.carona.id, user!.id);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Você entrou na carona')),
+                          const SnackBar(content: Text('Você entrou na carona')),
                         );
                       } else {
                         var pedidoPassageiroController = PedidoPassageiroController();
                          pedidoPassageiroController.criarPedidoPassageiro(user!.id, widget.carona.motoristaId, widget.carona.id, 'Pendente' );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
+                          const SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
                         );
                       }
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder: (context, animation, secondaryAnimation) {
-                            return MainScreen();
+                            return const MainScreen();
                           },
                           transitionsBuilder: (context, animation, secondaryAnimation, child) {
                             return FadeTransition(
@@ -523,11 +521,11 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               child: child,
                             );
                           },
-                          transitionDuration: Duration(milliseconds: 250),
+                          transitionDuration: const Duration(milliseconds: 250),
                         ),
                       );
                     },
-                    child: Text('Entrar na Carona'),
+                    child: const Text('Entrar na Carona'),
                   ),
                 ),
               ],

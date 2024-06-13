@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/AvaliacaoDAO.dart';
 import 'package:uff_caronas/model/DAO/ChatGrupoDAO.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
 import 'package:uff_caronas/model/modelos/chatGrupo.dart';
 import 'package:uff_caronas/view/detalhesCarona.dart';
+import 'package:uff_caronas/view/fazerAvaliacao.dart';
+import 'package:uff_caronas/view/login.dart';
 import '../../controller/VeiculoController.dart';
 
 
@@ -30,6 +34,8 @@ class _CaronaCardState extends State<CaronaCard> {
   late RouteService routeService;
   List<LatLng> route = [];
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+  bool passouData = false;
+  bool jaAvaliou = false;
 
   @override
   void initState() {
@@ -47,9 +53,7 @@ class _CaronaCardState extends State<CaronaCard> {
   Future<ChatGrupo?> _getChat() async {
     CaronaController caronaController = CaronaController();
     String? docId = await caronaController.docIdString(widget.carona.id);
-    print(docId);
     ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
-    print(chat?.membersId);
     return chat;
   }
 
@@ -67,6 +71,26 @@ class _CaronaCardState extends State<CaronaCard> {
     }
     return fetchedPassageiros;
   }
+
+  bool hasPassed(String date, String time) {
+    DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(date);
+
+    TimeOfDay parsedTime = TimeOfDay(
+      hour: int.parse(time.split(':')[0]),
+      minute: int.parse(time.split(':')[1]),
+    );
+
+    DateTime combinedDateTime = DateTime(
+      parsedDate.year,
+      parsedDate.month,
+      parsedDate.day,
+      parsedTime.hour,
+      parsedTime.minute,
+    );
+    DateTime now = DateTime.now();
+    return combinedDateTime.isBefore(now);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -314,6 +338,35 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
+                // D: A data atual passou da data especificada.
+                // P: O motoristaid é igual ao user_id.
+                // L: A lista de passageiros não é vazia.
+              //(¬P∧D)∨(P∧L∧D)
+              
+              !jaAvaliou && ((widget.carona.motoristaId != user!.id && hasPassed(widget.carona.data, widget.carona.hora)) || (widget.carona.motoristaId == user!.id && widget.carona.passageirosIds!.isNotEmpty && hasPassed(widget.carona.data, widget.carona.hora))) ?
+              OutlinedButton(
+                onPressed: () {
+                   Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return FazerAvaliacao(
+                              isMotorista: widget.carona.motoristaId != user!.id,
+                              carona: widget.carona,
+                            );
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                },
+                child: const Text('Fazer Avaliação'),
+              ) : Container()
             ],
           ),
         ),

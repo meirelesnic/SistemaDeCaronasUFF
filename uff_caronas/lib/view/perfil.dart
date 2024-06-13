@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
+import 'package:uff_caronas/view/fazerAvaliacao.dart';
 import 'package:uff_caronas/view/login.dart';
 import 'package:uff_caronas/view/pedidoArmazenado.dart';
 import 'package:uff_caronas/view/meusVeiculos.dart';
-import 'package:uff_caronas/view/motoristaAvaliacao.dart';
-import 'package:uff_caronas/view/passageiroAvaliacao.dart';
+import 'package:uff_caronas/view/verAvaliacao.dart';
 
 import '../model/Services/googleAuthenticator.dart';
 
@@ -198,7 +198,7 @@ class _PerfilState extends State<Perfil> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return PassageiroAvaliacao();
+                                return const VerAvaliacao(isMotorista: true);
                               },
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
@@ -247,7 +247,7 @@ class _PerfilState extends State<Perfil> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return MotoristaAvaliacao();
+                                return const VerAvaliacao(isMotorista: true,);
                               },
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
