@@ -8,7 +8,7 @@ void main() {
 
   setUp(() {
     firestore = FakeFirebaseFirestore();
-    usuarioDAO = UsuarioDAO.comFirestore(firestore);
+    usuarioDAO = UsuarioDAO.comFirestore(firestore: firestore);
   });
 
   test('Teste de salvar usuário', () async {
