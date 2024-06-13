@@ -8,13 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/uff_caronas/test/model/DAO/usuario_dao_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/PedidoPassageiroController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/PedidoPassageiroController.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/PedidoPassageiroDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/PedidoPassageiroDAO.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/passageiroListBuilder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/custom_widgets/passageiroListBuilder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/view/detalhesCarona.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/view/detalhesCarona.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +53,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Pedro",
+    "git-widget-placeholder": "nicolle__unit__testes",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "last_opened_file_path": "C:/tools/dart-sdk",
@@ -98,5 +94,8 @@
       <updated>1714254907621</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="../../../../Documents/GitHub/SistemaDeCaronasUFF/uff_caronas/coverage/lcov.info" NAME="tests in usuario_dao_test.dart Coverage Results" MODIFIED="1717969788508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="FlutterCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
