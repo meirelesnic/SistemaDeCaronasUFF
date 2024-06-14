@@ -5,6 +5,7 @@ import 'package:uff_caronas/controller/UsuarioController.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
 import '../../controller/VeiculoController.dart';
 import 'package:intl/intl.dart';
+import '../../model/DAO/AvaliacaoDAO.dart';
 import '../../model/modelos/CaronaInfo.dart';
 import '../../model/modelos/Usuario.dart';
 import '../../model/modelos/Veiculo.dart';
@@ -21,11 +22,19 @@ class BuscaCaronaCard extends StatefulWidget {
 
 class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
   String horaChegada = '';
-
+  double media = 0;
   @override
   void initState() {
+    _getMedia();
     horaChegada = addMinutesToTimeString(widget.carona.hora, widget.info.routeDuration);
     super.initState();
+  }
+
+  Future<void> _getMedia() async{
+    media = await AvaliacaoDAO.getMedia(widget.carona.motoristaId, true);
+    setState(() {
+      
+    });
   }
 
   String addMinutesToTimeString(String time, int minutes) {
@@ -258,7 +267,7 @@ class _BuscaCaronaCardState extends State<BuscaCaronaCard> {
                   Row(
                     children: [
                       Text(
-                        '4,8',
+                        '$media',
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: screenSize.height * (13 / 800),

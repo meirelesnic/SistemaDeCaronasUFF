@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/AvaliacaoDAO.dart';
 import 'package:uff_caronas/view/custom_widgets/fazerAvaliacaoCard.dart';
+import 'package:uff_caronas/view/mainScreen.dart';
 import '../model/modelos/Carona.dart';
 import '../model/modelos/Usuario.dart';
+import 'login.dart';
 
 class FazerAvaliacao extends StatefulWidget {
   final bool isMotorista;
@@ -25,12 +28,12 @@ class _FazerAvaliacaoState extends State<FazerAvaliacao> {
 
   @override
   void initState() {
-    if(widget.isMotorista){
-      fetchPassageiros([widget.carona.motoristaId]);
-    }else{
+    if(!widget.isMotorista){
       if (widget.carona.passageirosIds != null) {
         fetchPassageiros(widget.carona.passageirosIds!);
       }
+    }else{
+      fetchPassageiros([widget.carona.motoristaId]);
     }
     super.initState();
   }
@@ -139,8 +142,30 @@ class _FazerAvaliacaoState extends State<FazerAvaliacao> {
                   child: FilledButton(
                     onPressed: () {
                       if(notasBool.every((element) => element == true) && comentariosBool.every((element) => element == true)){
-                        
-                        
+                        for (int i = 0; i < passageiros.length; i++) {
+                          AvaliacaoDAO.salvarAvaliacao(
+                            passageiros[i].id,
+                            widget.isMotorista,
+                            user!.nome,
+                            notas[i],
+                            comentarios[i]
+                            );
+                        }
+                        AvaliacaoDAO.definirAvaliacaoUsuario(user!.id, widget.carona.id);
+                        Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return const MainScreen();
+                          },
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

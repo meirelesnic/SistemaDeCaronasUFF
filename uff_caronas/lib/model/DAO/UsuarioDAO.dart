@@ -27,7 +27,7 @@ class UsuarioDAO {
         Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
         if (data != null) {
           return Usuario(
-            id: snapshot.id,
+            id: id,
             nome: data['nome'],
             email: data['email'],
             fotoUrl: data['fotoUrl'],

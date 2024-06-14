@@ -6,8 +6,10 @@ import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/view/chatMessages.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import 'package:uff_caronas/view/login.dart';
+import 'package:uff_caronas/view/verAvaliacao.dart';
 import '../controller/PedidoPassageiroController.dart';
 import '../controller/UsuarioController.dart';
+import '../model/DAO/AvaliacaoDAO.dart';
 import '../model/DAO/ChatGrupoDAO.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
@@ -43,17 +45,12 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   List<Usuario> passageiros = [];
   bool isPassageirosLoading = true;
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+  double media = 0;
 
-  @override
+   @override
   void initState() {
     routeService = RouteService();
     usuarioController = UsuarioController();
-    if(widget.isPedido){
-      getEnderecos();
-    }
-    if (widget.carona.passageirosIds != null) {
-      fetchPassageiros(widget.carona.passageirosIds!);
-    }
     super.initState();
   }
 
@@ -65,14 +62,22 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
     });
   }
 
-  void fetchPassageiros(List<String> passageirosIds) async {
+  Future<void> _getMedia() async{
+    media = await AvaliacaoDAO.getMedia(widget.carona.motoristaId, true);
+    setState(() {
+      
+    });
+  }
+
+  void fetchPassageiros(List<String> pId) async {
     List<Usuario> fetchedPassageiros = [];
-    for (String id in passageirosIds) {
+    for (String id in pId) {
       Usuario? usuario = await usuarioController.recuperarUsuario(id);
       if (usuario != null) {
         fetchedPassageiros.add(usuario);
       }
     }
+    print('no bd ${widget.carona.passageirosIds!.length}, aqui ${fetchedPassageiros.length}');
     setState(() {
       passageiros = fetchedPassageiros;
       isPassageirosLoading = false;
@@ -101,6 +106,19 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
       fetchedPassageiros = fetchedPassageiros.substring(0, fetchedPassageiros.length - 2);
     }
     return fetchedPassageiros;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Load data on initial render
+    _getMedia();
+    if (widget.isPedido) {
+      getEnderecos();
+    }
+    if (widget.carona.passageirosIds != null) {
+      fetchPassageiros(widget.carona.passageirosIds!);
+    }
   }
 
   @override
@@ -267,7 +285,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                     Row(
                                       children: [
                                         Text(
-                                          '4,8',
+                                          '$media',
                                           style: Theme.of(context).textTheme.titleMedium,
                                         ),
                                         const Icon(Icons.star_rounded),
@@ -275,7 +293,21 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        //ver reputacao ID
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation, secondaryAnimation) {
+                                              return VerAvaliacao(userId: widget.carona.motoristaId, isMotorista: true);
+                                            },
+                                            transitionsBuilder:
+                                                (context, animation, secondaryAnimation, child) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: child,
+                                              );
+                                            },
+                                            transitionDuration: const Duration(milliseconds: 250),
+                                          ),
+                                        );
                                       },
                                       child: const Text('Ver reputação'),
                                     ),

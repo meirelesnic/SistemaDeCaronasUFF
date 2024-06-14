@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uff_caronas/model/modelos/Avaliacao.dart';
 import 'package:uff_caronas/view/custom_widgets/estrelas.dart';
 
 
 class AvaliacaoCard extends StatefulWidget {
-  //Avaliacao
-  const AvaliacaoCard({super.key});
+  final Avaliacao avaliacao;
+  const AvaliacaoCard({super.key, required this.avaliacao});
 
   @override
   State<AvaliacaoCard> createState() => _AvaliacaoCardState();
@@ -18,6 +19,7 @@ class _AvaliacaoCardState extends State<AvaliacaoCard> {
     return  Column(
       children: [
         Container(
+          width: screenSize.width,
           padding: const EdgeInsets.all(18),
           //color: Theme.of(context).colorScheme.inversePrimary,
           decoration: BoxDecoration(
@@ -53,17 +55,17 @@ class _AvaliacaoCardState extends State<AvaliacaoCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Leonardo Maia',
+              Text(widget.avaliacao.autor,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold
                 )
               ),
               SizedBox(
                 width: screenSize.width * (90/360),
-                child: Estrelas(rating: 4)
+                child: Estrelas(rating: widget.avaliacao.nota)
               ),
               const SizedBox(height: 10,),
-              Text('"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet urna et nibh viverra maximus in ac leo. Suspendisse est felis, laoreet ac orci in, dapibus semper quam. Suspendisse nec sem mattis, facilisis magna sed,imperdiet leo. Etiam ornare elit a scelerisque consectetur."',
+              Text('"${widget.avaliacao.comentario}"',
                 style: Theme.of(context).textTheme.bodyMedium,
               )
             ],

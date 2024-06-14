@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/AvaliacaoDAO.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
 import 'package:uff_caronas/view/fazerAvaliacao.dart';
 import 'package:uff_caronas/view/login.dart';
@@ -23,6 +24,23 @@ class _PerfilState extends State<Perfil> {
   TextEditingController _userNameController =
   TextEditingController(text: user!.nome);
   String nomeAntigo = user!.nome;
+
+  double mediaMotorista = 0;
+  double mediaPassageiro = 0;
+
+  @override
+  void initState() {
+    _getMedia();
+    super.initState();
+  }
+
+  Future<void> _getMedia() async{
+    mediaMotorista = await AvaliacaoDAO.getMedia(user!.id, true);
+    mediaPassageiro = await AvaliacaoDAO.getMedia(user!.id, false);
+    setState(() {
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +202,7 @@ class _PerfilState extends State<Perfil> {
                       Row(
                         children: [
                           Text(
-                            '4,8',
+                            '${mediaPassageiro}',
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: screenSize.height * (13 / 800)),
@@ -198,7 +216,7 @@ class _PerfilState extends State<Perfil> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return const VerAvaliacao(isMotorista: true);
+                                return VerAvaliacao(userId: user!.id , isMotorista: false,);
                               },
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
@@ -233,7 +251,7 @@ class _PerfilState extends State<Perfil> {
                       Row(
                         children: [
                           Text(
-                            '4,8',
+                            '${mediaMotorista}',
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: screenSize.height * (13 / 800)),
@@ -247,7 +265,7 @@ class _PerfilState extends State<Perfil> {
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return const VerAvaliacao(isMotorista: true,);
+                                return VerAvaliacao(userId: user!.id , isMotorista: true,);
                               },
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {

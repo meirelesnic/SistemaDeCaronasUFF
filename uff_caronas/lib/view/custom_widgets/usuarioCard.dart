@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
 
+import '../../model/DAO/AvaliacaoDAO.dart';
+
 class UsuarioCard extends StatefulWidget {
   final Usuario user;
   const UsuarioCard({super.key, required this.user});
@@ -10,6 +12,21 @@ class UsuarioCard extends StatefulWidget {
 }
 
 class _UsuarioCardState extends State<UsuarioCard> {
+  double media = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> _getMedia() async{
+    media = await AvaliacaoDAO.getMedia(widget.user.id, false);
+    setState(() {
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -56,7 +73,7 @@ class _UsuarioCardState extends State<UsuarioCard> {
                         Row(
                           children: [
                             Text(
-                              '4,8',
+                              '$media',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Icon(

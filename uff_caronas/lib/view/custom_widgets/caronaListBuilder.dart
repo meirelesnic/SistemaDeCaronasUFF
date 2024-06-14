@@ -20,12 +20,13 @@ class _CaronaListBuilderState extends State<CaronaListBuilder> {
     for (var c in caronas) {
       List<String> ids = [];
       if(c.passageirosIds!.isNotEmpty){
-        ids = c.passageirosIds!;
+        ids.addAll(c.passageirosIds!);
       }
       ids.add(c.motoristaId);
       await AvaliacaoDAO.criarOuVerificarAvaliacao(ids, c.id);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

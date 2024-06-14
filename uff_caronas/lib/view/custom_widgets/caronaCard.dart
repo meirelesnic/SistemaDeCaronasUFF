@@ -35,7 +35,6 @@ class _CaronaCardState extends State<CaronaCard> {
   List<LatLng> route = [];
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
   bool passouData = false;
-  bool jaAvaliou = false;
 
   @override
   void initState() {
@@ -49,6 +48,8 @@ class _CaronaCardState extends State<CaronaCard> {
         route = result;
       });
   }
+
+ 
 
   Future<ChatGrupo?> _getChat() async {
     CaronaController caronaController = CaronaController();
@@ -95,25 +96,29 @@ class _CaronaCardState extends State<CaronaCard> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future: Future.wait([
-        UsuarioController().recuperarUsuario(widget.carona.motoristaId),
-        VeiculoController().recuperarVeiculoDoc(widget.carona.veiculoId) ?? Future.value(null)
-      ]),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(width: 15); // Mostra um indicador de progresso enquanto os dados estão sendo carregados
-        } else if (snapshot.hasError) {
-          return Text('Erro: ${snapshot.error}'); // Exibe uma mensagem de erro se houver algum erro
-        } else {
-          Usuario? motorista = snapshot.data?[0] as Usuario?;
-          Veiculo? veiculo = snapshot.data?[1] as Veiculo?;
-          return _buildCaronaCard(context, motorista, veiculo); // Constrói o widget do CaronaCard com os dados do motorista e veículo
-        }
-      },
-    );
+  future: Future.wait([
+    UsuarioController().recuperarUsuario(widget.carona.motoristaId),
+    VeiculoController().recuperarVeiculoDoc(widget.carona.veiculoId) ?? Future.value(null),
+    AvaliacaoDAO.getMedia(widget.carona.motoristaId, true),
+    AvaliacaoDAO.usuarioAvaliouCarona(user!.id, widget.carona.id)
+  ]),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Container(width: 15); // Mostra um indicador de progresso enquanto os dados estão sendo carregados
+    } else if (snapshot.hasError) {
+      return Text('Erro: ${snapshot.error}'); // Exibe uma mensagem de erro se houver algum erro
+    } else {
+      Usuario? motorista = snapshot.data?[0] as Usuario?;
+      Veiculo? veiculo = snapshot.data?[1] as Veiculo?;
+      double mediaMotorista = snapshot.data?[2] as double? ?? 0.0; // Obtém a média do motorista
+      bool jaAvaliou = snapshot.data?[3] as bool? ?? false;
+      return _buildCaronaCard(context, motorista, veiculo, mediaMotorista, jaAvaliou); // Constrói o widget do CaronaCard com os dados do motorista, veículo e média
+    }
+  },
+);
   }
 
-  Widget _buildCaronaCard(BuildContext context, Usuario? motorista, Veiculo? veiculo) {
+  Widget _buildCaronaCard(BuildContext context, Usuario? motorista, Veiculo? veiculo, double media, bool jaAvaliou) {
     final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -164,7 +169,7 @@ class _CaronaCardState extends State<CaronaCard> {
                       Row(
                         children: [
                           Text(
-                            '4,8',
+                            '$media',
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: screenSize.height * (13 / 800),
@@ -286,6 +291,7 @@ class _CaronaCardState extends State<CaronaCard> {
                   FilledButton(
                     onPressed: () async {
                       await _getRoute();
+                      print('n passageiros ${widget.carona.passageirosIds!.length}');
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:

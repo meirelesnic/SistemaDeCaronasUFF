@@ -9,6 +9,7 @@ import 'package:uff_caronas/model/modelos/Veiculo.dart';
 import 'package:uff_caronas/view/mainScreen.dart';
 import 'package:uff_caronas/controller/AutenticaçãoController.dart';
 import 'package:uff_caronas/view/perfil.dart';
+import '../model/DAO/AvaliacaoDAO.dart';
 import '../model/Services/googleAuthenticator.dart';
 
 Usuario? user;
@@ -69,10 +70,11 @@ class _LoginState extends State<Login> {
                     );
                   } else {
                     usuarioController.salvarUsuario(user!.id, user!.nome, user!.email, user!.fotoUrl);
+                    AvaliacaoDAO.verificarECriarDocumento(user!.id);
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) {
-                          return Perfil();
+                          return MainScreen();
                         },
                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                           return FadeTransition(
