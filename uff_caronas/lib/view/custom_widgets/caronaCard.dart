@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
 import 'package:uff_caronas/controller/UsuarioController.dart';
+import 'package:uff_caronas/model/DAO/AvaliacaoDAO.dart';
 import 'package:uff_caronas/model/DAO/ChatGrupoDAO.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
 import 'package:uff_caronas/model/modelos/chatGrupo.dart';
 import 'package:uff_caronas/view/detalhesCarona.dart';
+import 'package:uff_caronas/view/fazerAvaliacao.dart';
+import 'package:uff_caronas/view/login.dart';
 import '../../controller/VeiculoController.dart';
 
 
@@ -30,6 +34,7 @@ class _CaronaCardState extends State<CaronaCard> {
   late RouteService routeService;
   List<LatLng> route = [];
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+  bool passouData = false;
 
   @override
   void initState() {
@@ -44,12 +49,12 @@ class _CaronaCardState extends State<CaronaCard> {
       });
   }
 
+ 
+
   Future<ChatGrupo?> _getChat() async {
     CaronaController caronaController = CaronaController();
     String? docId = await caronaController.docIdString(widget.carona.id);
-    print(docId);
     ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
-    print(chat?.membersId);
     return chat;
   }
 
@@ -68,28 +73,52 @@ class _CaronaCardState extends State<CaronaCard> {
     return fetchedPassageiros;
   }
 
+  bool hasPassed(String date, String time) {
+    DateTime parsedDate = DateFormat('dd/MM/yyyy').parse(date);
+
+    TimeOfDay parsedTime = TimeOfDay(
+      hour: int.parse(time.split(':')[0]),
+      minute: int.parse(time.split(':')[1]),
+    );
+
+    DateTime combinedDateTime = DateTime(
+      parsedDate.year,
+      parsedDate.month,
+      parsedDate.day,
+      parsedTime.hour,
+      parsedTime.minute,
+    );
+    DateTime now = DateTime.now();
+    return combinedDateTime.isBefore(now);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future: Future.wait([
-        UsuarioController().recuperarUsuario(widget.carona.motoristaId),
-        VeiculoController().recuperarVeiculoDoc(widget.carona.veiculoId) ?? Future.value(null)
-      ]),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(width: 15); // Mostra um indicador de progresso enquanto os dados estão sendo carregados
-        } else if (snapshot.hasError) {
-          return Text('Erro: ${snapshot.error}'); // Exibe uma mensagem de erro se houver algum erro
-        } else {
-          Usuario? motorista = snapshot.data?[0] as Usuario?;
-          Veiculo? veiculo = snapshot.data?[1] as Veiculo?;
-          return _buildCaronaCard(context, motorista, veiculo); // Constrói o widget do CaronaCard com os dados do motorista e veículo
-        }
-      },
-    );
+  future: Future.wait([
+    UsuarioController().recuperarUsuario(widget.carona.motoristaId),
+    VeiculoController().recuperarVeiculoDoc(widget.carona.veiculoId) ?? Future.value(null),
+    AvaliacaoDAO.getMedia(widget.carona.motoristaId, true),
+    AvaliacaoDAO.usuarioAvaliouCarona(user!.id, widget.carona.id)
+  ]),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Container(width: 15); // Mostra um indicador de progresso enquanto os dados estão sendo carregados
+    } else if (snapshot.hasError) {
+      return Text('Erro: ${snapshot.error}'); // Exibe uma mensagem de erro se houver algum erro
+    } else {
+      Usuario? motorista = snapshot.data?[0] as Usuario?;
+      Veiculo? veiculo = snapshot.data?[1] as Veiculo?;
+      double mediaMotorista = snapshot.data?[2] as double? ?? 0.0; // Obtém a média do motorista
+      bool jaAvaliou = snapshot.data?[3] as bool? ?? false;
+      return _buildCaronaCard(context, motorista, veiculo, mediaMotorista, jaAvaliou); // Constrói o widget do CaronaCard com os dados do motorista, veículo e média
+    }
+  },
+);
   }
 
-  Widget _buildCaronaCard(BuildContext context, Usuario? motorista, Veiculo? veiculo) {
+  Widget _buildCaronaCard(BuildContext context, Usuario? motorista, Veiculo? veiculo, double media, bool jaAvaliou) {
     final screenSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -140,7 +169,7 @@ class _CaronaCardState extends State<CaronaCard> {
                       Row(
                         children: [
                           Text(
-                            '4,8',
+                            '$media',
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: screenSize.height * (13 / 800),
@@ -262,6 +291,7 @@ class _CaronaCardState extends State<CaronaCard> {
                   FilledButton(
                     onPressed: () async {
                       await _getRoute();
+                      print('n passageiros ${widget.carona.passageirosIds!.length}');
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:
@@ -314,6 +344,35 @@ class _CaronaCardState extends State<CaronaCard> {
                   ),
                 ],
               ),
+                // D: A data atual passou da data especificada.
+                // P: O motoristaid é igual ao user_id.
+                // L: A lista de passageiros não é vazia.
+              //(¬P∧D)∨(P∧L∧D)
+              
+              !jaAvaliou && ((widget.carona.motoristaId != user!.id && hasPassed(widget.carona.data, widget.carona.hora)) || (widget.carona.motoristaId == user!.id && widget.carona.passageirosIds!.isNotEmpty && hasPassed(widget.carona.data, widget.carona.hora))) ?
+              OutlinedButton(
+                onPressed: () {
+                   Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return FazerAvaliacao(
+                              isMotorista: widget.carona.motoristaId != user!.id,
+                              carona: widget.carona,
+                            );
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        ),
+                      );
+                },
+                child: const Text('Fazer Avaliação'),
+              ) : Container()
             ],
           ),
         ),

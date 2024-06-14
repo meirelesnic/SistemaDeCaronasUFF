@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uff_caronas/controller/CaronaController.dart';
-import 'package:uff_caronas/controller/PedidoController.dart';
 import 'package:uff_caronas/view/chatMessages.dart';
 import 'package:uff_caronas/view/custom_widgets/placa.dart';
 import 'package:uff_caronas/view/login.dart';
+import 'package:uff_caronas/view/verAvaliacao.dart';
 import '../controller/PedidoPassageiroController.dart';
 import '../controller/UsuarioController.dart';
+import '../model/DAO/AvaliacaoDAO.dart';
 import '../model/DAO/ChatGrupoDAO.dart';
 import '../model/Services/mapa.dart';
 import 'package:flutter/services.dart';
-import 'package:shimmer/shimmer.dart';
 import '../model/Services/routeService.dart';
 import '../model/modelos/Carona.dart';
 import '../model/modelos/chatGrupo.dart';
@@ -45,17 +45,12 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   List<Usuario> passageiros = [];
   bool isPassageirosLoading = true;
   final ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
+  double media = 0;
 
-  @override
+   @override
   void initState() {
     routeService = RouteService();
     usuarioController = UsuarioController();
-    if(widget.isPedido){
-      getEnderecos();
-    }
-    if (widget.carona.passageirosIds != null) {
-      fetchPassageiros(widget.carona.passageirosIds!);
-    }
     super.initState();
   }
 
@@ -67,14 +62,22 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
     });
   }
 
-  void fetchPassageiros(List<String> passageirosIds) async {
+  Future<void> _getMedia() async{
+    media = await AvaliacaoDAO.getMedia(widget.carona.motoristaId, true);
+    setState(() {
+      
+    });
+  }
+
+  void fetchPassageiros(List<String> pId) async {
     List<Usuario> fetchedPassageiros = [];
-    for (String id in passageirosIds) {
+    for (String id in pId) {
       Usuario? usuario = await usuarioController.recuperarUsuario(id);
       if (usuario != null) {
         fetchedPassageiros.add(usuario);
       }
     }
+    print('no bd ${widget.carona.passageirosIds!.length}, aqui ${fetchedPassageiros.length}');
     setState(() {
       passageiros = fetchedPassageiros;
       isPassageirosLoading = false;
@@ -84,9 +87,9 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   Future<ChatGrupo?> _getChat() async {
     CaronaController caronaController = CaronaController();
     String? docId = await caronaController.docIdString(widget.carona.id);
-    print(docId);
+    //print(docId);
     ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
-    print(chat?.membersId);
+    //print(chat?.membersId);
     return chat;
   }
 
@@ -103,6 +106,19 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
       fetchedPassageiros = fetchedPassageiros.substring(0, fetchedPassageiros.length - 2);
     }
     return fetchedPassageiros;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Load data on initial render
+    _getMedia();
+    if (widget.isPedido) {
+      getEnderecos();
+    }
+    if (widget.carona.passageirosIds != null) {
+      fetchPassageiros(widget.carona.passageirosIds!);
+    }
   }
 
   @override
@@ -163,7 +179,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                 //   )
                                 // ),
                                 // const SizedBox(height: 7,),
-                                Text('Embarque',
+                                const Text('Embarque',
                                   style: TextStyle(
                                     color: Colors.white
                                   ),
@@ -194,7 +210,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                   )
                                 ),
                                 const SizedBox(height: 8,),
-                                Text('Desembarque',
+                                const Text('Desembarque',
                                   style: TextStyle(
                                     color: Colors.white
                                   ),
@@ -231,7 +247,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                     )
                     :
                     Container(),
-                    widget.isPedido ? SizedBox(height: 10,) : Container(),
+                    widget.isPedido ? const SizedBox(height: 10,) : Container(),
                     Container(
                       width: screenSize.width * (313 / 360),
                       padding: EdgeInsets.all(screenSize.width * (9 / 360)),
@@ -269,7 +285,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                     Row(
                                       children: [
                                         Text(
-                                          '4,8',
+                                          '$media',
                                           style: Theme.of(context).textTheme.titleMedium,
                                         ),
                                         const Icon(Icons.star_rounded),
@@ -277,7 +293,21 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        //ver reputacao ID
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation, secondaryAnimation) {
+                                              return VerAvaliacao(userId: widget.carona.motoristaId, isMotorista: true);
+                                            },
+                                            transitionsBuilder:
+                                                (context, animation, secondaryAnimation, child) {
+                                              return FadeTransition(
+                                                opacity: animation,
+                                                child: child,
+                                              );
+                                            },
+                                            transitionDuration: const Duration(milliseconds: 250),
+                                          ),
+                                        );
                                       },
                                       child: const Text('Ver reputação'),
                                     ),
@@ -458,7 +488,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                           ),
                           ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: passageiros.length,
                             itemBuilder: (context, index) {
                               final passageiro = passageiros[index];
@@ -490,10 +520,10 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Voltar'),
+                    child: const Text('Voltar'),
                   ),
                 ),
-                SizedBox(width: 7,),
+                const SizedBox(width: 7,),
                 SizedBox(
                   width: screenSize.width * (150/360),
                   height: screenSize.height * (45/800),
@@ -503,19 +533,19 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                         var caronaController = CaronaController();
                         caronaController.adicionarPassageiroNaCarona(widget.carona.id, user!.id);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Você entrou na carona')),
+                          const SnackBar(content: Text('Você entrou na carona')),
                         );
                       } else {
                         var pedidoPassageiroController = PedidoPassageiroController();
                          pedidoPassageiroController.criarPedidoPassageiro(user!.id, widget.carona.motoristaId, widget.carona.id, 'Pendente' );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
+                          const SnackBar(content: Text('Seu pedido está em espera de aceitação do motorista')),
                         );
                       }
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder: (context, animation, secondaryAnimation) {
-                            return MainScreen();
+                            return const MainScreen();
                           },
                           transitionsBuilder: (context, animation, secondaryAnimation, child) {
                             return FadeTransition(
@@ -523,11 +553,11 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
                               child: child,
                             );
                           },
-                          transitionDuration: Duration(milliseconds: 250),
+                          transitionDuration: const Duration(milliseconds: 250),
                         ),
                       );
                     },
-                    child: Text('Entrar na Carona'),
+                    child: const Text('Entrar na Carona'),
                   ),
                 ),
               ],

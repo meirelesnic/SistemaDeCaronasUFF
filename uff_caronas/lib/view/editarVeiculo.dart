@@ -516,13 +516,7 @@ class _EditarVeiculoState extends State<EditarVeiculo> {
                                     );
                                     var vecController = VeiculoController();
                                     vecController.editarVeiculo(novoVeiculo);
-                                    Navigator.of(context).push(
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation, secondaryAnimation) {
-                                          return MeusVeiculos();
-                                        },
-                                      ),
-                                    );
+                                    Navigator.of(context).pop();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Theme.of(context).colorScheme.primary,
