@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uff_caronas/view/login.dart';
 import '../controller/VeiculoController.dart';
-import '../model/DAO/VeiculoDAO.dart';
 import '../model/modelos/Veiculo.dart';
-import 'meusVeiculos.dart';
 
 class AdicionarVeiculo extends StatefulWidget {
   @override
@@ -316,13 +314,12 @@ class _AdicionarVeiculoState extends State<AdicionarVeiculo> {
                                         VeiculoController();
                                     if (_verificarVeiculo(
                                         autenticacaoVeiculo)) {
-                                      print(1);
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             content: Text(
-                                                'Deseja cadastrar o seguinte veículo:\nmodelo: ${_modelController.text}\nmarca: ${_brandController.text}\ncor: ${_selectedColor}\nano: ${int.parse(_yearController.text)}\nplaca: ${_placaController.text}.'),
+                                                'Deseja cadastrar o seguinte veículo:\nmodelo: ${_modelController.text}\nmarca: ${_selectedBrand}\ncor: ${_selectedColor}\nano: ${int.parse(_yearController.text)}\nplaca: ${_placaController.text}.'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
@@ -333,18 +330,32 @@ class _AdicionarVeiculoState extends State<AdicionarVeiculo> {
                                               TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
+                                                  Veiculo novoVeiculo = Veiculo(
+                                                      id: '1',
+                                                      modelo:
+                                                          _modelController.text,
+                                                      marca: _selectedBrand,
+                                                      cor: _selectedColor,
+                                                      ano: int.parse(
+                                                          _yearController.text),
+                                                      usuarioId: user!.id,
+                                                      placa: _placaController
+                                                          .text
+                                                          .toUpperCase());
                                                   autenticacaoVeiculo
                                                       .salvarVeiculo(
                                                           _modelController.text,
-                                                          _brandController.text,
+                                                          _selectedBrand,
                                                           _selectedColor,
                                                           int.parse(
                                                               _yearController
                                                                   .text),
                                                           user!.id,
-                                                          _placaController
-                                                              .text);
-                                                  Navigator.of(context).pop();
+                                                          _placaController.text
+                                                              .toUpperCase());
+
+                                                  Navigator.of(context)
+                                                      .pop(novoVeiculo);
                                                 },
                                                 child: Text('Sim'),
                                               ),
@@ -352,15 +363,6 @@ class _AdicionarVeiculoState extends State<AdicionarVeiculo> {
                                           );
                                         },
                                       );
-                                      /*
-                                    // Cria um novo veículo com as informações dos campos de texto
-                                    _autenticacaoVeiculo.salvarVeiculo(
-                                        _modelController.text,
-                                        _brandController.text,
-                                        _selectedColor,
-                                        int.parse(_yearController.text),
-                                        user!.id,
-                                        _placaController.text);*/
                                     } else {
                                       showDialog(
                                         context: context,

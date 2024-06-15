@@ -43,12 +43,13 @@ class _VeiculoCardState extends State<VeiculoCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Marca: ${widget.veiculo.marca}",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(
-                        height: screenSize.height * (1 / 60),
-                      ),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: screenSize.height * (17 / 960))),
                       Text("Modelo: ${widget.veiculo.modelo}",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: screenSize.height * (17 / 960))),
                     ],
                   ),
                 ],
@@ -59,9 +60,13 @@ class _VeiculoCardState extends State<VeiculoCard> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Placa(placa: widget.veiculo.placa, width: screenSize.width * (115/360)),
+                  Placa(
+                      placa: widget.veiculo.placa,
+                      width: screenSize.width * (115 / 360)),
                   Text("Cor: ${widget.veiculo.cor}",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenSize.height * (17 / 960))),
                 ],
               ),
               InkWell(

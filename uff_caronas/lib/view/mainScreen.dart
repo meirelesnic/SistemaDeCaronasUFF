@@ -38,6 +38,7 @@ class _MainScreenState extends State<MainScreen> {
           backgroundColor: Theme.of(context).colorScheme.surface,
         ),
         child: NavigationBar(
+          height: MediaQuery.of(context).size.height / 10,
           selectedIndex: indexScreen,
           onDestinationSelected: (value) {
             setState(() {
@@ -61,7 +62,8 @@ class _MainScreenState extends State<MainScreen> {
               selectedIcon: Icon(Icons.directions_car_filled),
             ),
             NavigationDestination(
-              icon: _buildChatIcon(), // Usar o método _buildChatIcon para construir o ícone do chat
+              icon:
+                  _buildChatIcon(), // Usar o método _buildChatIcon para construir o ícone do chat
               label: 'Chat',
               selectedIcon: Icon(Icons.messenger),
             ),
@@ -81,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
       stream: chatGrupoDAO.getUnreadMessagesCountForAllChats(user!.id),
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.data == 0) {
-          return Icon(Icons.messenger_outline); 
+          return Icon(Icons.messenger_outline);
         }
         int unreadCount = snapshot.data!;
         print('${unreadCount} Nao lidas');

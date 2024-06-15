@@ -104,7 +104,8 @@ class _HomeState extends State<Home> {
             ),
             //botoes Pedir oferecer
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
+              padding: EdgeInsets.symmetric(
+                  vertical: screenSize.height * (22 / 800)),
               child: Text('O que deseja?',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -158,7 +159,8 @@ class _HomeState extends State<Home> {
                     ))),
             InkWell(
                 onTap: () async {
-                  possuiVeiculo = (await _veiculoController.hasVeiculoIdUser(user!.id))!;
+                  possuiVeiculo =
+                      (await _veiculoController.hasVeiculoIdUser(user!.id))!;
                   if (possuiVeiculo) {
                     Navigator.of(context).push(
                       PageRouteBuilder(
@@ -175,7 +177,7 @@ class _HomeState extends State<Home> {
                         transitionDuration: Duration(milliseconds: 250),
                       ),
                     );
-                  }else{
+                  } else {
                     Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) {
@@ -191,7 +193,6 @@ class _HomeState extends State<Home> {
                         transitionDuration: Duration(milliseconds: 250),
                       ),
                     );
-                
                   }
                 },
                 child: Container(
@@ -281,7 +282,6 @@ class _HomeState extends State<Home> {
                   ),
                   InkWell(
                     onTap: () {
-                      print('Pedido armazenado');
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:

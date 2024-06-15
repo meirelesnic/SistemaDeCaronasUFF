@@ -25,16 +25,16 @@ class _OferecerCaronaState extends State<OferecerCarona> {
   TextEditingController destinoLocal = TextEditingController();
   TextEditingController dataSelecionada = TextEditingController();
   TextEditingController horaSelecionada = TextEditingController();
-  
+
   FocusNode origemFocus = FocusNode();
   FocusNode destinoFocus = FocusNode();
-  
+
   List<Veiculo> veiculos = [];
 
   List<InfoBuscaPlaces> enderecos = [];
   List<double> origemCoord = [];
   List<double> destinoCoord = [];
- 
+
   bool dateVazio = true;
   bool horaVazio = true;
 
@@ -60,8 +60,8 @@ class _OferecerCaronaState extends State<OferecerCarona> {
   @override
   void initState() {
     _carregarVeiculos();
-    origemCoord = [0,0];
-    destinoCoord = [0,0];
+    origemCoord = [0, 0];
+    destinoCoord = [0, 0];
     super.initState();
   }
 
@@ -69,12 +69,11 @@ class _OferecerCaronaState extends State<OferecerCarona> {
     veiculos = await VeiculoDAO().recuperarVeiculosPorUsuario(user!.id);
     setState(() {});
     print(veiculos);
-    
   }
 
-  String getDataCalendario(){
+  String getDataCalendario() {
     DateTime hoje = DateTime.now();
-    if(dateVazio){
+    if (dateVazio) {
       String formattedDate = DateFormat('dd/MM/yyyy').format(hoje);
       dataCarona = formattedDate;
       return "Hoje, $formattedDate";
@@ -82,21 +81,28 @@ class _OferecerCaronaState extends State<OferecerCarona> {
     return "$dataCarona";
   }
 
-  void updateDate(DateTime? dt){
-    if(dt==null){return;}
+  void updateDate(DateTime? dt) {
+    if (dt == null) {
+      return;
+    }
     setState(() {
       dateVazio = false;
-      dataCarona = DateFormat('dd/MM/yyyy').format(dt);;
+      dataCarona = DateFormat('dd/MM/yyyy').format(dt);
+      ;
     });
   }
 
-  void _showDatePicker(){
-    showDatePicker(context: context, initialDate: DateTime.now(),
-        firstDate: DateTime(2024), lastDate:  DateTime(2028)).then((value) => updateDate(value));
+  void _showDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2024),
+            lastDate: DateTime(2028))
+        .then((value) => updateDate(value));
   }
 
   String getHorario() {
-    if(horaVazio){
+    if (horaVazio) {
       DateTime hoje = DateTime.now();
       String formattedTime = DateFormat('HH:mm').format(hoje);
       horaCarona = formattedTime;
@@ -105,37 +111,41 @@ class _OferecerCaronaState extends State<OferecerCarona> {
     return "$horaCarona";
   }
 
-  void updateHora(TimeOfDay? dt){
-    if(dt==null){return;}
+  void updateHora(TimeOfDay? dt) {
+    if (dt == null) {
+      return;
+    }
     setState(() {
       horaVazio = false;
       horaCarona = dt.toString().split('(')[1].replaceAll(')', '');
     });
   }
 
-  void _showTimePicker(){
-    showTimePicker(context: context, initialTime:  TimeOfDay.now()).then(
-        (value) => updateHora(value)
-    );
+  void _showTimePicker() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) => updateHora(value));
   }
 
-  void autoCompletarLocal(String val) async{
-    await buscaEnderecoAPI(val).then((value){
+  void autoCompletarLocal(String val) async {
+    await buscaEnderecoAPI(val).then((value) {
       setState(() {
         enderecos = value;
       });
     });
   }
 
-  Future<List<InfoBuscaPlaces>>buscaEnderecoAPI(String endereco) async{
+  Future<List<InfoBuscaPlaces>> buscaEnderecoAPI(String endereco) async {
     Response response = await Dio().get('https://photon.komoot.io/api/',
-      queryParameters: {"q": endereco, "limit": 4, "bbox": '-44.4289,-23.3575,-40.7499,-20.7640'}
-    ); //https://github.com/komoot/photon documentação
+        queryParameters: {
+          "q": endereco,
+          "limit": 4,
+          "bbox": '-44.4289,-23.3575,-40.7499,-20.7640'
+        }); //https://github.com/komoot/photon documentação
 
     final json = response.data;
-    return(json['features'] as List)
-      .map((e) => InfoBuscaPlaces.fromJson(e))
-      .toList();
+    return (json['features'] as List)
+        .map((e) => InfoBuscaPlaces.fromJson(e))
+        .toList();
   }
 
   bool _isFormComplete() {
@@ -186,27 +196,33 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Oferecer Carona',
-                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.background
-                      ),
+                    Text(
+                      'Oferecer Carona',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.background),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: screenSize.height * (11 / 800)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenSize.height * (8 / 800)),
                       child: Text('De',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.background
-                          )
-                      ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .background)),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
                           width: screenSize.width * (254 / 360),
-                          child: TextField( //Buscar Origem
+                          child: TextField(
+                            //Buscar Origem
                             decoration: InputDecoration(
-                              fillColor: Theme.of(context).colorScheme.background,
+                              fillColor:
+                                  Theme.of(context).colorScheme.background,
                               prefixIcon: Icon(Icons.search),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.clear),
@@ -241,21 +257,26 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                               builder: (BuildContext context) {
                                 return Dialog(
                                   child: Container(
-                                      height: 1.5 * screenSize.width, // Defina a altura que você deseja
-                                      width: screenSize.width, // Defina a largura que você deseja
+                                      height: 1.5 *
+                                          screenSize
+                                              .width, // Defina a altura que você deseja
+                                      width: screenSize
+                                          .width, // Defina a largura que você deseja
                                       child: OpenStreetMapSearchAndPick(
-                                        //center: LatLong(23, 89),
-                                          buttonColor: Theme.of(context).colorScheme.primary,
+                                          //center: LatLong(23, 89),
+                                          buttonColor: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           buttonText: 'Selecionar localização',
                                           onPicked: (pickedData) {
-                                            origemLocal.text = pickedData.addressName;
+                                            origemLocal.text =
+                                                pickedData.addressName;
                                             LatLong coord = pickedData.latLong;
                                             origemCoord[0] = coord.latitude;
                                             origemCoord[1] = coord.longitude;
                                             Navigator.of(context).pop();
                                             setState(() {});
-                                          })
-                                  ),
+                                          })),
                                 );
                               },
                             );
@@ -266,12 +287,16 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: screenSize.height * (11 / 800)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenSize.height * (8 / 800)),
                       child: Text('Para',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.background
-                          )
-                      ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .background)),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -280,7 +305,8 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                           width: screenSize.width * (254 / 360),
                           child: TextField(
                             decoration: InputDecoration(
-                              fillColor: Theme.of(context).colorScheme.background,
+                              fillColor:
+                                  Theme.of(context).colorScheme.background,
                               prefixIcon: Icon(Icons.search),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.clear),
@@ -315,21 +341,26 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                               builder: (BuildContext context) {
                                 return Dialog(
                                   child: Container(
-                                      height: 1.5 * screenSize.width, // Defina a altura que você deseja
-                                      width: screenSize.width, // Defina a largura que você deseja
+                                      height: 1.5 *
+                                          screenSize
+                                              .width, // Defina a altura que você deseja
+                                      width: screenSize
+                                          .width, // Defina a largura que você deseja
                                       child: OpenStreetMapSearchAndPick(
-                                        //center: LatLong(23, 89),
-                                        buttonColor: Theme.of(context).colorScheme.primary,
-                                        buttonText: 'Selecionar localização',
-                                        onPicked: (pickedData) {
-                                          destinoLocal.text = pickedData.addressName;
-                                          LatLong coord = pickedData.latLong;
-                                          destinoCoord[0] = coord.latitude;
-                                          destinoCoord[1] = coord.longitude;
-                                          Navigator.of(context).pop();
-                                          setState(() {});
-                                        })
-                                  ),
+                                          //center: LatLong(23, 89),
+                                          buttonColor: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          buttonText: 'Selecionar localização',
+                                          onPicked: (pickedData) {
+                                            destinoLocal.text =
+                                                pickedData.addressName;
+                                            LatLong coord = pickedData.latLong;
+                                            destinoCoord[0] = coord.latitude;
+                                            destinoCoord[1] = coord.longitude;
+                                            Navigator.of(context).pop();
+                                            setState(() {});
+                                          })),
                                 );
                               },
                             );
@@ -348,7 +379,6 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                   trackVisibility: true,
                   thumbVisibility: true,
                   radius: Radius.circular(5),
-                  
                   child: SingleChildScrollView(
                     child: Container(
                       width: double.infinity,
@@ -356,18 +386,31 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Data',
-                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.primary
-                            ),
+                          Text(
+                            'Data',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                           ),
                           Padding(
-                              padding: EdgeInsets.symmetric(vertical: screenSize.height * (7 / 800)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenSize.height * (7 / 800)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(getDataCalendario(),
-                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                        maxWidth: 2 * screenSize.width / 5),
+                                    child: Text(
+                                      getDataCalendario(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
                                   ),
                                   ElevatedButton.icon(
                                     onPressed: () {
@@ -377,22 +420,27 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                                     label: Text('Selecionar'),
                                   )
                                 ],
-                              )
-                          ),
-                          Text('Hora',
-                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.primary
-                            ),
+                              )),
+                          Text(
+                            'Hora',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                  padding: EdgeInsets.symmetric(vertical: screenSize.height * (7 / 800)),
-                                  child: Text(getHorario(),
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  )
-                              ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: screenSize.height * (7 / 800)),
+                                  child: Text(
+                                    getHorario(),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  )),
                               ElevatedButton.icon(
                                 onPressed: () {
                                   _showTimePicker();
@@ -404,17 +452,26 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primaryContainer,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: screenSize.height * (11 / 800)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenSize.height * (11 / 800)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Autoaceitar?',
-                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                        color: Theme.of(context).colorScheme.primary
-                                    ),
+                                  Text(
+                                    'Autoaceitar?',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium
+                                        ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary),
                                   ),
                                   Switch(
                                     thumbIcon: thumbIcon,
@@ -429,41 +486,50 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                               ),
                             ),
                           ),
-                          Text('Veículo',
-                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.primary
-                            ),
+                          Text(
+                            'Veículo',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               DropdownButton<Veiculo>(
-                                value: null, 
-                                hint: Text('Selecione'), 
+                                value: null,
+                                hint: Text('Selecione'),
                                 onChanged: (Veiculo? selected) {
                                   selectedVeiculo = selected;
-                                  setState(() {
-                                    
-                                  });
+                                  setState(() {});
                                 },
                                 items: veiculos.map((Veiculo veiculo) {
                                   return DropdownMenuItem<Veiculo>(
                                     value: veiculo,
-                                    child: Text('${veiculo.marca} ${veiculo.modelo} (${veiculo.placa})'),
+                                    child: Text(
+                                        '${veiculo.marca} ${veiculo.modelo} (${veiculo.placa})'),
                                   );
                                 }).toList(),
                               ),
-                              selectedVeiculo != null ?
-                              VeiculoData(veiculo: selectedVeiculo!): Container(),
+                              selectedVeiculo != null
+                                  ? VeiculoData(veiculo: selectedVeiculo!)
+                                  : Container(),
                             ],
                           ),
-                          Text('Vagas',
-                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.primary
-                            ),
+                          Text(
+                            'Vagas',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                           ),
                           ToggleButtons(
-                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(25)),
                             fillColor: Theme.of(context).colorScheme.primary,
                             selectedColor: Colors.white,
                             isSelected: _acentosBool,
@@ -523,16 +589,18 @@ class _OferecerCaronaState extends State<OferecerCarona> {
                           SnackBar(
                             content: Text('Carona Registrada'),
                             duration: Duration(seconds: 5),
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                           ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Por favor, preencha todos os campos obrigatórios.'),
-                            duration: Duration(seconds: 5),
-                            backgroundColor: Theme.of(context).colorScheme.error
-                          ),
+                              content: Text(
+                                  'Por favor, preencha todos os campos obrigatórios.'),
+                              duration: Duration(seconds: 5),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error),
                         );
                       }
                     },
@@ -543,52 +611,55 @@ class _OferecerCaronaState extends State<OferecerCarona> {
             ],
           ),
           Positioned(
-              left: screenSize.width * (28/360),
-              top: origemFocus.hasFocus ? screenSize.height * (150/800) : screenSize.height * (235/800),
-              child: Container(
-                color: Colors.white,
-                child: SizedBox(
-                  width: screenSize.width * (254/360),
-                  child: Column(
+            left: screenSize.width * (28 / 360),
+            top: origemFocus.hasFocus
+                ? screenSize.height * (150 / 800)
+                : screenSize.height * (235 / 800),
+            child: Container(
+              color: Colors.white,
+              child: SizedBox(
+                width: screenSize.width * (254 / 360),
+                child: Column(
                   children: [
                     ...enderecos
-                      .map((e) => ListTile(
-                        title: Text("${e.properties?.name ?? ''}",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        subtitle: Text("${e.properties?.locality ?? ''} - ${e.properties?.city ?? ''}"),
-                        onTap: () {
-                          if(origemFocus.hasFocus){
-                            //origemLocal.clear();
-                            origemLocal.text = e.properties?.name ?? '';
-                            //origemFocus.dispose();
-                            enderecos.clear();
-                            setState(() {
-                              var coord = e.geometry!.coordinates!;
-                              origemCoord[0] = coord[1];
-                              origemCoord[1] = coord[0];
-                            });
-                          }
-                          else{
-                            destinoLocal.text = e.properties?.name ?? '';
-                            //destinoFocus.dispose();
-                            enderecos.clear();
-                            setState(() {
-                              var coord = e.geometry!.coordinates!;
-                              destinoCoord[0] = coord[1];
-                              destinoCoord[1] = coord[0];      
-                            });
-                          }
-                        },
-                    )).toList(),
+                        .map((e) => ListTile(
+                              title: Text(
+                                "${e.properties?.name ?? ''}",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              subtitle: Text(
+                                  "${e.properties?.locality ?? ''} - ${e.properties?.city ?? ''}"),
+                              onTap: () {
+                                if (origemFocus.hasFocus) {
+                                  //origemLocal.clear();
+                                  origemLocal.text = e.properties?.name ?? '';
+                                  //origemFocus.dispose();
+                                  enderecos.clear();
+                                  setState(() {
+                                    var coord = e.geometry!.coordinates!;
+                                    origemCoord[0] = coord[1];
+                                    origemCoord[1] = coord[0];
+                                  });
+                                } else {
+                                  destinoLocal.text = e.properties?.name ?? '';
+                                  //destinoFocus.dispose();
+                                  enderecos.clear();
+                                  setState(() {
+                                    var coord = e.geometry!.coordinates!;
+                                    destinoCoord[0] = coord[1];
+                                    destinoCoord[1] = coord[0];
+                                  });
+                                }
+                              },
+                            ))
+                        .toList(),
                   ],
-                  ),
                 ),
               ),
-            )
+            ),
+          )
         ],
       ),
-      
     );
   }
 }

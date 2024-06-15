@@ -34,21 +34,28 @@ class _MeusVeiculosState extends State<MeusVeiculos> {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return AdicionarVeiculo();
-            },
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 250),
-          ),
-        ),
+        onPressed: () async {
+          final novo = await Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return AdicionarVeiculo();
+              },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+              transitionDuration: Duration(milliseconds: 250),
+            ),
+          );
+          if (novo != null) {
+            setState(() {
+              veiculos.add(novo);
+            });
+          }
+        },
         tooltip: 'Add',
         child: Icon(
           Icons.add,
