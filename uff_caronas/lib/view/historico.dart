@@ -4,6 +4,7 @@ import 'package:uff_caronas/view/custom_widgets/caronaListBuilder.dart';
 import '../../model/modelos/Carona.dart';
 import '../model/DAO/CaronaDAO.dart';
 import 'login.dart';
+import 'package:intl/intl.dart';
 
 class Historico extends StatefulWidget {
   const Historico({super.key});
@@ -19,21 +20,22 @@ class _HistoricoState extends State<Historico> {
   String? selectedPapel = 'Passageiro';
   List<Carona> caronas = [];
   final CaronaDAO _caronaDAO = CaronaDAO();
+  final DateFormat dateFormat = DateFormat('dd/MM/yyyy');
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchCaronas();
-  }
-
-  Future<void> _fetchCaronas() async {
-    if (selectedPapel == 'Passageiro') {
-      caronas = await _caronaDAO.recuperarCaronasComoPassageiro(user!.id) ?? [];
-    } else if (selectedPapel == 'Motorista') {
-      caronas = await _caronaDAO.recuperarCaronasComoMotorista(user!.id) ?? [];
+   @override
+    void initState() {
+      super.initState();
+      _fetchCaronas();
     }
-    setState(() {});
-  }
+
+    Future<void> _fetchCaronas() async {
+      caronas = await _caronaDAO.recuperarCaronasPorPapelEPeriodo(
+        user!.id, selectedPapel!, selectedPeriodo!
+      );
+      setState(() {});
+    }
+
+  
 
   @override
   Widget build(BuildContext context) {
