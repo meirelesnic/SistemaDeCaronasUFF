@@ -65,7 +65,7 @@ class _ChatCardState extends State<ChatCard> {
         padding: const EdgeInsets.only(bottom: 8),
         child: SizedBox(
           width: screenSize.width * (300 / 360),
-          height: screenSize.height * (89 / 800),
+          height: screenSize.height * (95 / 800),
           child: Container(
             padding: EdgeInsets.all(screenSize.width * (10/360)),
             decoration: BoxDecoration(
@@ -119,12 +119,9 @@ class _ChatCardState extends State<ChatCard> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: screenSize.height * (15/800)),
-                      child: Badge.count(
-                        isLabelVisible: (widget.chat.mensagensTotais - (widget.chat.members[user!.id]?['readCount'] as int))>0,
-                        count: widget.chat.mensagensTotais - (widget.chat.members[user!.id]?['readCount'] as int) 
-                      ),
+                    Badge.count(
+                      isLabelVisible: (widget.chat.mensagensTotais - (widget.chat.members[user!.id]?['readCount'] as int))>0,
+                      count: widget.chat.mensagensTotais - (widget.chat.members[user!.id]?['readCount'] as int) 
                     ),
                     Text("${widget.chat.ultimaMensagem?['hora'] != null ? widget.chat.ultimaMensagem!['hora'].toDate().hour.toString().padLeft(2, '0') : ''}:${widget.chat.ultimaMensagem?['hora'] != null ? widget.chat.ultimaMensagem!['hora'].toDate().minute.toString().padLeft(2, '0') : ''}",),
                     Text("${widget.chat.ultimaMensagem?['hora'] != null ? (widget.chat.ultimaMensagem!['hora'].toDate()).day.toString().padLeft(2, '0') : ''}/${widget.chat.ultimaMensagem?['hora'] != null ? (widget.chat.ultimaMensagem!['hora'].toDate()).month.toString().padLeft(2, '0') : ''}")
