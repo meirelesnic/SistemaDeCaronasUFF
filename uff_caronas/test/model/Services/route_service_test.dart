@@ -50,16 +50,10 @@ void main() {
     final endLat = -22.9083;
     final endLng = -43.1964;
 
-    // Chamada ao método distanciaCaminhada2
     final result = await routeService.distanciaCaminhada2(startLat, startLng, endLat, endLng);
 
-    // Imprime o resultado para depuração
-    print('Resultado: $result');
-
-    // Verifica se a rota não está vazia
     expect(result['route'], isNotEmpty, reason: 'A rota não deveria estar vazia');
 
-    // Verifica se a distância é maior que zero
     expect(double.parse(result['distance']), greaterThan(0), reason: 'A distância deveria ser maior que zero');
   });
 
@@ -90,15 +84,10 @@ void main() {
     expect(nearestPoint, isNotEmpty);
   });
 
-  test('Deve verificar se um ponto está perto de outro ponto', () async {
-    final point = [-22.9068, -43.1729];
-    final lat = -22.907;
-    final lng = -43.173;
-    final maxDistance = 500.0;
+  test('Deve verificar se um ponto está perto de outro ponto', () {
+    expect(routeService.isPointNear([20.0, 10.0], 10.0, 20.0, 100), true);
 
-    final isNear = routeService.isPointNear(point, lat, lng, maxDistance);
-
-    expect(isNear, isTrue);
+    expect(routeService.isPointNear([30.0, 15.0], 10.0, 20.0, 100), false);
   });
 
   test('Deve obter o endereço de um ponto (lat, lng)', () async {

@@ -8,10 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +85,12 @@
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="Deve verificar se um ponto está perto de outro ponto" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Deve verificar se um ponto está perto de outro ponto" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="tests in carona_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
       <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" />
       <option name="useRegexp" value="false" />
@@ -97,18 +101,13 @@
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in veiculo_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/veiculo_dao_test.dart" />
-      <option name="useRegexp" value="false" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Flutter Test.tests in route_service_test.dart" />
+        <item itemvalue="Flutter Test.Deve verificar se um ponto está perto de outro ponto" />
         <item itemvalue="Flutter Test.Deve obter a rota de caminhada e distância" />
         <item itemvalue="Flutter Test.tests in carona_dao_test.dart" />
         <item itemvalue="Flutter Test.Deve salvar uma carona corretamente" />
-        <item itemvalue="Flutter Test.tests in veiculo_dao_test.dart" />
       </list>
     </recent_temporary>
   </component>
