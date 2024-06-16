@@ -4,8 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modelos/Usuario.dart';
 
 class UsuarioDAO {
-  final CollectionReference _usuariosCollection =
-      FirebaseFirestore.instance.collection('usuarios');
+  final CollectionReference<Map<String, dynamic>> _usuariosCollection;
+
+  UsuarioDAO() : _usuariosCollection = FirebaseFirestore.instance.collection('usuarios');
+
+  UsuarioDAO.comFirestore({FirebaseFirestore? firestore})
+      : _usuariosCollection = (firestore ?? FirebaseFirestore.instance).collection('usuarios');
 
   Future<void> salvarUsuario(
       String id, String nome, String email, String fotoUrl) async {

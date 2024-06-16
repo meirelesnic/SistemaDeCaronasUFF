@@ -6,8 +6,12 @@ import '../modelos/Carona.dart';
 import 'package:intl/intl.dart';
 
 class CaronaDAO {
-  final CollectionReference _caronasCollection =
-      FirebaseFirestore.instance.collection('caronas');
+  final CollectionReference _caronasCollection;
+
+  CaronaDAO() : _caronasCollection = FirebaseFirestore.instance.collection('caronas');
+
+  CaronaDAO.comFirestore({FirebaseFirestore? firestore})
+      : _caronasCollection = (firestore ?? FirebaseFirestore.instance).collection('caronas');
 
   String _gerarId() {
     var random = Random();

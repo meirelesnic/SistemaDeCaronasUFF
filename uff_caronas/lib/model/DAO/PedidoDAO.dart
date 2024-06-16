@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modelos/Pedido.dart';
 
 class PedidoDAO {
-  final CollectionReference _pedidosCollection =
-      FirebaseFirestore.instance.collection('pedidos');
+  final CollectionReference _pedidosCollection;
+
+  PedidoDAO() : _pedidosCollection = FirebaseFirestore.instance.collection('pedidos');
+
+  PedidoDAO.comFirestore({FirebaseFirestore? firestore})
+      : _pedidosCollection = (firestore ?? FirebaseFirestore.instance).collection('pedidos');
 
   String _gerarId() {
     var random = Random();

@@ -7,11 +7,15 @@ import '../modelos/Mensagem.dart';
 import '../modelos/chatGrupo.dart';
 
 class ChatGrupoDAO {
-  final CollectionReference _chatGrupoCollection =
-      FirebaseFirestore.instance.collection('chatGrupo');
+  final CollectionReference _chatGrupoCollection;
+
+  ChatGrupoDAO() : _chatGrupoCollection = FirebaseFirestore.instance.collection('chatGrupo');
+
+  ChatGrupoDAO.comFirestore({FirebaseFirestore? firestore})
+      : _chatGrupoCollection = (firestore ?? FirebaseFirestore.instance).collection('chatGrupo');
 
   Future<void> createNewChat(String id, String nomeChat) async {
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection('chatGrupo');
+    //CollectionReference collectionRef = FirebaseFirestore.instance.collection('chatGrupo');
 
     Timestamp now = Timestamp.now();
 
@@ -27,14 +31,12 @@ class ChatGrupoDAO {
       "nomeChat": nomeChat,
     };
 
-   await collectionRef.add(data);
+   await _chatGrupoCollection.add(data);
    print('Chat criado');
   }
 
   Future<void> addMemberToChat(String caronaId, String userId, String username) async {
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection('chatGrupo');
-
-    QuerySnapshot querySnapshot = await collectionRef.where('id', isEqualTo: caronaId).get();
+    QuerySnapshot querySnapshot = await _chatGrupoCollection.where('id', isEqualTo: caronaId).get();
     var docId;
     if (querySnapshot.docs.isNotEmpty) {
       docId = querySnapshot.docs.first.id;
@@ -72,10 +74,10 @@ class ChatGrupoDAO {
 
     if (querySnapshot.docs.isNotEmpty) {
       DocumentSnapshot docSnapshot = querySnapshot.docs.first;
-      
+
       return ChatGrupo.fromMap(docSnapshot.id, docSnapshot.data() as Map<String, dynamic>);
     } else {
-      return null; 
+      return null;
     }
   }
 
