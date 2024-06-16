@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modelos/Veiculo.dart';
 
 class VeiculoDAO {
-  final CollectionReference _veiculosCollection =
-  FirebaseFirestore.instance.collection('veiculos');
+  final CollectionReference _veiculosCollection;
+
+  VeiculoDAO() : _veiculosCollection = FirebaseFirestore.instance.collection('veiculos');
+
+  VeiculoDAO.comFirestore({FirebaseFirestore? firestore})
+      : _veiculosCollection = (firestore ?? FirebaseFirestore.instance).collection('veiculos');
 
   String _gerarId() {
     var random = Random();

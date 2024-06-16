@@ -9,8 +9,12 @@ import 'package:uff_caronas/model/modelos/PedidoPassageiro.dart';
 import 'package:uff_caronas/model/modelos/Usuario.dart';
 
 class PedidoPassageiroDAO {
-  final CollectionReference _pedidoPassageiroCollection =
-      FirebaseFirestore.instance.collection('pedidoPassageiro');
+  final CollectionReference _pedidoPassageiroCollection;
+
+  PedidoPassageiroDAO() : _pedidoPassageiroCollection = FirebaseFirestore.instance.collection('pedidoPassageiro');
+
+  PedidoPassageiroDAO.comFirestore({FirebaseFirestore? firestore})
+      : _pedidoPassageiroCollection = (firestore ?? FirebaseFirestore.instance).collection('pedidoPassageiro');
 
   String _gerarId() {
     var random = Random();
