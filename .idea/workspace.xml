@@ -8,9 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uff_caronas/test/model/DAO/usuario_dao_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +54,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "nicolle__unit__testes",
+    "git-widget-placeholder": "pedro__unit__test",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "last_opened_file_path": "C:/tools/dart-sdk",
@@ -73,14 +74,41 @@
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android\app" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/uff_caronas/lib/main.dart" />
+  <component name="RunManager" selected="Flutter Test.tests in route_service_test.dart">
+    <configuration name="Deve obter a rota de caminhada e distância" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Deve obter a rota de caminhada e distância" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Deve salvar uma carona corretamente" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Deve salvar uma carona corretamente" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in carona_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in route_service_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+      <option name="useRegexp" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in veiculo_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/veiculo_dao_test.dart" />
+      <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Flutter.main.dart" />
+        <item itemvalue="Flutter Test.tests in route_service_test.dart" />
+        <item itemvalue="Flutter Test.Deve obter a rota de caminhada e distância" />
+        <item itemvalue="Flutter Test.tests in carona_dao_test.dart" />
+        <item itemvalue="Flutter Test.Deve salvar uma carona corretamente" />
+        <item itemvalue="Flutter Test.tests in veiculo_dao_test.dart" />
       </list>
     </recent_temporary>
   </component>
