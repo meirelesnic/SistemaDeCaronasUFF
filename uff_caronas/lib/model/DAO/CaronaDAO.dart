@@ -55,11 +55,9 @@ class CaronaDAO {
         'dataTimestamp': timestamp,
       });
       
-      //criar Chat,
       String nomeChat = 'Carona ${user!.nome.split(' ').first} - $data - $hora';
       ChatGrupoDAO _chatGrupoDAO = ChatGrupoDAO();
       await _chatGrupoDAO.createNewChat(docRefId.id, nomeChat);
-      //Add motorista no chat
       await _chatGrupoDAO.addMemberToChat(docRefId.id, motoristaId, user!.nome);
 
     } catch (e) {

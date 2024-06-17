@@ -25,6 +25,7 @@ class Veiculo {
 
   String get usuarioId => _usuarioId;
 
+
   set usuarioId(String value) {
     _usuarioId = value;
   }

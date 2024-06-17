@@ -8,8 +8,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="465da5e0-25e1-4c82-bf08-4ac35aa62b0a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/uff_caronas/test/integration/adicionar_veiculo_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/test/integration/buscar_carona_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/uff_caronas/test/integration/fazer_avaliacao_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/CaronaController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/controller/VeiculoController.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/AvaliacaoDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/AvaliacaoDAO.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/DAO/CaronaDAO.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Veiculo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/lib/model/modelos/Veiculo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/carona_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/chat_grupo_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/chat_grupo_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/pedido_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/pedido_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/pedido_passageiro_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/pedido_passageiro_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/usuario_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/usuario_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/DAO/veiculo_dao_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/veiculo_dao_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uff_caronas/test/unit/model/Services/route_service_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +66,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "pedro__unit__test",
+    "git-widget-placeholder": "pedro__integration__test",
     "ignore.virus.scanning.warn.message": "true",
     "io.flutter.reload.alreadyRun": "true",
     "last_opened_file_path": "C:/tools/dart-sdk",
@@ -65,49 +79,49 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\test\unit" />
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\test\integration" />
+      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\test\model\DAO" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\view" />
       <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\model" />
-      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\image" />
-      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\lib\telas" />
-      <recent name="C:\Users\Administrator\Documents\GitHub\SistemaDeCaronasUFF\uff_caronas\android\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter Test.tests in route_service_test.dart">
-    <configuration name="Deve obter a rota de caminhada e distância" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Deve obter a rota de caminhada e distância" />
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+  <component name="RunManager" selected="Flutter Test.Deve chamar AvaliacaoDAO.salvarAvaliacao para cada passageiro">
+    <configuration name="Criar novo chat no Firestore falso" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Criar novo chat no Firestore falso" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/chat_grupo_dao_test.dart" />
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Deve salvar uma carona corretamente" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Deve salvar uma carona corretamente" />
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" />
+    <configuration name="Deve chamar AvaliacaoDAO.salvarAvaliacao para cada passageiro" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Deve chamar AvaliacaoDAO.salvarAvaliacao para cada passageiro" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/integration/fazer_avaliacao_test.dart" />
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Deve verificar se um ponto está perto de outro ponto" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Deve verificar se um ponto está perto de outro ponto" />
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+    <configuration name="buscarCaronasCompativeis" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="buscarCaronasCompativeis" />
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/integration/buscar_carona_test.dart" />
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in carona_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/DAO/carona_dao_test.dart" />
+    <configuration name="tests in buscar_carona_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/integration/buscar_carona_test.dart" />
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in route_service_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/model/Services/route_service_test.dart" />
+    <configuration name="tests in chat_grupo_dao_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testFile" value="$PROJECT_DIR$/uff_caronas/test/unit/model/DAO/chat_grupo_dao_test.dart" />
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Flutter Test.tests in route_service_test.dart" />
-        <item itemvalue="Flutter Test.Deve verificar se um ponto está perto de outro ponto" />
-        <item itemvalue="Flutter Test.Deve obter a rota de caminhada e distância" />
-        <item itemvalue="Flutter Test.tests in carona_dao_test.dart" />
-        <item itemvalue="Flutter Test.Deve salvar uma carona corretamente" />
+        <item itemvalue="Flutter Test.Deve chamar AvaliacaoDAO.salvarAvaliacao para cada passageiro" />
+        <item itemvalue="Flutter Test.tests in chat_grupo_dao_test.dart" />
+        <item itemvalue="Flutter Test.Criar novo chat no Firestore falso" />
+        <item itemvalue="Flutter Test.buscarCaronasCompativeis" />
+        <item itemvalue="Flutter Test.tests in buscar_carona_test.dart" />
       </list>
     </recent_temporary>
   </component>

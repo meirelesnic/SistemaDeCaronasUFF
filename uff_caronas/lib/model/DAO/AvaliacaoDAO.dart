@@ -1,9 +1,11 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uff_caronas/model/modelos/Avaliacao.dart';
 
 class AvaliacaoDAO{
+  final CollectionReference avaliacoesCollection;
+
+  AvaliacaoDAO.comFirestore({FirebaseFirestore? firestore})
+      : avaliacoesCollection = (firestore ?? FirebaseFirestore.instance).collection('caronas');
 
   static Future<void> criarOuVerificarAvaliacao(List<String> ids, String caronaId) async {
     try {
@@ -58,7 +60,6 @@ class AvaliacaoDAO{
           .where('caronaId', isEqualTo: caronaId)
           .get();
 
-      // Se não houver documentos correspondentes, cria um novo documento
       if (querySnapshot.docs.isEmpty) {
         await FirebaseFirestore.instance.collection('controleAvaliacoes').doc(caronaId).set({ 'caronaId': caronaId });
       }
@@ -106,6 +107,38 @@ class AvaliacaoDAO{
     return avaliacoes;
   }
 
+   Future<List<Avaliacao>> resgatarAvaliacoes2(String userId, bool isMotorista) async {
+    List<Avaliacao> avaliacoes = [];
+
+    try {
+      String subcolecaoPath = isMotorista ? 'motorista' : 'passageiro';
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('avaliacoes')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        return avaliacoes;
+      }
+
+      DocumentReference docRef = querySnapshot.docs.first.reference;
+
+      CollectionReference subcolecao = docRef.collection(subcolecaoPath);
+
+      QuerySnapshot subQuerySnapshot = await subcolecao.get();
+
+      for (var doc in subQuerySnapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Avaliacao avaliacao = Avaliacao.fromMap(data);
+        avaliacoes.add(avaliacao);
+      }
+    } catch (e) {
+    }
+
+    return avaliacoes;
+  }
+
   static Future<void> salvarAvaliacao(String userId, bool isMotorista, String autor, int nota, String comentario) async {
     try {
       String subcolecaoPath = isMotorista ? 'motorista' : 'passageiro';
@@ -134,6 +167,34 @@ class AvaliacaoDAO{
       await _atualizarMedia(docRef, subcolecaoPath, isMotorista);
     } catch (e) {
       print("Erro ao salvar avaliação: $e");
+    }
+  }
+
+   Future<void> salvarAvaliacao2(String userId, bool isMotorista, String autor, int nota, String comentario) async {
+    try {
+      String subcolecaoPath = isMotorista ? 'motorista' : 'passageiro';
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('avaliacoes')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        return;
+      }
+
+      DocumentReference docRef = querySnapshot.docs.first.reference;
+      CollectionReference subcolecao = docRef.collection(subcolecaoPath);
+
+      await subcolecao.add({
+        'autor': autor,
+        'nota': nota,
+        'comentario': comentario,
+      });
+      print('Avaliacao SALVA');
+
+      await _atualizarMedia(docRef, subcolecaoPath, isMotorista);
+    } catch (e) {
     }
   }
 
@@ -207,66 +268,4 @@ class AvaliacaoDAO{
       print("Erro ao verificar/criar documento: $e");
     }
   }
-//===============================================================================
-  
-
-//   static Future<List<String>> recuperarTodosUsuarios() async {
-//   try {
-//     QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('usuarios').get();
-//     List<String> userIds = querySnapshot.docs.map((doc) => doc['id'] as String).toList();
-//     return userIds;
-//   } catch (e) {
-//     print('Erro ao recuperar IDs de usuários: $e');
-//     return [];
-//   }
-// }
-
-//  static Future<void> gerarAvaliacoesAleatorias(String userId) async {
-//   final random = Random();
-//   final avaliacaoDAO = AvaliacaoDAO();
-//   List<String> nomesAutores = [
-//   'João Silva', 'Maria Souza', 'Carlos Pereira', 'Ana Oliveira', 
-//   'Paulo Rodrigues', 'Fernanda Lima', 'Lucas Almeida', 'Juliana Gomes'
-// ];
-
-// List<String> comentarios = [
-//   'Muito bom!', 'Excelente serviço.', 'Recomendo!', 'Muito atencioso.', 
-//   'Foi uma ótima experiência.', 'Gostei muito.', 'Tudo perfeito.'
-// ];
-  
-//   // Verificar e criar documento de avaliação se não existir
-//   await AvaliacaoDAO.verificarECriarDocumento(userId);
-
-//   // Gerar avaliações para motorista
-//   for (int i = 0; i < 3 + random.nextInt(4); i++) {
-//     await AvaliacaoDAO.salvarAvaliacao(
-//       userId,
-//       true,  // isMotorista
-//       nomesAutores[random.nextInt(nomesAutores.length)],
-//       4 + random.nextInt(2),  // Nota entre 4 e 5
-//       comentarios[random.nextInt(comentarios.length)],
-//     );
-//   }
-
-//   // Gerar avaliações para passageiro
-//   for (int i = 0; i < 3 + random.nextInt(4); i++) {
-//     await AvaliacaoDAO.salvarAvaliacao(
-//       userId,
-//       false,  // Não é motorista
-//       nomesAutores[random.nextInt(nomesAutores.length)],
-//       4 + random.nextInt(2),  // Nota entre 4 e 5
-//       comentarios[random.nextInt(comentarios.length)],
-//     );
-//   }
-// }
-
-// static Future<void> gerarAvaliacoesParaTodosUsuarios() async {
-//   List<String> userIds = await recuperarTodosUsuarios();
-  
-//   for (String userId in userIds) {
-//     await gerarAvaliacoesAleatorias(userId);
-//   }
-// }
-
-
 }

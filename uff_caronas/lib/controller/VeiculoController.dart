@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../model/DAO/VeiculoDAO.dart';
 import '../model/modelos/Veiculo.dart';
 
@@ -6,6 +8,10 @@ class VeiculoController {
 
   VeiculoController() {
     veiculoDAO = VeiculoDAO();
+  }
+
+  VeiculoController.comFirestore({FirebaseFirestore? firestore}) {
+    veiculoDAO = VeiculoDAO.comFirestore(firestore: firestore);
   }
 
   void salvarVeiculo(String modelo, String marca, String cor, int ano,

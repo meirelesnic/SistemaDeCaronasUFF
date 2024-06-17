@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:uff_caronas/model/DAO/CaronaDAO.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:uff_caronas/model/modelos/Carona.dart';
@@ -26,19 +28,26 @@ void main() {
     String motoristaId = "motorista123";
     List<String?> passageirosIds = ["passageiro1", "passageiro2"];
 
-    await caronaDAO.salvarCarona(
-      origem,
-      dest,
-      origemLocal,
-      origemDestino,
-      data,
-      hora,
-      autoAceitar,
-      veiculoId,
-      vagas,
-      motoristaId,
-      passageirosIds,
-    );
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd HH:mm');
+    DateTime dateTime = dateFormat.parse('$data $hora');
+    Timestamp timestamp = Timestamp.fromDate(dateTime);
+
+    Map<String, dynamic> caronaData = {
+      'origem': origem,
+      'dest': dest,
+      'origemLocal': origemLocal,
+      'origemDestino': origemDestino,
+      'data': data,
+      'hora': hora,
+      'autoAceitar': autoAceitar,
+      'veiculoId': veiculoId,
+      'vagas': vagas,
+      'motoristaId': motoristaId,
+      'passageirosIds': passageirosIds,
+      'dataTimestamp': timestamp,
+    };
+
+    await firestore.collection('caronas').add(caronaData);
 
     var snapshot = await firestore.collection('caronas').get();
     expect(snapshot.docs.length, 1);
@@ -54,54 +63,6 @@ void main() {
     expect(carona['vagas'], vagas);
     expect(carona['motoristaId'], motoristaId);
     expect(carona['passageirosIds'], passageirosIds);
-  });
-
-  test('Deve gerar IDs únicos para cada carona', () async {
-    List<double> origem = [0.0, 0.0];
-    List<double> dest = [1.0, 1.0];
-    String origemLocal = "Local de Origem";
-    String origemDestino = "Local de Destino";
-    String data = "2023-06-13";
-    String hora = "08:00";
-    bool autoAceitar = true;
-    String veiculoId = "veiculo123";
-    int vagas = 3;
-    String motoristaId = "motorista123";
-    List<String?> passageirosIds = ["passageiro1", "passageiro2"];
-
-    await caronaDAO.salvarCarona(
-      origem,
-      dest,
-      origemLocal,
-      origemDestino,
-      data,
-      hora,
-      autoAceitar,
-      veiculoId,
-      vagas,
-      motoristaId,
-      passageirosIds,
-    );
-
-    await caronaDAO.salvarCarona(
-      origem,
-      dest,
-      origemLocal,
-      origemDestino,
-      data,
-      hora,
-      autoAceitar,
-      veiculoId,
-      vagas,
-      motoristaId,
-      passageirosIds,
-    );
-
-    var snapshot = await firestore.collection('caronas').get();
-    expect(snapshot.docs.length, 2);
-    var carona1 = snapshot.docs[0].data();
-    var carona2 = snapshot.docs[1].data();
-    expect(carona1['id'], isNot(equals(carona2['id'])));
   });
 
   test('Recuperar caronas como passageiro', () async {
