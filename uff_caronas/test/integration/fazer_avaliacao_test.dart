@@ -16,7 +16,7 @@ void main() {
     usuarioDAO = UsuarioDAO.comFirestore(firestore: firestore);
   });
 
-  test('Deve chamar AvaliacaoDAO.salvarAvaliacao para cada passageiro', () {
+  test('Comportamento fazer avaliação', () async {
 
     var passageiro1 = Usuario(nome: 'nome', email: 'email', id: 'id', fotoUrl: 'fotoUrl');
     var passageiro2 = Usuario(nome: 'nome2', email: 'email2', id: 'id2', fotoUrl: 'fotoUrl');
@@ -46,7 +46,11 @@ void main() {
         );
       }
     }
-    var avaliacao = avaliacaoDAO.resgatarAvaliacoes2(passageiro1.id, false);
-    expect(avaliacao, isNotNull);
+
+    var avaliacao1 = await avaliacaoDAO.resgataAvaliacoes(passageiro1.id, false);
+    var avaliacao2 = await avaliacaoDAO.resgataAvaliacoes(passageiro2.id, false);
+
+    expect(avaliacao1, isNotNull);
+    expect(avaliacao2, isNotNull);
   });
 }

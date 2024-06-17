@@ -15,7 +15,7 @@ void main() {
     caronaController = CaronaController.comFirestore(firestore: firestore);
   });
 
-  test('comportamento da tela de buscarCarona', () async {
+  test('comportamento de buscar Carona', () async {
     String data = "2023-06-13";
     String hora = "08:00";
 

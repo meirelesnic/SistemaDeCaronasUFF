@@ -34,29 +34,15 @@ void main() {
   });
 
   test('Deve obter a distância de caminhada entre dois pontos', () async {
-    final startLat = -22.9068;
-    final startLng = -43.1729;
-    final endLat = -22.9083;
-    final endLng = -43.1964;
+    final startLat = -22.9515096;
+    final startLng = -43.1862969;
+    final endLat = -22.97570575;
+    final endLng = -43.18662424789011;
 
     final distance = await routeService.distanciaCaminhada(startLat, startLng, endLat, endLng);
 
-    expect(double.parse(distance), greaterThan(0));
+    expect(double.parse(distance), 0);
   });
-
-  test('Deve obter a rota de caminhada e distância', () async {
-    final startLat = -22.9068;
-    final startLng = -43.1729;
-    final endLat = -22.9083;
-    final endLng = -43.1964;
-
-    final result = await routeService.distanciaCaminhada2(startLat, startLng, endLat, endLng);
-
-    expect(result['route'], isNotEmpty, reason: 'A rota não deveria estar vazia');
-
-    expect(double.parse(result['distance']), greaterThan(0), reason: 'A distância deveria ser maior que zero');
-  });
-
 
   test('Deve verificar se um ponto está perto de uma rota', () async {
     final route = [

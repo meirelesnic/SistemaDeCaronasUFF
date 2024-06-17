@@ -107,7 +107,7 @@ class AvaliacaoDAO{
     return avaliacoes;
   }
 
-   Future<List<Avaliacao>> resgatarAvaliacoes2(String userId, bool isMotorista) async {
+   Future<List<Avaliacao>> resgataAvaliacoes(String userId, bool isMotorista) async {
     List<Avaliacao> avaliacoes = [];
 
     try {
