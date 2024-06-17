@@ -111,8 +111,8 @@ class _HistoricoState extends State<Historico> {
                     onSelected: (String? s) {
                       setState(() {
                         selectedPapel = s;
-                        _fetchCaronas(); // atualizar caronas
                       });
+                      _fetchCaronas(); // atualizar caronas
                     },
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(
@@ -132,6 +132,7 @@ class _HistoricoState extends State<Historico> {
                         selectedPeriodo = s;
                         //fazer consulta se necessário
                       });
+                      _fetchCaronas();
                     },
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 'Atual', label: 'Atual'),

@@ -85,11 +85,7 @@ class _DetalhesCaronaState extends State<DetalhesCarona> {
   }
 
   Future<ChatGrupo?> _getChat() async {
-    CaronaController caronaController = CaronaController();
-    String? docId = await caronaController.docIdString(widget.carona.id);
-    //print(docId);
-    ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(docId!);
-    //print(chat?.membersId);
+    ChatGrupo? chat = await _chatGrupoDAO.getChatGrupoById(widget.carona.id);
     return chat;
   }
 
